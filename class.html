@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClassBoard — Smart Classroom Management</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#09090b;color:#fff;overflow-x:hidden}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#09090b}::-webkit-scrollbar-thumb{background:#27272a;border-radius:3px}
+@keyframes fadeIn{0%{opacity:0}100%{opacity:1}}
+@keyframes slideUp{0%{opacity:0;transform:translateY(30px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.fade-in{animation:fadeIn .4s ease-out}.slide-up{animation:slideUp .6s ease-out}
+.grad-text{background:linear-gradient(135deg,#818cf8,#6366f1,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:700px;height:450px;background:radial-gradient(circle at 50% 0%,rgba(99,102,241,.18) 0%,transparent 70%);pointer-events:none}
+.nav-blur{backdrop-filter:blur(20px);background:rgba(9,9,11,.75);border-bottom:1px solid rgba(255,255,255,.05)}
+.sidebar{width:260px;min-height:100vh;background:#0c0c0e;border-right:1px solid rgba(255,255,255,.05);position:fixed;left:0;top:0;z-index:40;transition:transform .3s ease}
+.main-area{margin-left:260px;min-height:100vh;transition:margin .3s ease}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;color:#71717a;cursor:pointer;transition:all .15s;position:relative}
+.nav-item:hover{color:#e4e4e7;background:rgba(255,255,255,.03)}
+.nav-item.active{color:#818cf8;background:rgba(99,102,241,.08)}
+.nav-item .bdg{position:absolute;right:10px;background:#ef4444;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px;transition:all .3s}
+.card:hover{border-color:rgba(255,255,255,.1)}
+.stat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:20px}
+.stat-card .ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.btn{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;border:none;display:inline-flex;align-items:center;gap:6px}
+.btn-p{background:#6366f1;color:#fff;box-shadow:0 0 15px -3px rgba(99,102,241,.4)}
+.btn-p:hover{background:#818cf8;box-shadow:0 0 20px -3px rgba(99,102,241,.6)}
+.btn-g{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:#a1a1aa}
+.btn-g:hover{background:rgba(255,255,255,.07);color:#fff}
+.btn-s{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:#34d399}
+.btn-s:hover{background:rgba(16,185,129,.2)}
+.btn-sm{padding:6px 12px;font-size:11px}
+.input{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;font-size:13px;color:#fff;font-family:inherit;outline:none;transition:border .2s}
+.input:focus{border-color:rgba(99,102,241,.5)}
+.input::placeholder{color:#3f3f46}
+select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+textarea.input{resize:vertical;min-height:80px}
+.bt{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.bt-g{background:rgba(16,185,129,.1);color:#34d399;border:1px solid rgba(16,185,129,.2)}
+.bt-r{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.bt-y{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
+.bt-b{background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.2)}
+.bt-pu{background:rgba(139,92,246,.1);color:#a78bfa;border:1px solid rgba(139,92,246,.2)}
+.bt-gr{background:rgba(255,255,255,.05);color:#71717a;border:1px solid rgba(255,255,255,.08)}
+.tw{overflow-x:auto;border:1px solid rgba(255,255,255,.05);border-radius:10px}
+table{width:100%;border-collapse:collapse}
+th{background:rgba(255,255,255,.03);padding:10px 14px;font-size:11px;font-weight:600;color:#71717a;text-align:left;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.05)}
+td{padding:10px 14px;font-size:13px;color:#a1a1aa;border-bottom:1px solid rgba(255,255,255,.03)}
+tr:hover td{background:rgba(255,255,255,.015)}
+.tc{padding:8px;border:1px solid rgba(255,255,255,.04);border-radius:6px;font-size:11px;font-weight:500;text-align:center;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.tc .s{font-size:11px;font-weight:600;color:#e4e4e7}
+.tc .t{font-size:9px;color:#71717a}
+.pb{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;transition:width .8s}
+.toast{position:fixed;bottom:24px;right:24px;background:rgba(15,15,18,.95);border:1px solid rgba(99,102,241,.3);backdrop-filter:blur(12px);padding:12px 20px;border-radius:10px;z-index:9999;transform:translateY(100px);opacity:0;transition:all .4s cubic-bezier(.25,.46,.45,.94);pointer-events:none;display:flex;align-items:center;gap:8px;font-size:13px;color:#d4d4d8}
+.toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.cb{max-width:80%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+.cb-s{background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.2);color:#c7d2fe;margin-left:auto;border-bottom-right-radius:4px}
+.cb-r{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);color:#a1a1aa;border-bottom-left-radius:4px}
+.ad{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.ad-p{background:rgba(16,185,129,.15);color:#34d399;border:1px solid rgba(16,185,129,.2)}
+.ad-a{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.2)}
+.ad-l{background:rgba(245,158,11,.15);color:#fbbf24;border:1px solid rgba(245,158,11,.2)}
+.ad-n{background:rgba(255,255,255,.03);color:#3f3f46;border:1px solid rgba(255,255,255,.05)}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-bg.open{opacity:1;pointer-events:auto}
+.modal{background:#111113;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;width:100%;max-width:440px;transform:translateY(20px);transition:transform .3s}
+.modal-bg.open .modal{transform:translateY(0)}
+.hamburger{display:none;position:fixed;top:14px;left:14px;z-index:45;width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);align-items:center;justify-content:center;cursor:pointer;color:#a1a1aa}
+@keyframes ping{75%,100%{transform:scale(2);opacity:0}}.ping{animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-area{margin-left:0!important}.hamburger{display:flex}}
+</style>
+</head>
+<body class="font-inter">
+
+<div id="toast-el" class="toast"><i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i><span id="toast-msg"></span></div>
+
+<!-- ══════════ LOGIN MODAL ══════════ -->
+<div id="login-modal" class="modal-bg">
+<div class="modal">
+  <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4 text-white"></i></div>
+      <span class="text-lg font-bold">Class<span class="text-indigo-400">Board</span></span>
+    </div>
+    <button onclick="closeLogin()" class="w-8 h-8 rounded-lg bg-white/[.05] flex items-center justify-center text-zinc-500 hover:text-white transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+  <div class="flex mb-5 bg-white/[.03] rounded-lg p-1">
+    <button onclick="setRole('student')" id="rl-s" class="flex-1 py-2 rounded-md text-xs font-semibold tracking-wide transition-all bg-indigo-600 text-white">STUDENT</button>
+    <button onclick="setRole('teacher')" id="rl-t" class="flex-1 py-2 rounded-md text-xs font-semibold tracking-wide transition-all text-zinc-500">TEACHER</button>
+  </div>
+  <div class="space-y-3">
+    <div><label class="block text-xs text-zinc-500 font-medium mb-1">Email</label><input id="le" type="email" class="input" placeholder="Enter email"></div>
+    <div><label class="block text-xs text-zinc-500 font-medium mb-1">Password</label><input id="lp" type="password" class="input" placeholder="Enter password"></div>
+    <button onclick="doLogin()" class="btn btn-p w-full justify-center py-2.5 text-sm">Sign In</button>
+  </div>
+  <div class="mt-4 pt-4 border-t border-white/5">
+    <p class="text-[10px] text-zinc-600 font-medium text-center mb-2">DEMO CREDENTIALS</p>
+    <div class="grid grid-cols-2 gap-2">
+      <div class="bg-white/[.02] rounded-lg p-2 text-center"><p class="text-[9px] text-zinc-600">Student</p><p class="text-[10px] text-zinc-400 font-mono">aarav@demo.com</p><p class="text-[10px] text-zinc-500 font-mono">student123</p></div>
+      <div class="bg-white/[.02] rounded-lg p-2 text-center"><p class="text-[9px] text-zinc-600">Teacher</p><p class="text-[10px] text-zinc-400 font-mono">priya@demo.com</p><p class="text-[10px] text-zinc-500 font-mono">teacher123</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════ LANDING PAGE ══════════ -->
+<div id="landing">
+<!-- NAV -->
+<nav id="lnav" class="nav-blur fixed top-0 left-0 right-0 z-50 h-16">
+<div class="max-w-7xl mx-auto px-5 h-full flex items-center justify-between">
+  <a href="#" class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4 text-white"></i></div><span class="font-bold text-sm tracking-tight">Class<span class="text-indigo-400">Board</span></span></a>
+  <div class="hidden md:flex items-center gap-7">
+    <a href="#features" class="text-zinc-500 hover:text-indigo-400 text-[13px] font-medium transition-colors">Features</a>
+    <a href="#how" class="text-zinc-500 hover:text-indigo-400 text-[13px] font-medium transition-colors">How It Works</a>
+    <a href="#testimonials" class="text-zinc-500 hover:text-indigo-400 text-[13px] font-medium transition-colors">Testimonials</a>
+    <a href="#contact" class="text-zinc-500 hover:text-indigo-400 text-[13px] font-medium transition-colors">Contact</a>
+  </div>
+  <div class="flex items-center gap-3">
+    <button onclick="openLogin()" class="btn btn-g text-xs">Log In</button>
+    <button onclick="openLogin()" class="btn btn-p text-xs">Get Started</button>
+    <button id="mob-tog" class="md:hidden text-zinc-400 hover:text-white" onclick="toggleMob()"><i data-lucide="menu" class="w-5 h-5"></i></button>
+  </div>
+</div>
+<div id="mob-menu" class="md:hidden hidden border-t border-white/5 px-5 py-3 space-y-2">
+  <a href="#features" class="block text-zinc-500 hover:text-indigo-400 text-sm py-1.5" onclick="closeMob()">Features</a>
+  <a href="#how" class="block text-zinc-500 hover:text-indigo-400 text-sm py-1.5" onclick="closeMob()">How It Works</a>
+  <a href="#testimonials" class="block text-zinc-500 hover:text-indigo-400 text-sm py-1.5" onclick="closeMob()">Testimonials</a>
+  <a href="#contact" class="block text-zinc-500 hover:text-indigo-400 text-sm py-1.5" onclick="closeMob()">Contact</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="relative pt-32 pb-24 text-center overflow-hidden">
+<div class="hero-glow"></div>
+<div class="relative z-10 max-w-4xl mx-auto px-5">
+  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[.03] mb-8 slide-up">
+    <span class="relative flex h-2 w-2"><span class="ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+    <span class="text-xs text-zinc-400 font-medium tracking-wide">Trusted by 500+ schools across India</span>
+  </div>
+  <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight leading-[1.08] tracking-tight mb-6 slide-up" style="animation-delay:.1s">
+    Smart Classroom<br><span class="grad-text font-light">Management</span>
+  </h1>
+  <p class="text-base sm:text-lg text-zinc-400 font-light leading-relaxed max-w-xl mx-auto mb-10 slide-up" style="animation-delay:.2s">
+    Timetable, attendance, homework, exams, notes, student doubts — everything in one place. For students and teachers.
+  </p>
+  <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 slide-up" style="animation-delay:.3s">
+    <button onclick="openLogin()" class="btn btn-p text-sm px-8 py-3.5 tracking-wide"><i data-lucide="zap" class="w-4 h-4"></i>Try Free Demo</button>
+    <a href="#features" class="flex items-center gap-2 text-zinc-400 hover:text-white text-sm font-medium transition-colors px-6 py-3.5"><i data-lucide="play-circle" class="w-4 h-4"></i>See Features</a>
+  </div>
+  <div class="slide-up relative max-w-4xl mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-2xl" style="animation-delay:.4s">
+    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&q=80" alt="Classroom" class="w-full h-[250px] sm:h-[380px] md:h-[440px] object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent"></div>
+    <div class="absolute bottom-5 left-5 right-5 flex flex-wrap gap-3">
+      <div class="bg-black/50 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/10"><div class="text-lg font-bold">6</div><div class="text-[10px] text-zinc-400">Subjects</div></div>
+      <div class="bg-black/50 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/10"><div class="text-lg font-bold">24/7</div><div class="text-[10px] text-zinc-400">Access</div></div>
+      <div class="bg-black/50 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/10"><div class="text-lg font-bold">15+</div><div class="text-[10px] text-zinc-400">Features</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- STATS -->
+<section class="border-y border-white/5 bg-white/[.01]">
+<div class="max-w-7xl mx-auto px-5 py-14 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+  <div><div class="text-3xl font-extralight grad-text mb-1">500+</div><div class="text-[10px] text-zinc-600 tracking-widest uppercase">Schools</div></div>
+  <div><div class="text-3xl font-extralight grad-text mb-1">50K+</div><div class="text-[10px] text-zinc-600 tracking-widest uppercase">Students</div></div>
+  <div><div class="text-3xl font-extralight grad-text mb-1">3K+</div><div class="text-[10px] text-zinc-600 tracking-widest uppercase">Teachers</div></div>
+  <div><div class="text-3xl font-extralight grad-text mb-1">99.9%</div><div class="text-[10px] text-zinc-600 tracking-widest uppercase">Uptime</div></div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-24">
+<div class="max-w-7xl mx-auto px-5">
+  <div class="text-center mb-14"><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4"><i data-lucide="sparkles" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400">Features</span></div><h2 class="text-3xl md:text-4xl font-light tracking-tight mb-3">Everything You <span class="grad-text">Need</span></h2><p class="text-zinc-500 font-light max-w-lg mx-auto">A complete classroom management toolkit for modern schools.</p></div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-4"><i data-lucide="calendar" class="w-5 h-5 text-indigo-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Smart Timetable</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Auto-generated weekly timetable visible to all students and teachers instantly.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4"><i data-lucide="user-check" class="w-5 h-5 text-emerald-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Digital Attendance</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">One-click attendance with real-time percentage tracking and parent notifications.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4"><i data-lucide="book-open" class="w-5 h-5 text-amber-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Homework Management</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Assign, submit, and grade homework digitally. Never lose a submission again.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4"><i data-lucide="file-check" class="w-5 h-5 text-red-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Exam Scheduler</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Schedule exams with date, time, room, and marks. Students see it instantly.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-4"><i data-lucide="message-circle" class="w-5 h-5 text-violet-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Doubt Resolution</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Students ask questions, teachers reply — all organized by subject and date.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4"><i data-lucide="file-text" class="w-5 h-5 text-cyan-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Notes Upload</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Teachers upload PDF notes. Students access them anytime from any device.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center mb-4"><i data-lucide="bell" class="w-5 h-5 text-pink-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Notice Board</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Important announcements with priority badges. Everyone stays informed.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-4"><i data-lucide="layers" class="w-5 h-5 text-teal-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Chapter Tracking</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">See which chapters are done, in progress, or upcoming — subject by subject.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4"><i data-lucide="calendar-plus" class="w-5 h-5 text-orange-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Session Booking</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Students book doubt sessions, lab practice, or extra classes with one click.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-lime-500/10 border border-lime-500/20 flex items-center justify-center mb-4"><i data-lucide="users" class="w-5 h-5 text-lime-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Student Management</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Teachers view class list, search students, and monitor individual attendance.</p></div>
+    <div class="card"><div class="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4"><i data-lucide="smartphone" class="w-5 h-5 text-sky-400"></i></div><h3 class="text-sm font-semibold mb-1.5">Mobile Friendly</h3><p class="text-xs text-zinc-500 font-light leading-relaxed">Fully responsive. Works beautifully on phones, tablets, and desktops.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="py-24 bg-white/[.01] border-y border-white/5">
+<div class="max-w-7xl mx-auto px-5">
+  <div class="text-center mb-14"><h2 class="text-3xl md:text-4xl font-light tracking-tight mb-3">How It <span class="grad-text">Works</span></h2></div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    <div class="text-center"><div class="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-4"><span class="text-xl font-bold grad-text">1</span></div><h3 class="text-sm font-semibold mb-2">Log In</h3><p class="text-xs text-zinc-500 font-light">Sign in as student or teacher using your school-provided credentials.</p></div>
+    <div class="text-center"><div class="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-4"><span class="text-xl font-bold grad-text">2</span></div><h3 class="text-sm font-semibold mb-2">Explore</h3><p class="text-xs text-zinc-500 font-light">Access your dashboard — timetable, homework, attendance, and more.</p></div>
+    <div class="text-center"><div class="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-4"><span class="text-xl font-bold grad-text">3</span></div><h3 class="text-sm font-semibold mb-2">Succeed</h3><p class="text-xs text-zinc-500 font-light">Stay organized, never miss a deadline, and track your progress.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="py-24">
+<div class="max-w-7xl mx-auto px-5">
+  <div class="text-center mb-14"><h2 class="text-3xl md:text-4xl font-light tracking-tight mb-3">Loved by <span class="grad-text">Educators</span></h2></div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+    <div class="card"><div class="flex items-center gap-0.5 mb-3"><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i></div><p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">"ClassBoard replaced 4 different tools for us. Attendance, homework, notices — everything in one place. Our teachers love it."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs">R</div><div><p class="text-xs font-semibold">Dr. Ramesh Gupta</p><p class="text-[10px] text-zinc-600">Principal, DPS Delhi</p></div></div></div>
+    <div class="card"><div class="flex items-center gap-0.5 mb-3"><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i></div><p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">"The doubt resolution feature is a game-changer. Students ask questions anytime and I reply at my convenience. No more chaos before exams."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs">P</div><div><p class="text-xs font-semibold">Priya Patel</p><p class="text-[10px] text-zinc-600">Math Teacher, KV Mumbai</p></div></div></div>
+    <div class="card"><div class="flex items-center gap-0.5 mb-3"><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i></div><p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">"I can see my timetable, submit homework, and check attendance from my phone. It's so much easier than before. Best thing our school adopted."</p><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs">A</div><div><p class="text-xs font-semibold">Aarav Sharma</p><p class="text-[10px] text-zinc-600">Student, Class X-A</p></div></div></div>
+  </div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="py-24 bg-white/[.01] border-y border-white/5">
+<div class="max-w-3xl mx-auto px-5 text-center">
+  <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4">Ready to <span class="grad-text">Transform</span> Your Classroom?</h2>
+  <p class="text-zinc-500 font-light mb-8 max-w-md mx-auto">Try the live demo below. No signup needed — just click and explore.</p>
+  <button onclick="openLogin()" class="btn btn-p text-sm px-10 py-3.5"><i data-lucide="zap" class="w-4 h-4"></i>Launch Demo</button>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24">
+<div class="max-w-7xl mx-auto px-5">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+    <div><h2 class="text-2xl font-light tracking-tight mb-4">Get in <span class="grad-text">Touch</span></h2><p class="text-sm text-zinc-500 font-light leading-relaxed mb-8">Want ClassBoard for your school? Reach out and we'll set up a free pilot.</p>
+      <div class="space-y-4">
+        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-indigo-500/10 flex items-center justify-center"><i data-lucide="mail" class="w-4 h-4 text-indigo-400"></i></div><span class="text-sm text-zinc-400">hello@classboard.in</span></div>
+        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center"><i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i></div><span class="text-sm text-zinc-400">+91 98765 43210</span></div>
+        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center"><i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i></div><span class="text-sm text-zinc-400">Mumbai, Maharashtra, India</span></div>
+      </div>
+    </div>
+    <div class="card" style="transform:none!important">
+      <div class="space-y-3">
+        <div><label class="block text-xs text-zinc-500 mb-1">Name</label><input class="input" placeholder="Your name"></div>
+        <div><label class="block text-xs text-zinc-500 mb-1">Email</label><input class="input" placeholder="you@school.com"></div>
+        <div><label class="block text-xs text-zinc-500 mb-1">Message</label><textarea class="input" rows="3" placeholder="Tell us about your school..."></textarea></div>
+        <button onclick="toast('Message sent! We\'ll get back to you soon.')" class="btn btn-p w-full justify-center">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-white/5 py-12">
+<div class="max-w-7xl mx-auto px-5">
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center"><i data-lucide="graduation-cap" class="w-4 h-4 text-white"></i></div><span class="font-bold text-sm">Class<span class="text-indigo-400">Board</span></span></div>
+    <p class="text-xs text-zinc-700">© 2025 ClassBoard. All rights reserved.</p>
+    <div class="flex items-center gap-3">
+      <a href="#" class="text-zinc-700 hover:text-indigo-400 transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+      <a href="#" class="text-zinc-700 hover:text-indigo-400 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+      <a href="#" class="text-zinc-700 hover:text-indigo-400 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+    </div>
+  </div>
+</div>
+</footer>
+</div>
+
+<!-- ══════════ APP SHELL ══════════ -->
+<div id="app" style="display:none">
+<button class="hamburger" onclick="$('sb').classList.toggle('open')"><i data-lucide="menu" class="w-5 h-5"></i></button>
+<aside id="sb" class="sidebar"></aside>
+<div id="mn" class="main-area"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const toast=m=>{const t=$('toast-el');$('toast-msg').textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)};
+const fmt=d=>{const dt=new Date(d);return dt.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})};
+const ic=(n,c='w-4 h-4')=>`<i data-lucide="${n}" class="${c}"></i>`;
+const sc=s=>({Mathematics:'b',Physics:'pu',Chemistry:'g',English:'y','Computer Science':'b',Hindi:'r'}[s]||'b');
+const hs=s=>s==='graded'?'<span class="bt bt-g">Graded</span>':s==='submitted'?'<span class="bt bt-b">Submitted</span>':'<span class="bt bt-y">Pending</span>';
+
+function getAttPct(sid){const a=DB.attendance[sid];if(!a)return 0;const v=Object.values(a),t=v.filter(x=>x==='p'||x==='a'||x==='l').length;return t?Math.round(v.filter(x=>x==='p').length/t*100):0}
+
+// ══════════ DATA ══════════
+const DB={
+students:[
+  {id:1,name:'Aarav Sharma',email:'aarav@demo.com',password:'student123',cls:'X-A',roll:'01'},
+  {id:2,name:'Diya Patel',email:'diya@demo.com',password:'student123',cls:'X-A',roll:'02'},
+  {id:3,name:'Arjun Singh',email:'arjun@demo.com',password:'student123',cls:'X-A',roll:'03'},
+  {id:4,name:'Ananya Gupta',email:'ananya@demo.com',password:'student123',cls:'X-A',roll:'04'},
+  {id:5,name:'Rohan Mehta',email:'rohan@demo.com',password:'student123',cls:'X-A',roll:'05'},
+  {id:6,name:'Ishita Reddy',email:'ishita@demo.com',password:'student123',cls:'X-A',roll:'06'},
+  {id:7,name:'Vivaan Joshi',email:'vivaan@demo.com',password:'student123',cls:'X-A',roll:'07'},
+  {id:8,name:'Priya Nair',email:'priyan@demo.com',password:'student123',cls:'X-A',roll:'08'}
+],
+teachers:[
+  {id:1,name:'Dr. Priya Patel',email:'priya@demo.com',password:'teacher123',subject:'Mathematics'},
+  {id:2,name:'Prof. Raj Kumar',email:'raj@demo.com',password:'teacher123',subject:'Physics'},
+  {id:3,name:'Dr. Meera Shah',email:'meera@demo.com',password:'teacher123',subject:'Chemistry'},
+  {id:4,name:'Ms. Kavita Desai',email:'kavita@demo.com',password:'teacher123',subject:'English'},
+  {id:5,name:'Mr. Suresh Iyer',email:'suresh@demo.com',password:'teacher123',subject:'Computer Science'}
+],
+subjects:['Mathematics','Physics','Chemistry','English','Computer Science','Hindi'],
+timetable:[
+  {day:'Monday',p:[{t:'8:00–8:45',s:'Mathematics',tid:1},{t:'8:45–9:30',s:'Physics',tid:2},{t:'9:45–10:30',s:'Chemistry',tid:3},{t:'10:30–11:15',s:'English',tid:4},{t:'11:30–12:15',s:'Computer Sc.',tid:5},{t:'12:15–1:00',s:'Hindi',tid:1}]},
+  {day:'Tuesday',p:[{t:'8:00–8:45',s:'Physics',tid:2},{t:'8:45–9:30',s:'Mathematics',tid:1},{t:'9:45–10:30',s:'English',tid:4},{t:'10:30–11:15',s:'Chemistry',tid:3},{t:'11:30–12:15',s:'Hindi',tid:1},{t:'12:15–1:00',s:'Computer Sc.',tid:5}]},
+  {day:'Wednesday',p:[{t:'8:00–8:45',s:'Chemistry',tid:3},{t:'8:45–9:30',s:'Computer Sc.',tid:5},{t:'9:45–10:30',s:'Mathematics',tid:1},{t:'10:30–11:15',s:'Physics',tid:2},{t:'11:30–12:15',s:'English',tid:4},{t:'12:15–1:00',s:'Hindi',tid:1}]},
+  {day:'Thursday',p:[{t:'8:00–8:45',s:'English',tid:4},{t:'8:45–9:30',s:'Chemistry',tid:3},{t:'9:45–10:30',s:'Physics',tid:2},{t:'10:30–11:15',s:'Mathematics',tid:1},{t:'11:30–12:15',s:'Computer Sc.',tid:5},{t:'12:15–1:00',s:'English',tid:4}]},
+  {day:'Friday',p:[{t:'8:00–8:45',s:'Computer Sc.',tid:5},{t:'8:45–9:30',s:'Mathematics',tid:1},{t:'9:45–10:30',s:'Hindi',tid:1},{t:'10:30–11:15',s:'Physics',tid:2},{t:'11:30–12:15',s:'Chemistry',tid:3},{t:'12:15–1:00',s:'English',tid:4}]},
+  {day:'Saturday',p:[{t:'8:00–8:45',s:'Mathematics',tid:1},{t:'8:45–9:30',s:'Physics',tid:2},{t:'9:45–10:30',s:'Chemistry',tid:3},{t:'10:30–11:15',s:'English',tid:4}]}
+],
+notices:[
+  {id:1,title:'Annual Day Celebration',msg:'Annual Day will be held on 15th March. All students must participate.',date:'2025-03-01',by:'Principal',imp:true},
+  {id:2,title:'Science Fair Registration',msg:'Register for Science Fair before 10th March. See Mr. Suresh for details.',date:'2025-02-28',by:'Mr. Suresh Iyer',imp:false},
+  {id:3,title:'Parent-Teacher Meeting',msg:'PTM scheduled for 20th March, 10 AM – 1 PM. Attendance compulsory.',date:'2025-02-25',by:'Principal',imp:true},
+  {id:4,title:'Library Books Return',msg:'All library books must be returned by 5th March. Fine applicable after deadline.',date:'2025-02-22',by:'Librarian',imp:false}
+],
+homework:[
+  {id:1,sub:'Mathematics',title:'Quadratic Equations – Ch 4',desc:'Solve Q1-Q20 from NCERT Ex 4.3',due:'2025-03-05',status:'pending'},
+  {id:2,sub:'Physics',title:'Light – Reflection & Refraction',desc:'Complete worksheet given in class.',due:'2025-03-04',status:'submitted'},
+  {id:3,sub:'Chemistry',title:'Carbon & Its Compounds',desc:'Write balanced equations for Ch 4 reactions.',due:'2025-03-06',status:'pending'},
+  {id:4,sub:'English',title:'Essay: Impact of Technology',desc:'Write 300-word essay. Submit handwritten.',due:'2025-03-03',status:'graded',grade:'A'},
+  {id:5,sub:'Computer Science',title:'Python Loops Practice',desc:'Complete all 15 problems from practice sheet.',due:'2025-03-07',status:'pending'}
+],
+exams:[
+  {id:1,sub:'Mathematics',ch:'Ch 1-4',date:'2025-03-15',time:'8:00 AM',room:'Hall A',type:'Unit Test',max:50},
+  {id:2,sub:'Physics',ch:'Ch 1-3',date:'2025-03-17',time:'8:00 AM',room:'Hall A',type:'Unit Test',max:50},
+  {id:3,sub:'Chemistry',ch:'Ch 1-4',date:'2025-03-19',time:'8:00 AM',room:'Hall B',type:'Unit Test',max:50},
+  {id:4,sub:'English',ch:'Full Syllabus',date:'2025-04-10',time:'10:00 AM',room:'Hall A',type:'Mid Term',max:80},
+  {id:5,sub:'Computer Science',ch:'Ch 1-5',date:'2025-04-12',time:'10:00 AM',room:'Lab 1',type:'Mid Term',max:80}
+],
+chapters:{
+  'Mathematics':[{n:'Real Numbers',st:'completed',pg:100},{n:'Polynomials',st:'completed',pg:100},{n:'Linear Equations',st:'completed',pg:100},{n:'Quadratic Equations',st:'in-progress',pg:65},{n:'Arithmetic Progressions',st:'upcoming',pg:0},{n:'Triangles',st:'upcoming',pg:0}],
+  'Physics':[{n:'Light – Reflection',st:'completed',pg:100},{n:'Light – Refraction',st:'completed',pg:100},{n:'Human Eye',st:'in-progress',pg:40},{n:'Electricity',st:'upcoming',pg:0},{n:'Magnetic Effects',st:'upcoming',pg:0}],
+  'Chemistry':[{n:'Chemical Reactions',st:'completed',pg:100},{n:'Acids, Bases & Salts',st:'completed',pg:100},{n:'Metals & Non-metals',st:'completed',pg:100},{n:'Carbon Compounds',st:'in-progress',pg:55},{n:'Periodic Classification',st:'upcoming',pg:0}],
+  'English':[{n:'The Letter',st:'completed',pg:100},{n:'Nelson Mandela',st:'completed',pg:100},{n:'Anne Frank',st:'in-progress',pg:70},{n:'Glimpses of India',st:'upcoming',pg:0}],
+  'Computer Science':[{n:'Python Basics',st:'completed',pg:100},{n:'Data Types',st:'completed',pg:100},{n:'Flow Control',st:'in-progress',pg:50},{n:'Functions',st:'upcoming',pg:0},{n:'File Handling',st:'upcoming',pg:0}]
+},
+questions:[
+  {id:1,sid:1,nm:'Aarav Sharma',sub:'Mathematics',q:'Why do we use the discriminant? Can we solve without it?',d:'2025-03-01',replies:[{by:'Dr. Priya Patel',text:'The discriminant (b²-4ac) tells us the nature of roots before solving. >0 = 2 real roots, =0 = 1 repeated, <0 = no real roots. Saves time in exams!',d:'2025-03-01'}]},
+  {id:2,sid:3,nm:'Arjun Singh',sub:'Physics',q:'Why does light bend when passing from air to water?',d:'2025-02-28',replies:[]},
+  {id:3,sid:2,nm:'Diya Patel',sub:'Chemistry',q:'Difference between covalent and ionic bonds? Can a compound have both?',d:'2025-02-27',replies:[{by:'Dr. Meera Shah',text:'Ionic = electron transfer (Na+Cl-), Covalent = sharing (H₂O). Yes! NaOH has both — Na+ and OH- are ionic, O-H is covalent.',d:'2025-02-28'}]},
+  {id:4,sid:5,nm:'Rohan Mehta',sub:'Computer Science',q:'Difference between for loop and while loop in Python?',d:'2025-02-26',replies:[]}
+],
+attendance:{},
+notes:[
+  {id:1,sub:'Mathematics',title:'Quadratic Equations Notes',ch:'Ch 4',date:'2025-02-28',by:'Dr. Priya Patel',sz:'2.4 MB'},
+  {id:2,sub:'Physics',title:'Reflection & Refraction Summary',ch:'Ch 1-2',date:'2025-02-25',by:'Prof. Raj Kumar',sz:'1.8 MB'},
+  {id:3,sub:'Chemistry',title:'Carbon Compounds Handout',ch:'Ch 4',date:'2025-02-24',by:'Dr. Meera Shah',sz:'3.1 MB'},
+  {id:4,sub:'English',title:'Grammar Rules – Tenses',ch:'Grammar',date:'2025-02-22',by:'Ms. Kavita Desai',sz:'1.2 MB'},
+  {id:5,sub:'Computer Science',title:'Python Loops Cheat Sheet',ch:'Ch 3',date:'2025-02-20',by:'Mr. Suresh Iyer',sz:'0.8 MB'}
+],
+bookings:[
+  {id:1,student:'Aarav Sharma',type:'Doubt Session',sub:'Mathematics',date:'2025-03-03',time:'3:00 PM',status:'confirmed'},
+  {id:2,student:'Diya Patel',type:'Lab Practice',sub:'Computer Science',date:'2025-03-04',time:'2:00 PM',status:'pending'}
+]
+};
+
+(function(){const st=['p','p','p','p','a','p','p','p','p','p','l','p','p','p','p','p','a','p','p','p'];const days=[];for(let i=19;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d.toISOString().split('T')[0])}DB.students.forEach(s=>{DB.attendance[s.id]={};days.forEach(d=>{DB.attendance[s.id][d]=st[Math.floor(Math.random()*st.length)]})})})();
+
+// ══════════ STATE ══════════
+let S={user:null,role:null,view:'dashboard',lr:'student'};
+
+// ══════════ LANDING NAV ══════════
+function toggleMob(){$('mob-menu').classList.toggle('hidden')}
+function closeMob(){$('mob-menu').classList.add('hidden')}
+
+// ══════════ LOGIN MODAL ══════════
+function openLogin(){$('login-modal').classList.add('open')}
+function closeLogin(){$('login-modal').classList.remove('open')}
+function setRole(r){S.lr=r;$('rl-s').className='flex-1 py-2 rounded-md text-xs font-semibold tracking-wide transition-all '+(r==='student'?'bg-indigo-600 text-white':'text-zinc-500');$('rl-t').className='flex-1 py-2 rounded-md text-xs font-semibold tracking-wide transition-all '+(r==='teacher'?'bg-indigo-600 text-white':'text-zinc-500');$('le').placeholder=r==='student'?'aarav@demo.com':'priya@demo.com';$('lp').placeholder=r==='student'?'student123':'teacher123'}
+
+function doLogin(){
+  const e=$('le').value.trim(),p=$('lp').value.trim();
+  if(!e||!p)return toast('Please enter email and password');
+  const list=S.lr==='student'?DB.students:DB.teachers;
+  const u=list.find(x=>x.email===e&&x.password===p);
+  if(!u)return toast('Invalid credentials. Try demo accounts below.');
+  S.user=u;S.role=S.lr;S.view='dashboard';
+  closeLogin();$('landing').style.display='none';$('app').style.display='block';
+  renderApp();
+}
+
+function logout(){S.user=null;S.role=null;S.view='dashboard';$('app').style.display='none';$('landing').style.display='block';$('le').value='';$('lp').value=''}
+
+// ══════════ RENDER APP ══════════
+function renderApp(){renderSB();renderCT();lucide.createIcons()}
+
+function renderSB(){
+  const isT=S.role==='teacher';
+  const items=isT?[
+    {id:'dashboard',ic:'layout-dashboard',lb:'Dashboard'},{id:'timetable',ic:'calendar',lb:'Timetable'},
+    {id:'attendance',ic:'user-check',lb:'Take Attendance'},{id:'notes',ic:'file-text',lb:'Upload Notes'},
+    {id:'questions',ic:'message-circle',lb:'Student Questions',bd:DB.questions.filter(q=>q.replies.length===0).length},
+    {id:'homework',ic:'book-open',lb:'Assign Work'},{id:'exams',ic:'file-check',lb:'Exam Schedule'},
+    {id:'notices',ic:'bell',lb:'Notices'},{id:'students',ic:'users',lb:'Manage Students'}
+  ]:[
+    {id:'dashboard',ic:'layout-dashboard',lb:'Dashboard'},{id:'timetable',ic:'calendar',lb:'Timetable'},
+    {id:'notices',ic:'bell',lb:'Notices',bd:DB.notices.filter(n=>n.imp).length},
+    {id:'book',ic:'calendar-plus',lb:'Book Session'},{id:'homework',ic:'book-open',lb:'Homework'},
+    {id:'exams',ic:'file-check',lb:'Exam Schedule'},{id:'questions',ic:'message-circle',lb:'Ask Question'},
+    {id:'chapters',ic:'layers',lb:'Chapters'},{id:'attendance',ic:'bar-chart-3',lb:'My Attendance'}
+  ];
+  $('sb').innerHTML=`<div class="p-5 border-b border-white/5"><div class="flex items-center gap-2.5 mb-4"><div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center">${ic('graduation-cap','w-4 h-4 text-white')}</div><span class="text-base font-bold">Class<span class="text-indigo-400">Board</span></span></div><div class="flex items-center gap-3 bg-white/[.03] rounded-lg p-3"><div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-sm">${S.user.name.charAt(0)}</div><div class="min-w-0 flex-1"><p class="text-xs font-semibold truncate">${S.user.name}</p><p class="text-[10px] text-zinc-600">${isT?S.user.subject:S.user.cls+' · Roll '+S.user.roll}</p></div></div></div><nav class="p-3 space-y-0.5">${items.map(i=>`<div class="nav-item ${S.view===i.id?'active':''}" onclick="nav('${i.id}')">${ic(i.ic,'w-4 h-4 flex-shrink-0')}<span>${i.lb}</span>${i.bd?`<span class="bdg">${i.bd}</span>`:''}</div>`).join('')}</nav><div class="absolute bottom-0 left-0 right-0 p-3 border-t border-white/5"><div class="nav-item" onclick="logout()">${ic('log-out','w-4 h-4 flex-shrink-0')}<span>Sign Out</span></div></div>`;
+}
+
+function nav(v){S.view=v;renderSB();renderCT();lucide.createIcons();if(innerWidth<768)$('sb').classList.remove('open')}
+function renderCT(){$('mn').innerHTML='<div class="p-4 sm:p-6 lg:p-8 fade-in">'+(S.role==='teacher'?tView():sView())+'</div>';lucide.createIcons()}
+
+// ══════════ STUDENT VIEWS ══════════
+function sView(){return{dashboard:sDash,timetable:sTT,notices:sNtc,book:sBk,homework:sHW,exams:sEx,questions:sQ,chapters:sCh,attendance:sAtt}[S.view]||sDash()}
+
+function sDash(){const pc=getAttPct(S.user.id),ph=DB.homework.filter(h=>h.status==='pending').length,ue=DB.exams.filter(e=>new Date(e.date)>new Date()).length;return`<div class="flex items-center justify-between mb-6"><h1 class="text-xl font-bold">Welcome, ${S.user.name.split(' ')[0]} 👋</h1><span class="bt bt-b hidden sm:inline-flex">${S.role.toUpperCase()}</span></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"><div class="stat-card"><div class="ico bg-indigo-500/10 text-indigo-400 mb-3">${ic('book-open')}</div><p class="text-2xl font-bold">${DB.subjects.length}</p><p class="text-[10px] text-zinc-600 mt-1">Subjects</p></div><div class="stat-card"><div class="ico bg-emerald-500/10 text-emerald-400 mb-3">${ic('bar-chart-3')}</div><p class="text-2xl font-bold ${pc>=75?'text-emerald-400':pc>=50?'text-amber-400':'text-red-400'}">${pc}%</p><p class="text-[10px] text-zinc-600 mt-1">Attendance</p></div><div class="stat-card"><div class="ico bg-amber-500/10 text-amber-400 mb-3">${ic('alert-circle')}</div><p class="text-2xl font-bold">${ph}</p><p class="text-[10px] text-zinc-600 mt-1">Pending HW</p></div><div class="stat-card"><div class="ico bg-red-500/10 text-red-400 mb-3">${ic('file-check')}</div><p class="text-2xl font-bold">${ue}</p><p class="text-[10px] text-zinc-600 mt-1">Upcoming Exams</p></div></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-5"><div class="card"><h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('bell','w-4 h-4 text-indigo-400')}Recent Notices</h3><div class="space-y-3">${DB.notices.slice(0,3).map(n=>`<div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${n.imp?'bg-red-500':'bg-zinc-700'}"></div><div><p class="text-xs font-semibold">${n.title}</p><p class="text-[10px] text-zinc-600">${fmt(n.date)}</p></div></div>`).join('')}</div></div><div class="card"><h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('book-open','w-4 h-4 text-amber-400')}Pending Homework</h3><div class="space-y-3">${DB.homework.filter(h=>h.status==='pending').slice(0,3).map(h=>`<div class="p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><p class="text-xs font-semibold">${h.title}</p><p class="text-[10px] text-zinc-600">${h.sub} · Due ${fmt(h.due)}</p></div>`).join('')||'<p class="text-xs text-zinc-600">All caught up! 🎉</p>'}</div></div></div>`}
+
+function sTT(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar','w-5 h-5 text-indigo-400')}Weekly Timetable</h1><div class="tw"><table><thead><tr><th>Time</th>${DB.timetable.map(t=>`<th>${t.day}</th>`).join('')}</tr></thead><tbody>${[0,1,2,3,4,5].map(i=>`<tr><td class="text-[11px] text-zinc-500 font-mono whitespace-nowrap">${DB.timetable[0].p[i]?DB.timetable[0].p[i].t:''}</td>${DB.timetable.map(d=>`<td><div class="tc"><span class="s">${d.p[i]?d.p[i].s:'—'}</span><span class="t">${d.p[i]?DB.teachers.find(t=>t.id===d.p[i].tid)?.name.split(' ').pop():''}</span></div></td>`).join('')}</tr>`).join('')}</tbody></table></div>`}
+
+function sNtc(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bell','w-5 h-5 text-indigo-400')}Notices</h1><div class="space-y-3">${DB.notices.map(n=>`<div class="card flex items-start gap-4" style="transform:none!important"><div class="w-10 h-10 rounded-lg ${n.imp?'bg-red-500/10':'bg-white/[.03]'} flex items-center justify-center flex-shrink-0">${ic(n.imp?'alert-triangle':'info','w-4 h-4 '+(n.imp?'text-red-400':'text-zinc-500'))}</div><div class="flex-1"><div class="flex items-center gap-2 mb-1"><h3 class="text-sm font-bold">${n.title}</h3>${n.imp?'<span class="bt bt-r">Important</span>':''}</div><p class="text-xs text-zinc-500 leading-relaxed">${n.msg}</p><div class="flex gap-3 mt-2"><span class="text-[10px] text-zinc-700">${fmt(n.date)}</span><span class="text-[10px] text-zinc-700">By ${n.by}</span></div></div></div>`).join('')}</div>`}
+
+function sBk(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar-plus','w-5 h-5 text-indigo-400')}Book a Session</h1><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">New Booking</h3><div class="space-y-3"><div><label class="block text-xs text-zinc-500 mb-1">Type</label><select id="bk-tp" class="input"><option>Doubt Session</option><option>Lab Practice</option><option>Extra Class</option></select></div><div><label class="block text-xs text-zinc-500 mb-1">Subject</label><select id="bk-sb" class="input">${DB.subjects.map(s=>`<option>${s}</option>`).join('')}</select></div><div><label class="block text-xs text-zinc-500 mb-1">Date</label><input id="bk-dt" type="date" class="input"></div><div><label class="block text-xs text-zinc-500 mb-1">Time</label><select id="bk-tm" class="input"><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option></select></div><button onclick="addBk()" class="btn btn-p btn-sm w-full justify-center mt-2">Book</button></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">My Bookings</h3><div class="space-y-3">${DB.bookings.filter(b=>b.student===S.user.name).map(b=>`<div class="flex items-center justify-between p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div><p class="text-xs font-semibold">${b.type} – ${b.sub}</p><p class="text-[10px] text-zinc-600">${fmt(b.date)} · ${b.time}</p></div><span class="bt ${b.status==='confirmed'?'bt-g':'bt-y'}">${b.status}</span></div>`).join('')||'<p class="text-xs text-zinc-600">No bookings</p>'}</div></div></div>`}
+function addBk(){if(!$('bk-dt').value)return toast('Select a date');DB.bookings.push({id:DB.bookings.length+1,student:S.user.name,type:$('bk-tp').value,sub:$('bk-sb').value,date:$('bk-dt').value,time:$('bk-tm').value,status:'pending'});toast('Session booked!');nav('book')}
+
+function sHW(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('book-open','w-5 h-5 text-indigo-400')}Homework</h1><div class="space-y-3">${DB.homework.map(h=>`<div class="card flex flex-col sm:flex-row sm:items-center gap-4" style="transform:none!important"><div class="flex-1"><div class="flex items-center gap-2 mb-1"><span class="text-sm font-bold">${h.title}</span><span class="bt bt-${sc(h.sub)}">${h.sub}</span></div><p class="text-xs text-zinc-500">${h.desc}</p><p class="text-[10px] text-zinc-700 mt-1">Due: ${fmt(h.due)}${h.grade?' · Grade: <span class="text-emerald-400 font-bold">'+h.grade+'</span>':''}</p></div><div class="flex items-center gap-2">${hs(h.status)}${h.status==='pending'?`<button onclick="subHW(${h.id})" class="btn btn-s btn-sm">Submit</button>`:''}</div></div>`).join('')}</div>`}
+function subHW(id){const h=DB.homework.find(x=>x.id===id);if(h){h.status='submitted';toast('Submitted!');nav('homework')}}
+
+function sEx(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-check','w-5 h-5 text-indigo-400')}Exam Schedule</h1><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${DB.exams.map(e=>`<div class="card" style="transform:none!important"><div class="flex justify-between mb-3"><span class="bt bt-${sc(e.sub)}">${e.sub}</span><span class="bt bt-pu">${e.type}</span></div><h3 class="text-sm font-bold mb-2">${e.ch}</h3><div class="space-y-1.5"><p class="flex items-center gap-2 text-xs text-zinc-500">${ic('calendar','w-3 h-3')} ${fmt(e.date)}</p><p class="flex items-center gap-2 text-xs text-zinc-500">${ic('clock','w-3 h-3')} ${e.time}</p><p class="flex items-center gap-2 text-xs text-zinc-500">${ic('map-pin','w-3 h-3')} ${e.room}</p><p class="flex items-center gap-2 text-xs text-zinc-500">${ic('star','w-3 h-3')} Max: ${e.max}</p></div></div>`).join('')}</div>`}
+
+function sQ(){const mq=DB.questions.filter(q=>q.sid===S.user.id);return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('message-circle','w-5 h-5 text-indigo-400')}Questions</h1><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Ask a Question</h3><div class="space-y-3"><div><label class="block text-xs text-zinc-500 mb-1">Subject</label><select id="q-sb" class="input">${DB.subjects.map(s=>`<option>${s}</option>`).join('')}</select></div><div><label class="block text-xs text-zinc-500 mb-1">Question</label><textarea id="q-tx" class="input" placeholder="Type your question..."></textarea></div><button onclick="askQ()" class="btn btn-p btn-sm">Submit</button></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">My Questions (${mq.length})</h3><div class="space-y-4 max-h-[500px] overflow-y-auto">${mq.length?mq.map(q=>`<div class="pb-4 mb-4 border-b border-white/[.04] last:border-0"><div class="flex gap-2 mb-2"><span class="bt bt-${sc(q.sub)}">${q.sub}</span><span class="text-[10px] text-zinc-700">${fmt(q.d)}</span></div><div class="cb cb-s mb-2">${q.q}</div>${q.replies.map(r=>`<div class="cb cb-r mb-2"><p class="text-[10px] text-indigo-400 font-semibold mb-1">${r.by}</p>${r.text}</div>`).join('')}${!q.replies.length?'<p class="text-[11px] text-zinc-700 italic">Awaiting reply...</p>':''}</div>`).join(''):'<p class="text-xs text-zinc-600">No questions yet</p>'}</div></div></div></div>`}
+function askQ(){const q=$('q-tx').value.trim();if(!q)return toast('Type a question');DB.questions.push({id:DB.questions.length+1,sid:S.user.id,nm:S.user.name,sub:$('q-sb').value,q,d:new Date().toISOString().split('T')[0],replies:[]});toast('Question submitted!');nav('questions')}
+
+function sCh(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('layers','w-5 h-5 text-indigo-400')}Chapter Progress</h1><div class="space-y-4">${Object.entries(DB.chapters).map(([sub,chs])=>`<div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">${sub}</h3><div class="space-y-3">${chs.map(c=>`<div><div class="flex justify-between mb-1.5"><span class="text-xs text-zinc-400">${c.n}</span><div class="flex gap-2"><span class="text-[10px] font-semibold ${c.st==='completed'?'text-emerald-400':c.st==='in-progress'?'text-amber-400':'text-zinc-700'}">${c.pg}%</span><span class="bt ${c.st==='completed'?'bt-g':c.st==='in-progress'?'bt-y':'bt-gr'}">${c.st==='completed'?'Done':c.st==='in-progress'?'Active':'Upcoming'}</span></div></div><div class="pb"><div class="pf ${c.st==='completed'?'bg-emerald-500':c.st==='in-progress'?'bg-amber-500':'bg-zinc-800'}" style="width:${c.pg}%"></div></div></div>`).join('')}</div></div>`).join('')}</div>`}
+
+function sAtt(){const a=DB.attendance[S.user.id]||{},days=Object.keys(a).sort(),pc=days.filter(d=>a[d]==='p').length,ac=days.filter(d=>a[d]==='a').length,lc=days.filter(d=>a[d]==='l').length,pct=days.length?Math.round(pc/days.length*100):0;return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bar-chart-3','w-5 h-5 text-indigo-400')}My Attendance</h1><div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6"><div class="stat-card text-center"><p class="text-2xl font-bold text-emerald-400">${pc}</p><p class="text-[10px] text-zinc-600">Present</p></div><div class="stat-card text-center"><p class="text-2xl font-bold text-red-400">${ac}</p><p class="text-[10px] text-zinc-600">Absent</p></div><div class="stat-card text-center"><p class="text-2xl font-bold text-amber-400">${lc}</p><p class="text-[10px] text-zinc-600">Late</p></div><div class="stat-card text-center"><p class="text-2xl font-bold ${pct>=75?'text-emerald-400':'text-red-400'}">${pct}%</p><p class="text-[10px] text-zinc-600">Percentage</p></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Last 20 Days</h3><div class="flex flex-wrap gap-2">${days.slice(-20).map(d=>`<div class="text-center"><div class="ad ${a[d]==='p'?'ad-p':a[d]==='a'?'ad-a':a[d]==='l'?'ad-l':'ad-n'} mb-1">${a[d]==='p'?'P':a[d]==='a'?'A':a[d]==='l'?'L':'—'}</div><p class="text-[8px] text-zinc-700">${new Date(d).getDate()}/${new Date(d).getMonth()+1}</p></div>`).join('')}</div></div>`}
+
+// ══════════ TEACHER VIEWS ══════════
+function tView(){return{dashboard:tDash,timetable:tTT,attendance:tAtt,notes:tNt,questions:tQ,homework:tHW,exams:tEx,notices:tNc,students:tSt}[S.view]||tDash()}
+
+function tDash(){const ms=S.user.subject,uq=DB.questions.filter(q=>q.sub===ms&&q.replies.length===0).length,mn=DB.notes.filter(n=>n.by===S.user.name).length;return`<div class="flex items-center justify-between mb-6"><h1 class="text-xl font-bold">Welcome, ${S.user.name.split(' ').pop()} 📚</h1><span class="bt bt-pu">${ms}</span></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"><div class="stat-card"><div class="ico bg-indigo-500/10 text-indigo-400 mb-3">${ic('users')}</div><p class="text-2xl font-bold">${DB.students.length}</p><p class="text-[10px] text-zinc-600 mt-1">Students</p></div><div class="stat-card"><div class="ico bg-amber-500/10 text-amber-400 mb-3">${ic('message-circle')}</div><p class="text-2xl font-bold">${uq}</p><p class="text-[10px] text-zinc-600 mt-1">Unanswered Qs</p></div><div class="stat-card"><div class="ico bg-emerald-500/10 text-emerald-400 mb-3">${ic('file-text')}</div><p class="text-2xl font-bold">${mn}</p><p class="text-[10px] text-zinc-600 mt-1">Notes</p></div><div class="stat-card"><div class="ico bg-red-500/10 text-red-400 mb-3">${ic('calendar')}</div><p class="text-2xl font-bold">${DB.timetable[0].p.length}</p><p class="text-[10px] text-zinc-600 mt-1">Daily Periods</p></div></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-5"><div class="card"><h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('message-circle','w-4 h-4 text-amber-400')}Recent Questions</h3><div class="space-y-3">${DB.questions.filter(q=>q.sub===ms).slice(-3).reverse().map(q=>`<div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="w-8 h-8 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs flex-shrink-0">${q.nm.charAt(0)}</div><div class="min-w-0 flex-1"><p class="text-xs font-semibold">${q.nm}</p><p class="text-[11px] text-zinc-600 truncate">${q.q}</p></div>${!q.replies.length?'<span class="bt bt-r ml-auto flex-shrink-0">New</span>':'<span class="bt bt-g ml-auto flex-shrink-0">Replied</span>'}</div>`).join('')||'<p class="text-xs text-zinc-600">No questions</p>'}</div></div><div class="card"><h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('users','w-4 h-4 text-indigo-400')}Class X-A</h3><div class="space-y-2">${DB.students.slice(0,5).map(s=>`<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/[.02]"><div class="w-7 h-7 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-[10px]">${s.name.charAt(0)}</div><span class="text-xs text-zinc-400">${s.name}</span><span class="text-[10px] text-zinc-700 ml-auto">Roll ${s.roll}</span></div>`).join('')}<p class="text-[11px] text-zinc-700 mt-2">+${DB.students.length-5} more</p></div></div></div>`}
+
+function tTT(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar','w-5 h-5 text-indigo-400')}Timetable</h1><div class="card mb-6" style="transform:none!important"><div class="tw"><table><thead><tr><th>Time</th>${DB.timetable.map(t=>`<th>${t.day}</th>`).join('')}</tr></thead><tbody>${[0,1,2,3,4,5].map(i=>`<tr><td class="text-[11px] text-zinc-500 font-mono whitespace-nowrap">${DB.timetable[0].p[i]?DB.timetable[0].p[i].t:''}</td>${DB.timetable.map(d=>`<td><div class="tc" style="${d.p[i]&&d.p[i].s===S.user.subject?'background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.2)':''}"><span class="s" ${d.p[i]&&d.p[i].s===S.user.subject?'style="color:#818cf8"':''}>${d.p[i]?d.p[i].s:'—'}</span><span class="t">${d.p[i]?DB.teachers.find(t=>t.id===d.p[i].tid)?.name.split(' ').pop():''}</span></div></td>`).join('')}</tr>`).join('')}</tbody></table></div></div><div class="card" style="transform:none!important"><p class="text-xs text-zinc-500">Your <span class="text-indigo-400 font-semibold">${S.user.subject}</span> periods are highlighted above. Contact admin for changes.</p></div>`}
+
+function tAtt(){const td=new Date().toISOString().split('T')[0];return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('user-check','w-5 h-5 text-indigo-400')}Take Attendance</h1><div class="card mb-6" style="transform:none!important"><div class="flex flex-col sm:flex-row gap-3 mb-5"><div><label class="block text-xs text-zinc-500 mb-1">Date</label><input id="at-dt" type="date" class="input" value="${td}" style="width:180px"></div><button onclick="nav('attendance')" class="btn btn-p btn-sm mt-5 sm:mt-5">Refresh</button></div><div class="space-y-2">${DB.students.map(s=>{const a=DB.attendance[s.id]?.[td]||'none';return`<div class="flex items-center justify-between p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs">${s.name.charAt(0)}</div><div><p class="text-xs font-semibold">${s.name}</p><p class="text-[10px] text-zinc-700">Roll ${s.roll}</p></div></div><div class="flex gap-1.5"><button onclick="mAtt(${s.id},'p')" class="ad ad-p cursor-pointer hover:opacity-80" title="Present">P</button><button onclick="mAtt(${s.id},'a')" class="ad ad-a cursor-pointer hover:opacity-80" title="Absent">A</button><button onclick="mAtt(${s.id},'l')" class="ad ad-l cursor-pointer hover:opacity-80" title="Late">L</button></div></div>`}).join('')}</div><div class="mt-5 flex gap-3"><button onclick="toast('Attendance saved!')" class="btn btn-p btn-sm">Save</button><button onclick="mAll('p')" class="btn btn-s btn-sm">All Present</button></div></div>`}
+function mAtt(sid,st){if(!DB.attendance[sid])DB.attendance[sid]={};DB.attendance[sid][$('at-dt').value]=st;nav('attendance')}
+function mAll(st){DB.students.forEach(s=>{if(!DB.attendance[s.id])DB.attendance[s.id]={};DB.attendance[s.id][$('at-dt').value]=st});nav('attendance')}
+
+function tNt(){const mn=DB.notes.filter(n=>n.by===S.user.name);return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-text','w-5 h-5 text-indigo-400')}Upload Notes</h1><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Upload New</h3><div class="space-y-3"><div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="nt-ti" class="input" placeholder="Chapter 5 Notes"></div><div><label class="block text-xs text-zinc-500 mb-1">Chapter</label><input id="nt-ch" class="input" placeholder="Ch 5"></div><div class="border-2 border-dashed border-white/[.08] rounded-lg p-8 text-center cursor-pointer hover:border-indigo-500/30 transition-colors" onclick="toast('File selected (demo)')">${ic('upload-cloud','w-8 h-8 text-zinc-700 mx-auto mb-2')}<p class="text-xs text-zinc-600">Click to upload PDF</p></div><button onclick="upNt()" class="btn btn-p btn-sm w-full justify-center">Upload</button></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">My Uploads (${mn.length})</h3><div class="space-y-3">${mn.map(n=>`<div class="flex items-center gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">${ic('file-text','w-4 h-4 text-indigo-400')}</div><div class="flex-1 min-w-0"><p class="text-xs font-semibold truncate">${n.title}</p><p class="text-[10px] text-zinc-700">${n.ch} · ${n.sz} · ${fmt(n.date)}</p></div><button onclick="toast('Download (demo)')" class="btn btn-g btn-sm">${ic('download','w-3 h-3')}</button></div>`).join('')||'<p class="text-xs text-zinc-600">No notes yet</p>'}</div></div></div>`}
+function upNt(){const t=$('nt-ti').value.trim();if(!t)return toast('Enter a title');DB.notes.push({id:DB.notes.length+1,sub:S.user.subject,title:t,ch:$('nt-ch').value||'General',date:new Date().toISOString().split('T')[0],by:S.user.name,sz:(Math.random()*4+.5).toFixed(1)+' MB'});toast('Uploaded!');nav('notes')}
+
+function tQ(){const mq=DB.questions.filter(q=>q.sub===S.user.subject);return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('message-circle','w-5 h-5 text-indigo-400')}Student Questions</h1><div class="space-y-4">${mq.map(q=>`<div class="card" style="transform:none!important"><div class="flex items-center gap-3 mb-3"><div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-sm">${q.nm.charAt(0)}</div><div><p class="text-sm font-semibold">${q.nm}</p><p class="text-[10px] text-zinc-700">${q.sub} · ${fmt(q.d)}</p></div>${!q.replies.length?'<span class="bt bt-r ml-auto">Needs Reply</span>':'<span class="bt bt-g ml-auto">Replied</span>'}</div><div class="cb cb-r mb-3">${q.q}</div>${q.replies.map(r=>`<div class="cb cb-s mb-3"><p class="text-[10px] text-indigo-400 font-semibold mb-1">${r.by}</p>${r.text}</div>`).join('')}<div class="flex gap-2"><input id="rp-${q.id}" class="input flex-1" placeholder="Type reply..."><button onclick="repQ(${q.id})" class="btn btn-p btn-sm">Reply</button></div></div>`).join('')||'<div class="card" style="transform:none!important"><p class="text-sm text-zinc-600 text-center py-8">No questions for ${S.user.subject}</p></div>'}</div>`}
+function repQ(qid){const r=$('rp-'+qid).value.trim();if(!r)return toast('Type a reply');const q=DB.questions.find(x=>x.id===qid);if(q){q.replies.push({by:S.user.name,text:r,d:new Date().toISOString().split('T')[0]});toast('Replied!');nav('questions')}}
+
+function tHW(){const mh=DB.homework.filter(h=>h.sub===S.user.subject);return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('book-open','w-5 h-5 text-indigo-400')}Assign Homework</h1><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">New Assignment</h3><div class="space-y-3"><div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="hw-ti" class="input" placeholder="Ch 5 Exercise"></div><div><label class="block text-xs text-zinc-500 mb-1">Description</label><textarea id="hw-ds" class="input" placeholder="Details..."></textarea></div><div><label class="block text-xs text-zinc-500 mb-1">Due Date</label><input id="hw-du" type="date" class="input"></div><button onclick="asHW()" class="btn btn-p btn-sm w-full justify-center">Assign to X-A</button></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Assigned (${mh.length})</h3><div class="space-y-3">${mh.map(h=>`<div class="p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="flex justify-between mb-1"><p class="text-xs font-semibold">${h.title}</p>${hs(h.status)}</div><p class="text-[11px] text-zinc-600">Due: ${fmt(h.due)}</p></div>`).join('')||'<p class="text-xs text-zinc-600">None yet</p>'}</div></div></div>`}
+function asHW(){const t=$('hw-ti').value.trim(),d=$('hw-du').value;if(!t||!d)return toast('Fill title and date');DB.homework.push({id:DB.homework.length+1,sub:S.user.subject,title:t,desc:$('hw-ds').value||'Complete the work.',due:d,status:'pending'});toast('Assigned!');nav('homework')}
+
+function tEx(){const me=DB.exams.filter(e=>e.sub===S.user.subject);return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-check','w-5 h-5 text-indigo-400')}Exam Schedule</h1><div class="card mb-6" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Schedule New Exam</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="block text-xs text-zinc-500 mb-1">Chapters</label><input id="ex-ch" class="input" placeholder="Ch 1-5"></div><div><label class="block text-xs text-zinc-500 mb-1">Date</label><input id="ex-dt" type="date" class="input"></div><div><label class="block text-xs text-zinc-500 mb-1">Time</label><input id="ex-tm" class="input" value="8:00 AM"></div><div><label class="block text-xs text-zinc-500 mb-1">Room</label><input id="ex-rm" class="input" value="Hall A"></div><div><label class="block text-xs text-zinc-500 mb-1">Type</label><select id="ex-tp" class="input"><option>Unit Test</option><option>Mid Term</option><option>Final</option></select></div><div><label class="block text-xs text-zinc-500 mb-1">Max Marks</label><input id="ex-mx" type="number" class="input" value="50"></div></div><button onclick="adEx()" class="btn btn-p btn-sm mt-4">Schedule</button></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">${S.user.subject} Exams</h3><div class="space-y-3">${me.map(e=>`<div class="flex items-center justify-between p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div><p class="text-xs font-semibold">${e.ch}</p><p class="text-[10px] text-zinc-700">${fmt(e.date)} · ${e.time} · ${e.room}</p></div><span class="bt bt-pu">${e.type}</span></div>`).join('')||'<p class="text-xs text-zinc-600">None</p>'}</div></div>`}
+function adEx(){const c=$('ex-ch').value.trim(),d=$('ex-dt').value;if(!c||!d)return toast('Fill chapters and date');DB.exams.push({id:DB.exams.length+1,sub:S.user.subject,ch:c,date:d,time:$('ex-tm').value||'8:00 AM',room:$('ex-rm').value||'TBA',type:$('ex-tp').value,max:+($('ex-mx').value)||50});toast('Scheduled!');nav('exams')}
+
+function tNc(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bell','w-5 h-5 text-indigo-400')}Notices</h1><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">Post Notice</h3><div class="space-y-3"><div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="nc-ti" class="input" placeholder="Notice title"></div><div><label class="block text-xs text-zinc-500 mb-1">Message</label><textarea id="nc-ms" class="input" placeholder="Details..."></textarea></div><label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="nc-im" class="accent-red-500"><span class="text-xs text-zinc-500">Mark Important</span></label><button onclick="adNc()" class="btn btn-p btn-sm w-full justify-center">Post</button></div></div><div class="card" style="transform:none!important"><h3 class="text-sm font-bold mb-4">All Notices (${DB.notices.length})</h3><div class="space-y-3">${DB.notices.map(n=>`<div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]"><div class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${n.imp?'bg-red-500':'bg-zinc-700'}"></div><div><p class="text-xs font-semibold">${n.title}</p><p class="text-[10px] text-zinc-700">${fmt(n.date)} · ${n.by}</p></div></div>`).join('')}</div></div></div>`}
+function adNc(){const t=$('nc-ti').value.trim(),m=$('nc-ms').value.trim();if(!t||!m)return toast('Fill title and message');DB.notices.unshift({id:DB.notices.length+1,title:t,msg:m,date:new Date().toISOString().split('T')[0],by:S.user.name,imp:$('nc-im').checked});toast('Posted!');nav('notices')}
+
+function tSt(){return`<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('users','w-5 h-5 text-indigo-400')}Students</h1><div class="card mb-4" style="transform:none!important"><div class="flex flex-col sm:flex-row gap-3"><input id="st-sr" class="input flex-1" placeholder="Search students..." oninput="filSt()"><span class="text-xs text-zinc-600 self-center">${DB.students.length} in X-A</span></div></div><div class="tw"><table><thead><tr><th>Roll</th><th>Name</th><th>Email</th><th>Attendance</th></tr></thead><tbody id="st-tb">${DB.students.map(s=>`<tr><td class="font-mono text-zinc-500">${s.roll}</td><td><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-[10px]">${s.name.charAt(0)}</div><span class="text-white font-medium">${s.name}</span></div></td><td class="text-zinc-600 text-xs">${s.email}</td><td><span class="font-bold ${getAttPct(s.id)>=75?'text-emerald-400':'text-red-400'}">${getAttPct(s.id)}%</span></td></tr>`).join('')}</tbody></table></div>`}
+function filSt(){const q=$('st-sr').value.toLowerCase();$('st-tb').querySelectorAll('tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(q)?'':'none'})}
+
+// ══════════ INIT ══════════
+lucide.createIcons();
+setRole('student');
+</script>
+</body>
+</html>

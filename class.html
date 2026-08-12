@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: #09090b; color: #fff; overflow-x: hidden; }
+body { font-family: 'Inter', sans-serif; background: #09090b; color: #fff; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 html { scroll-behavior: smooth; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #09090b; }
@@ -99,6 +99,47 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
   .main-area { margin-left: 0 !important; }
   .hamburger { display: flex; }
 }
+
+/* =========================================
+   LIGHT THEME OVERRIDES (Default)
+========================================= */
+body.light-theme { background: #f8fafc; color: #0f172a; }
+body.light-theme::-webkit-scrollbar-track { background: #f1f5f9; }
+body.light-theme::-webkit-scrollbar-thumb { background: #cbd5e1; }
+
+body.light-theme .nav-blur { background: rgba(255, 255, 255, 0.95); border-bottom-color: rgba(0,0,0,0.05); }
+body.light-theme .sidebar { background: #ffffff; border-right-color: rgba(0,0,0,0.05); }
+body.light-theme .card, body.light-theme .stat-card { background: #ffffff; border-color: rgba(0,0,0,0.05); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+body.light-theme .card:hover { border-color: rgba(0,0,0,0.1); }
+body.light-theme .bg-\[\#09090b\], body.light-theme .bg-\[\#111113\], body.light-theme .bg-black { background: #ffffff !important; }
+body.light-theme .border-white\/5, body.light-theme .border-white\/10 { border-color: rgba(0,0,0,0.05) !important; }
+body.light-theme .bg-white\/\[\.01\], body.light-theme .bg-white\/\[\.02\], body.light-theme .bg-white\/\[\.03\] { background: #f1f5f9 !important; }
+body.light-theme .hover\:bg-white\/\[\.02\]:hover, body.light-theme .hover\:bg-white\/\[\.03\]:hover { background: #e2e8f0 !important; }
+
+body.light-theme .text-zinc-400, body.light-theme .text-zinc-500 { color: #64748b !important; }
+body.light-theme .text-white { color: #0f172a !important; }
+body.light-theme .nav-item { color: #64748b; }
+body.light-theme .nav-item:hover { color: #0f172a; background: #f1f5f9; }
+body.light-theme .nav-item.active { background: rgba(99, 102, 241, 0.1); color: #4f46e5; }
+
+body.light-theme .input { background: #ffffff; border-color: #cbd5e1; color: #0f172a; }
+body.light-theme .input:focus { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99,102,241,0.2); }
+body.light-theme th { background: #f8fafc; color: #475569; border-bottom-color: rgba(0,0,0,0.05); }
+body.light-theme td { color: #334155; border-bottom-color: rgba(0,0,0,0.05); }
+body.light-theme tr:hover td { background: #f1f5f9; }
+body.light-theme .tc { border-color: rgba(0,0,0,0.05); }
+body.light-theme .tc .s { color: #0f172a; }
+body.light-theme .tw { border-color: rgba(0,0,0,0.05); }
+
+body.light-theme .modal { background: #ffffff; border-color: rgba(0,0,0,0.05); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
+body.light-theme .modal-bg { background: rgba(0, 0, 0, 0.5); }
+body.light-theme .cb-r { background: #f8fafc; border-color: rgba(0,0,0,0.05); color: #334155; }
+body.light-theme .border-b, body.light-theme .border-t, body.light-theme .border-y { border-color: rgba(0,0,0,0.05) !important; }
+body.light-theme .hamburger { background: #ffffff; border-color: rgba(0,0,0,0.1); color: #0f172a; }
+body.light-theme .pb { background: #e2e8f0; }
+body.light-theme .bg-zinc-800, body.light-theme .bg-zinc-900 { background: #e2e8f0 !important; }
+body.light-theme .btn-g { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+body.light-theme .btn-g:hover { background: #e2e8f0; color: #0f172a; }
 </style>
 </head>
 <body class="font-inter">
@@ -116,9 +157,9 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center">
           <i data-lucide="book" class="w-4 h-4 text-white"></i>
         </div>
-        <span class="text-lg font-bold">Apex<span class="text-indigo-400">Academy</span> Portal</span>
+        <span class="text-lg font-bold text-white">Apex<span class="text-indigo-400">Academy</span> Portal</span>
       </div>
-      <button onclick="closeLogin()" class="w-8 h-8 rounded-lg bg-white/[.05] flex items-center justify-center text-zinc-500 hover:text-white transition-colors">
+      <button onclick="closeLogin()" class="w-8 h-8 rounded-lg bg-white/[.05] flex items-center justify-center text-zinc-500 hover:text-indigo-500 transition-colors">
         <i data-lucide="x" class="w-4 h-4"></i>
       </button>
     </div>
@@ -164,7 +205,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         <div class="w-10 h-10 rounded-lg bg-indigo-600 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.4)]">
           <i data-lucide="book-open" class="w-5 h-5 text-white"></i>
         </div>
-        <span class="font-bold text-xl tracking-tight">Apex<span class="text-indigo-400">Academy</span></span>
+        <span class="font-bold text-xl tracking-tight text-white">Apex<span class="text-indigo-400">Academy</span></span>
       </a>
       <div class="hidden md:flex items-center gap-8">
         <a href="#about" class="text-zinc-400 hover:text-indigo-400 text-sm font-medium transition-colors">About Us</a>
@@ -174,14 +215,17 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         <a href="#contact" class="text-zinc-400 hover:text-indigo-400 text-sm font-medium transition-colors">Contact</a>
       </div>
       <div class="flex items-center gap-4">
+        <button onclick="toggleTheme()" class="btn btn-g px-3 shadow-lg" title="Toggle Theme">
+          <i id="theme-btn-1" data-lucide="moon" class="w-4 h-4"></i>
+        </button>
         <button onclick="openLogin()" class="btn btn-p text-sm shadow-lg"><i data-lucide="user" class="w-4 h-4"></i> Login Portal</button>
-        <button id="mob-tog" class="md:hidden text-zinc-400 hover:text-white" onclick="toggleMob()">
+        <button id="mob-tog" class="md:hidden text-zinc-400 hover:text-indigo-500" onclick="toggleMob()">
           <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
       </div>
     </div>
     
-    <div id="mob-menu" class="md:hidden hidden bg-[#09090b] border-t border-white/5 px-5 py-4 space-y-3 absolute w-full">
+    <div id="mob-menu" class="md:hidden hidden bg-[#09090b] border-t border-white/5 px-5 py-4 space-y-3 absolute w-full shadow-lg">
       <a href="#about" class="block text-zinc-400 hover:text-indigo-400 text-base" onclick="closeMob()">About Us</a>
       <a href="#process" class="block text-zinc-400 hover:text-indigo-400 text-base" onclick="closeMob()">Process</a>
       <a href="#achievements" class="block text-zinc-400 hover:text-indigo-400 text-base" onclick="closeMob()">Achievements</a>
@@ -197,7 +241,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[.03] mb-8 slide-up">
         <span class="text-xs text-indigo-400 font-medium tracking-wide uppercase">Admissions Open 2026-2027</span>
       </div>
-      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extralight leading-[1.1] tracking-tight mb-6 slide-up" style="animation-delay:.1s">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-extralight leading-[1.1] tracking-tight mb-6 slide-up text-white" style="animation-delay:.1s">
         Empowering Minds,<br>
         <span class="grad-text font-semibold">Transforming Futures.</span>
       </h1>
@@ -218,22 +262,22 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4">
           <i data-lucide="info" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400 uppercase">About Us</span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-6">Why Choose <span class="grad-text font-semibold">Apex Academy?</span></h2>
+        <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-6 text-white">Why Choose <span class="grad-text font-semibold">Apex Academy?</span></h2>
         <p class="text-zinc-400 leading-relaxed mb-6 font-light">
           Founded on the principle of uncompromised educational quality, Apex Academy has been shaping the careers of thousands of students. We believe in building strong fundamentals, fostering critical thinking, and ensuring holistic development.
         </p>
         <ul class="space-y-4">
           <li class="flex items-start gap-3">
             <div class="w-6 h-6 rounded bg-indigo-500/10 flex items-center justify-center mt-0.5"><i data-lucide="check" class="w-4 h-4 text-indigo-400"></i></div>
-            <div><strong class="block text-sm text-zinc-200">Expert Faculty</strong><span class="text-xs text-zinc-500">Learn from seasoned educators and industry professionals.</span></div>
+            <div><strong class="block text-sm text-white">Expert Faculty</strong><span class="text-xs text-zinc-500 block">Learn from seasoned educators and industry professionals.</span></div>
           </li>
           <li class="flex items-start gap-3">
             <div class="w-6 h-6 rounded bg-indigo-500/10 flex items-center justify-center mt-0.5"><i data-lucide="check" class="w-4 h-4 text-indigo-400"></i></div>
-            <div><strong class="block text-sm text-zinc-200">Comprehensive Material</strong><span class="text-xs text-zinc-500">Updated and meticulously curated study resources.</span></div>
+            <div><strong class="block text-sm text-white">Comprehensive Material</strong><span class="text-xs text-zinc-500 block">Updated and meticulously curated study resources.</span></div>
           </li>
           <li class="flex items-start gap-3">
             <div class="w-6 h-6 rounded bg-indigo-500/10 flex items-center justify-center mt-0.5"><i data-lucide="check" class="w-4 h-4 text-indigo-400"></i></div>
-            <div><strong class="block text-sm text-zinc-200">Digital Integration</strong><span class="text-xs text-zinc-500">Seamless online portal for notes, doubts, and performance tracking.</span></div>
+            <div><strong class="block text-sm text-white">Digital Integration</strong><span class="text-xs text-zinc-500 block">Seamless online portal for notes, doubts, and performance tracking.</span></div>
           </li>
         </ul>
       </div>
@@ -253,32 +297,32 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4">
         <i data-lucide="git-merge" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400 uppercase">Methodology</span>
       </div>
-      <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-16">The Apex <span class="grad-text font-semibold">Process</span></h2>
+      <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-16 text-white">The Apex <span class="grad-text font-semibold">Process</span></h2>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
         <div class="hidden md:block absolute top-1/2 left-1/6 right-1/6 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent -translate-y-1/2 z-0"></div>
         
-        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors">
+        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors shadow-lg">
           <div class="w-16 h-16 rounded-full bg-indigo-600/20 flex items-center justify-center mx-auto mb-6 border border-indigo-500/30">
             <span class="text-2xl font-bold text-indigo-400">1</span>
           </div>
-          <h3 class="text-lg font-semibold mb-3">Assessment & Enrollment</h3>
+          <h3 class="text-lg font-semibold mb-3 text-white">Assessment & Enrollment</h3>
           <p class="text-sm text-zinc-400 font-light leading-relaxed">We start by understanding the student's current proficiency through an initial assessment, aligning them with the right batch and curriculum.</p>
         </div>
         
-        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors">
+        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors shadow-lg">
           <div class="w-16 h-16 rounded-full bg-indigo-600/20 flex items-center justify-center mx-auto mb-6 border border-indigo-500/30">
             <span class="text-2xl font-bold text-indigo-400">2</span>
           </div>
-          <h3 class="text-lg font-semibold mb-3">Hybrid Learning</h3>
+          <h3 class="text-lg font-semibold mb-3 text-white">Hybrid Learning</h3>
           <p class="text-sm text-zinc-400 font-light leading-relaxed">Experience dynamic classroom sessions paired with our robust digital portal for 24/7 access to notes, homework, and doubt resolution.</p>
         </div>
 
-        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors">
+        <div class="relative z-10 bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-colors shadow-lg">
           <div class="w-16 h-16 rounded-full bg-indigo-600/20 flex items-center justify-center mx-auto mb-6 border border-indigo-500/30">
             <span class="text-2xl font-bold text-indigo-400">3</span>
           </div>
-          <h3 class="text-lg font-semibold mb-3">Testing & Excellence</h3>
+          <h3 class="text-lg font-semibold mb-3 text-white">Testing & Excellence</h3>
           <p class="text-sm text-zinc-400 font-light leading-relaxed">Continuous evaluation through scheduled exams and mock tests ensures students are thoroughly prepared to top their final boards.</p>
         </div>
       </div>
@@ -291,19 +335,19 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4">
         <i data-lucide="award" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400 uppercase">Achievements</span>
       </div>
-      <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-16">A Legacy of <span class="grad-text font-semibold">Success</span></h2>
+      <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-16 text-white">A Legacy of <span class="grad-text font-semibold">Success</span></h2>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-        <div><div class="text-4xl font-bold text-white mb-2">99%</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Passing Rate</div></div>
-        <div><div class="text-4xl font-bold text-white mb-2">500+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">State Rankers</div></div>
-        <div><div class="text-4xl font-bold text-white mb-2">50+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Expert Teachers</div></div>
-        <div><div class="text-4xl font-bold text-white mb-2">10k+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Alumni</div></div>
+        <div><div class="text-4xl font-bold text-indigo-500 mb-2">99%</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Passing Rate</div></div>
+        <div><div class="text-4xl font-bold text-indigo-500 mb-2">500+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">State Rankers</div></div>
+        <div><div class="text-4xl font-bold text-indigo-500 mb-2">50+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Expert Teachers</div></div>
+        <div><div class="text-4xl font-bold text-indigo-500 mb-2">10k+</div><div class="text-xs text-zinc-500 tracking-widest uppercase">Alumni</div></div>
       </div>
 
-      <div class="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl p-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="bg-indigo-600/10 border border-indigo-500/20 rounded-2xl p-8 max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
         <div class="text-left">
-          <h3 class="text-xl font-semibold mb-2">Join Our Next Batch!</h3>
-          <p class="text-sm text-indigo-200/70 font-light">Admissions for the upcoming academic year are filling fast. Secure your seat today.</p>
+          <h3 class="text-xl font-semibold mb-2 text-white">Join Our Next Batch!</h3>
+          <p class="text-sm text-indigo-300 font-light">Admissions for the upcoming academic year are filling fast. Secure your seat today.</p>
         </div>
         <a href="#contact" class="btn btn-p whitespace-nowrap px-8 py-3">Inquire Now</a>
       </div>
@@ -317,7 +361,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4">
           <i data-lucide="message-square" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400 uppercase">Feedback</span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-light tracking-tight">What Parents & Students <span class="grad-text font-semibold">Say</span></h2>
+        <h2 class="text-3xl md:text-4xl font-light tracking-tight text-white">What Parents & Students <span class="grad-text font-semibold">Say</span></h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         <div class="card bg-white/[.01]">
@@ -327,7 +371,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
           <p class="text-sm text-zinc-400 font-light leading-relaxed mb-6">"The teachers here are phenomenal. My daughter's confidence in Mathematics skyrocketed after just three months. The student portal makes it so easy to track her progress."</p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-sm">R</div>
-            <div><p class="text-sm font-semibold">Rajesh Sharma</p><p class="text-xs text-zinc-600">Parent of Class X Student</p></div>
+            <div><p class="text-sm font-semibold text-white">Rajesh Sharma</p><p class="text-xs text-zinc-600">Parent of Class X Student</p></div>
           </div>
         </div>
         <div class="card bg-white/[.01]">
@@ -337,7 +381,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
           <p class="text-sm text-zinc-400 font-light leading-relaxed mb-6">"I love how approachable the faculty is. If I have a doubt late at night, I just drop it in the portal and get a detailed response the next morning. It's incredibly helpful."</p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-emerald-600/20 flex items-center justify-center text-emerald-400 font-bold text-sm">A</div>
-            <div><p class="text-sm font-semibold">Ananya Gupta</p><p class="text-xs text-zinc-600">Student, State Ranker</p></div>
+            <div><p class="text-sm font-semibold text-white">Ananya Gupta</p><p class="text-xs text-zinc-600">Student, State Ranker</p></div>
           </div>
         </div>
         <div class="card bg-white/[.01]">
@@ -347,7 +391,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
           <p class="text-sm text-zinc-400 font-light leading-relaxed mb-6">"Apex Academy provides the perfect environment for competitive exam prep. The mock tests are rigorous and exactly mirror the real exam patterns. Highly recommended."</p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-pink-600/20 flex items-center justify-center text-pink-400 font-bold text-sm">V</div>
-            <div><p class="text-sm font-semibold">Vikram Desai</p><p class="text-xs text-zinc-600">Alumnus</p></div>
+            <div><p class="text-sm font-semibold text-white">Vikram Desai</p><p class="text-xs text-zinc-600">Alumnus</p></div>
           </div>
         </div>
       </div>
@@ -362,7 +406,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[.03] mb-4">
             <i data-lucide="phone" class="w-3 h-3 text-indigo-400"></i><span class="text-xs text-zinc-400 uppercase">Contact Us</span>
           </div>
-          <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4">Get in <span class="grad-text font-semibold">Touch</span></h2>
+          <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4 text-white">Get in <span class="grad-text font-semibold">Touch</span></h2>
           <p class="text-base text-zinc-400 font-light leading-relaxed mb-10">Visit our campus or fill out the form for admission inquiries. Our counselors are ready to guide you.</p>
           
           <div class="space-y-6">
@@ -397,7 +441,7 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
         </div>
         
         <div class="bg-[#111113] border border-white/10 rounded-2xl p-8 shadow-2xl">
-          <h3 class="text-xl font-semibold mb-6">Send an Inquiry</h3>
+          <h3 class="text-xl font-semibold mb-6 text-white">Send an Inquiry</h3>
           <div class="space-y-4">
             <div>
               <label class="block text-xs text-zinc-400 font-medium mb-1.5">Student Name</label>
@@ -432,14 +476,14 @@ tr:hover td { background: rgba(255, 255, 255, .015); }
           <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center">
             <i data-lucide="book-open" class="w-4 h-4 text-white"></i>
           </div>
-          <span class="font-bold text-lg">Apex<span class="text-indigo-400">Academy</span></span>
+          <span class="font-bold text-lg text-white">Apex<span class="text-indigo-400">Academy</span></span>
         </div>
-        <p class="text-sm text-zinc-600 font-light">© 2026 Apex Academy. All rights reserved.</p>
+        <p class="text-sm text-zinc-500 font-light">© 2026 Apex Academy. All rights reserved.</p>
         <div class="flex items-center gap-5">
-          <a href="#" class="text-zinc-600 hover:text-indigo-400 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-          <a href="#" class="text-zinc-600 hover:text-indigo-400 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-          <a href="#" class="text-zinc-600 hover:text-indigo-400 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-          <a href="#" class="text-zinc-600 hover:text-indigo-400 transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+          <a href="#" class="text-zinc-500 hover:text-indigo-400 transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+          <a href="#" class="text-zinc-500 hover:text-indigo-400 transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+          <a href="#" class="text-zinc-500 hover:text-indigo-400 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+          <a href="#" class="text-zinc-500 hover:text-indigo-400 transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
         </div>
       </div>
     </div>
@@ -470,7 +514,7 @@ const fmt = d => {
 };
 const ic = (n, c = 'w-4 h-4') => `<i data-lucide="${n}" class="${c}"></i>`;
 
-// XSS Prevention Utility: Strictly escape all user-generated content rendered via innerHTML
+// XSS Prevention Utility
 const esc = str => {
   if (!str) return '';
   return String(str).replace(/[&<>'"]/g, tag => ({
@@ -489,7 +533,7 @@ function getAttPct(sid) {
   return t ? Math.round(v.filter(x => x === 'p').length / t * 100) : 0;
 }
 
-// ══════════ DATA (Preserved perfectly) ══════════
+// ══════════ DATA (Preserved perfectly & Expanded) ══════════
 const DB = {
   students: [
     { id: 1, name: 'Aarav Sharma', email: 'aarav@demo.com', password: 'student123', cls: 'X-A', roll: '01' },
@@ -561,6 +605,16 @@ const DB = {
   bookings: [
     { id: 1, student: 'Aarav Sharma', type: 'Doubt Session', sub: 'Mathematics', date: '2025-03-03', time: '3:00 PM', status: 'confirmed' },
     { id: 2, student: 'Diya Patel', type: 'Lab Practice', sub: 'Computer Science', date: '2025-03-04', time: '2:00 PM', status: 'pending' }
+  ],
+  onlineExams: [
+    { id: 1, sub: 'Mathematics', title: 'Quadratic Equations Quiz', date: '2025-03-10', dur: 15, questions: [
+        { q: 'What is the standard form of a quadratic equation?', opts: ['ax+b=0', 'ax²+bx+c=0', 'y=mx+c', 'ax³+bx²+cx+d=0'], ans: 1 },
+        { q: 'What does the discriminant (b²-4ac) indicate if it is negative?', opts: ['Two real roots', 'One real root', 'No real roots', 'Infinite roots'], ans: 2 }
+    ] }
+  ],
+  examResults: [
+    { id: 1, examId: 1, sid: 2, score: 2, total: 2 },
+    { id: 2, examId: 1, sid: 3, score: 1, total: 2 }
   ]
 };
 
@@ -581,8 +635,29 @@ const DB = {
   });
 })();
 
+// Theme Setup Default To Light
+(function() {
+  const saved = localStorage.getItem('apex-theme') || 'light';
+  if(saved === 'light') document.body.classList.add('light-theme');
+})();
+
 // ══════════ STATE ══════════
-let S = { user: null, role: null, view: 'dashboard', lr: 'student' };
+let S = { user: null, role: null, view: 'dashboard', lr: 'student', activeOEx: null, showLdBd: null, oexAnswers: {} };
+
+// ══════════ THEME TOGGLE ══════════
+function toggleTheme() {
+  document.body.classList.toggle('light-theme');
+  const isLight = document.body.classList.contains('light-theme');
+  localStorage.setItem('apex-theme', isLight ? 'light' : 'dark');
+  updateThemeIcons();
+}
+function updateThemeIcons() {
+  const isLight = document.body.classList.contains('light-theme');
+  const icon = isLight ? 'moon' : 'sun';
+  const btn1 = $('theme-btn-1'); if(btn1) btn1.outerHTML = `<i id="theme-btn-1" data-lucide="${icon}" class="w-4 h-4"></i>`;
+  const btn2 = $('theme-btn-2'); if(btn2) btn2.outerHTML = `<i id="theme-btn-2" data-lucide="${icon}" class="w-4 h-4 flex-shrink-0"></i>`;
+  lucide.createIcons();
+}
 
 // ══════════ LANDING NAV ══════════
 function toggleMob() { $('mob-menu').classList.toggle('hidden'); }
@@ -612,11 +687,14 @@ function doLogin() {
   S.user = u;
   S.role = S.lr;
   S.view = 'dashboard';
+  S.activeOEx = null;
+  S.showLdBd = null;
   
   closeLogin();
   $('landing').style.display = 'none';
   $('app').style.display = 'block';
   renderApp();
+  updateThemeIcons();
 }
 
 function logout() {
@@ -627,12 +705,14 @@ function logout() {
   $('landing').style.display = 'block';
   $('le').value = '';
   $('lp').value = '';
+  updateThemeIcons();
 }
 
 // ══════════ RENDER APP ══════════
 function renderApp() {
   renderSB();
   renderCT();
+  updateThemeIcons();
   lucide.createIcons();
 }
 
@@ -643,6 +723,7 @@ function renderSB() {
     { id: 'timetable', ic: 'calendar', lb: 'Timetable' },
     { id: 'attendance', ic: 'user-check', lb: 'Take Attendance' },
     { id: 'notes', ic: 'file-text', lb: 'Upload Notes' },
+    { id: 'online-exams', ic: 'monitor-play', lb: 'Online Exams' },
     { id: 'questions', ic: 'message-circle', lb: 'Student Questions', bd: DB.questions.filter(q => q.replies.length === 0).length },
     { id: 'homework', ic: 'book-open', lb: 'Assign Work' },
     { id: 'exams', ic: 'file-check', lb: 'Exam Schedule' },
@@ -655,6 +736,7 @@ function renderSB() {
     { id: 'book', ic: 'calendar-plus', lb: 'Book Session' },
     { id: 'homework', ic: 'book-open', lb: 'Homework' },
     { id: 'exams', ic: 'file-check', lb: 'Exam Schedule' },
+    { id: 'online-exams', ic: 'monitor-play', lb: 'Online Exams' },
     { id: 'questions', ic: 'message-circle', lb: 'Ask Question' },
     { id: 'chapters', ic: 'layers', lb: 'Chapters' },
     { id: 'attendance', ic: 'bar-chart-3', lb: 'My Attendance' }
@@ -677,22 +759,26 @@ function renderSB() {
         <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center">
           ${ic('book', 'w-4 h-4 text-white')}
         </div>
-        <span class="text-base font-bold">Apex<span class="text-indigo-400">Portal</span></span>
+        <span class="text-base font-bold text-white">Apex<span class="text-indigo-400">Portal</span></span>
       </div>
       <div class="flex items-center gap-3 bg-white/[.03] rounded-lg p-3">
         <div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-sm">
           ${esc(S.user.name.charAt(0))}
         </div>
         <div class="min-w-0 flex-1">
-          <p class="text-xs font-semibold truncate">${esc(S.user.name)}</p>
+          <p class="text-xs font-semibold truncate text-white">${esc(S.user.name)}</p>
           <p class="text-[10px] text-zinc-600">${isT ? esc(S.user.subject) : esc(S.user.cls) + ' · Roll ' + esc(S.user.roll)}</p>
         </div>
       </div>
     </div>
-    <nav class="p-3 space-y-0.5">
+    <nav class="p-3 space-y-0.5 pb-24">
       ${navHtml}
     </nav>
-    <div class="absolute bottom-0 left-0 right-0 p-3 border-t border-white/5">
+    <div class="absolute bottom-0 left-0 right-0 p-3 border-t border-white/5 bg-inherit z-10">
+      <div class="nav-item mb-1" onclick="toggleTheme()">
+        <i id="theme-btn-2" data-lucide="moon" class="w-4 h-4 flex-shrink-0"></i>
+        <span>Toggle Theme</span>
+      </div>
       <div class="nav-item" onclick="logout()">
         ${ic('log-out', 'w-4 h-4 flex-shrink-0')}
         <span>Sign Out</span>
@@ -702,9 +788,11 @@ function renderSB() {
 }
 
 function nav(v) {
+  if (v !== 'online-exams') { S.activeOEx = null; S.showLdBd = null; }
   S.view = v;
   renderSB();
   renderCT();
+  updateThemeIcons();
   lucide.createIcons();
   if (innerWidth < 768) $('sb').classList.remove('open');
 }
@@ -717,7 +805,8 @@ function renderCT() {
 
 // ══════════ STUDENT VIEWS ══════════
 function sView() {
-  return { dashboard: sDash, timetable: sTT, notices: sNtc, book: sBk, homework: sHW, exams: sEx, questions: sQ, chapters: sCh, attendance: sAtt }[S.view] || sDash();
+  const views = { dashboard: sDash, timetable: sTT, notices: sNtc, book: sBk, homework: sHW, exams: sEx, questions: sQ, chapters: sCh, attendance: sAtt, 'online-exams': sOEx };
+  return (views[S.view] || sDash)();
 }
 
 function sDash() {
@@ -729,7 +818,7 @@ function sDash() {
     <div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${n.imp ? 'bg-red-500' : 'bg-zinc-700'}"></div>
       <div>
-        <p class="text-xs font-semibold">${esc(n.title)}</p>
+        <p class="text-xs font-semibold text-white">${esc(n.title)}</p>
         <p class="text-[10px] text-zinc-600">${fmt(n.date)}</p>
       </div>
     </div>
@@ -737,20 +826,20 @@ function sDash() {
 
   let hwHtml = DB.homework.filter(h => h.status === 'pending').slice(0, 3).map(h => `
     <div class="p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
-      <p class="text-xs font-semibold">${esc(h.title)}</p>
+      <p class="text-xs font-semibold text-white">${esc(h.title)}</p>
       <p class="text-[10px] text-zinc-600">${esc(h.sub)} · Due ${fmt(h.due)}</p>
     </div>
   `).join('') || '<p class="text-xs text-zinc-600">All caught up! 🎉</p>';
 
   return `
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-bold">Welcome, ${esc(S.user.name.split(' ')[0])} 👋</h1>
+      <h1 class="text-xl font-bold text-white">Welcome, ${esc(S.user.name.split(' ')[0])} 👋</h1>
       <span class="bt bt-b hidden sm:inline-flex">${S.role.toUpperCase()}</span>
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <div class="stat-card">
         <div class="ico bg-indigo-500/10 text-indigo-400 mb-3">${ic('book-open')}</div>
-        <p class="text-2xl font-bold">${DB.subjects.length}</p>
+        <p class="text-2xl font-bold text-white">${DB.subjects.length}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Subjects</p>
       </div>
       <div class="stat-card">
@@ -760,22 +849,22 @@ function sDash() {
       </div>
       <div class="stat-card">
         <div class="ico bg-amber-500/10 text-amber-400 mb-3">${ic('alert-circle')}</div>
-        <p class="text-2xl font-bold">${ph}</p>
+        <p class="text-2xl font-bold text-white">${ph}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Pending HW</p>
       </div>
       <div class="stat-card">
         <div class="ico bg-red-500/10 text-red-400 mb-3">${ic('file-check')}</div>
-        <p class="text-2xl font-bold">${ue}</p>
+        <p class="text-2xl font-bold text-white">${ue}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Upcoming Exams</p>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <div class="card">
-        <h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('bell', 'w-4 h-4 text-indigo-400')}Recent Notices</h3>
+        <h3 class="text-sm font-bold mb-4 flex items-center gap-2 text-white">${ic('bell', 'w-4 h-4 text-indigo-400')}Recent Notices</h3>
         <div class="space-y-3">${noticesHtml}</div>
       </div>
       <div class="card">
-        <h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('book-open', 'w-4 h-4 text-amber-400')}Pending Homework</h3>
+        <h3 class="text-sm font-bold mb-4 flex items-center gap-2 text-white">${ic('book-open', 'w-4 h-4 text-amber-400')}Pending Homework</h3>
         <div class="space-y-3">${hwHtml}</div>
       </div>
     </div>
@@ -799,7 +888,7 @@ function sTT() {
   `).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar', 'w-5 h-5 text-indigo-400')}Weekly Timetable</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('calendar', 'w-5 h-5 text-indigo-400')}Weekly Timetable</h1>
     <div class="tw">
       <table>
         <thead><tr><th>Time</th>${thead}</tr></thead>
@@ -817,7 +906,7 @@ function sNtc() {
       </div>
       <div class="flex-1">
         <div class="flex items-center gap-2 mb-1">
-          <h3 class="text-sm font-bold">${esc(n.title)}</h3>
+          <h3 class="text-sm font-bold text-white">${esc(n.title)}</h3>
           ${n.imp ? '<span class="bt bt-r">Important</span>' : ''}
         </div>
         <p class="text-xs text-zinc-500 leading-relaxed">${esc(n.msg)}</p>
@@ -829,7 +918,7 @@ function sNtc() {
     </div>
   `).join('');
 
-  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bell', 'w-5 h-5 text-indigo-400')}Notices</h1><div class="space-y-3">${html}</div>`;
+  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('bell', 'w-5 h-5 text-indigo-400')}Notices</h1><div class="space-y-3">${html}</div>`;
 }
 
 function sBk() {
@@ -837,7 +926,7 @@ function sBk() {
   let bkHtml = DB.bookings.filter(b => b.student === S.user.name).map(b => `
     <div class="flex items-center justify-between p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div>
-        <p class="text-xs font-semibold">${esc(b.type)} – ${esc(b.sub)}</p>
+        <p class="text-xs font-semibold text-white">${esc(b.type)} – ${esc(b.sub)}</p>
         <p class="text-[10px] text-zinc-600">${fmt(b.date)} · ${esc(b.time)}</p>
       </div>
       <span class="bt ${b.status === 'confirmed' ? 'bt-g' : 'bt-y'}">${b.status}</span>
@@ -845,10 +934,10 @@ function sBk() {
   `).join('') || '<p class="text-xs text-zinc-600">No bookings</p>';
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar-plus', 'w-5 h-5 text-indigo-400')}Book a Session</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('calendar-plus', 'w-5 h-5 text-indigo-400')}Book a Session</h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">New Booking</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">New Booking</h3>
         <div class="space-y-3">
           <div>
             <label class="block text-xs text-zinc-500 mb-1">Type</label>
@@ -870,7 +959,7 @@ function sBk() {
         </div>
       </div>
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">My Bookings</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">My Bookings</h3>
         <div class="space-y-3">${bkHtml}</div>
       </div>
     </div>
@@ -896,7 +985,7 @@ function sHW() {
     <div class="card flex flex-col sm:flex-row sm:items-center gap-4" style="transform:none!important">
       <div class="flex-1">
         <div class="flex items-center gap-2 mb-1">
-          <span class="text-sm font-bold">${esc(h.title)}</span>
+          <span class="text-sm font-bold text-white">${esc(h.title)}</span>
           <span class="bt bt-${sc(h.sub)}">${esc(h.sub)}</span>
         </div>
         <p class="text-xs text-zinc-500">${esc(h.desc)}</p>
@@ -909,7 +998,7 @@ function sHW() {
     </div>
   `).join('');
 
-  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('book-open', 'w-5 h-5 text-indigo-400')}Homework</h1><div class="space-y-3">${html}</div>`;
+  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('book-open', 'w-5 h-5 text-indigo-400')}Homework</h1><div class="space-y-3">${html}</div>`;
 }
 function subHW(id) {
   const h = DB.homework.find(x => x.id === id);
@@ -927,7 +1016,7 @@ function sEx() {
         <span class="bt bt-${sc(e.sub)}">${esc(e.sub)}</span>
         <span class="bt bt-pu">${esc(e.type)}</span>
       </div>
-      <h3 class="text-sm font-bold mb-2">${esc(e.ch)}</h3>
+      <h3 class="text-sm font-bold mb-2 text-white">${esc(e.ch)}</h3>
       <div class="space-y-1.5">
         <p class="flex items-center gap-2 text-xs text-zinc-500">${ic('calendar', 'w-3 h-3')} ${fmt(e.date)}</p>
         <p class="flex items-center gap-2 text-xs text-zinc-500">${ic('clock', 'w-3 h-3')} ${esc(e.time)}</p>
@@ -936,7 +1025,7 @@ function sEx() {
       </div>
     </div>
   `).join('');
-  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-check', 'w-5 h-5 text-indigo-400')}Exam Schedule</h1><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${html}</div>`;
+  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('file-check', 'w-5 h-5 text-indigo-400')}Exam Schedule</h1><div class="grid grid-cols-1 md:grid-cols-2 gap-4">${html}</div>`;
 }
 
 function sQ() {
@@ -961,10 +1050,10 @@ function sQ() {
   `).join('') : '<p class="text-xs text-zinc-600">No questions yet</p>';
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('message-circle', 'w-5 h-5 text-indigo-400')}Questions</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('message-circle', 'w-5 h-5 text-indigo-400')}Questions</h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">Ask a Question</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">Ask a Question</h3>
         <div class="space-y-3">
           <div>
             <label class="block text-xs text-zinc-500 mb-1">Subject</label>
@@ -978,7 +1067,7 @@ function sQ() {
         </div>
       </div>
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">My Questions (${mq.length})</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">My Questions (${mq.length})</h3>
         <div class="space-y-4 max-h-[500px] overflow-y-auto">${mqHtml}</div>
       </div>
     </div>
@@ -1003,7 +1092,7 @@ function askQ() {
 function sCh() {
   let html = Object.entries(DB.chapters).map(([sub, chs]) => `
     <div class="card" style="transform:none!important">
-      <h3 class="text-sm font-bold mb-4">${esc(sub)}</h3>
+      <h3 class="text-sm font-bold mb-4 text-white">${esc(sub)}</h3>
       <div class="space-y-3">
         ${chs.map(c => `
           <div>
@@ -1022,7 +1111,7 @@ function sCh() {
       </div>
     </div>
   `).join('');
-  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('layers', 'w-5 h-5 text-indigo-400')}Chapter Progress</h1><div class="space-y-4">${html}</div>`;
+  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('layers', 'w-5 h-5 text-indigo-400')}Chapter Progress</h1><div class="space-y-4">${html}</div>`;
 }
 
 function sAtt() {
@@ -1041,7 +1130,7 @@ function sAtt() {
   `).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bar-chart-3', 'w-5 h-5 text-indigo-400')}My Attendance</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('bar-chart-3', 'w-5 h-5 text-indigo-400')}My Attendance</h1>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
       <div class="stat-card text-center">
         <p class="text-2xl font-bold text-emerald-400">${pc}</p>
@@ -1061,15 +1150,142 @@ function sAtt() {
       </div>
     </div>
     <div class="card" style="transform:none!important">
-      <h3 class="text-sm font-bold mb-4">Last 20 Days</h3>
+      <h3 class="text-sm font-bold mb-4 text-white">Last 20 Days</h3>
       <div class="flex flex-wrap gap-2">${daysHtml}</div>
+    </div>
+  `;
+}
+
+// ══════════ ONLINE EXAMS (STUDENT) ══════════
+function sOEx() {
+  if (S.activeOEx) return renderActiveOEx();
+  if (S.showLdBd) return renderLdBd();
+
+  let html = DB.onlineExams.map(e => {
+    const res = DB.examResults.find(r => r.examId === e.id && r.sid === S.user.id);
+    return `
+      <div class="card flex justify-between items-center gap-4 mb-4" style="transform:none!important">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-sm font-bold text-white">${esc(e.title)}</span>
+            <span class="bt bt-${sc(e.sub)}">${esc(e.sub)}</span>
+          </div>
+          <p class="text-[10px] text-zinc-500">${fmt(e.date)} · ${e.dur} mins · ${e.questions.length} Questions</p>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center gap-2">
+          ${res ? `<span class="text-emerald-500 font-bold text-sm mr-2">${res.score}/${res.total}</span>
+                   <button onclick="viewLdBd(${e.id})" class="btn btn-g btn-sm">Leaderboard</button>` 
+                : `<button onclick="startOEx(${e.id})" class="btn btn-p btn-sm">Take Exam</button>`}
+        </div>
+      </div>
+    `;
+  }).join('') || '<p class="text-xs text-zinc-600">No exams available right now.</p>';
+
+  return `
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('monitor-play', 'w-5 h-5 text-indigo-400')}Online Exams</h1>
+    <div class="space-y-3">${html}</div>
+  `;
+}
+
+function startOEx(eid) {
+  const e = DB.onlineExams.find(x => x.id === eid);
+  if(!e.questions.length) return toast('This exam has no questions added yet.');
+  S.activeOEx = e;
+  S.oexAnswers = {};
+  nav('online-exams');
+}
+
+function renderActiveOEx() {
+  const e = S.activeOEx;
+  let qHtml = e.questions.map((q, i) => `
+    <div class="mb-6 p-4 rounded-lg bg-white/[.02] border border-white/[.04]">
+      <p class="text-sm font-semibold mb-4 text-white">${i+1}. ${esc(q.q)}</p>
+      <div class="space-y-2">
+        ${q.opts.map((o, j) => `
+          <label class="flex items-center gap-3 cursor-pointer p-3 rounded hover:bg-white/[.03] border border-transparent transition-colors">
+            <input type="radio" name="q${i}" value="${j}" onchange="S.oexAnswers[${i}]=${j}" class="accent-indigo-500 w-4 h-4">
+            <span class="text-sm text-zinc-400">${esc(o)}</span>
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-xl font-bold text-white">${esc(e.title)}</h1>
+      <span class="bt bt-r px-4 py-1 text-sm">Timer: ${e.dur} Mins</span>
+    </div>
+    <div class="card" style="transform:none!important">
+      ${qHtml}
+      <div class="flex gap-3 mt-6 border-t border-white/5 pt-6">
+        <button onclick="submitOEx()" class="btn btn-p px-8">Submit Exam</button>
+        <button onclick="S.activeOEx=null;nav('online-exams')" class="btn btn-g">Cancel</button>
+      </div>
+    </div>
+  `;
+}
+
+function submitOEx() {
+  const e = S.activeOEx;
+  let score = 0;
+  e.questions.forEach((q, i) => {
+    if (S.oexAnswers[i] === q.ans) score++;
+  });
+  DB.examResults.push({ id: DB.examResults.length+1, examId: e.id, sid: S.user.id, score, total: e.questions.length });
+  toast(`Exam submitted successfully! Score: ${score}/${e.questions.length}`);
+  S.activeOEx = null;
+  nav('online-exams');
+}
+
+function viewLdBd(eid) {
+  S.showLdBd = eid;
+  nav('online-exams');
+}
+
+function renderLdBd() {
+  const e = DB.onlineExams.find(x => x.id === S.showLdBd);
+  const results = DB.examResults.filter(r => r.examId === S.showLdBd).sort((a,b) => b.score - a.score);
+  
+  let html = results.map((r, i) => {
+    const st = DB.students.find(s => s.id === r.sid);
+    return `
+      <div class="flex items-center justify-between p-4 rounded-lg bg-white/[.02] border border-white/[.04] mb-3 transition-colors hover:bg-white/[.04]">
+        <div class="flex items-center gap-4">
+          <div class="w-8 h-8 rounded-full ${i === 0 ? 'bg-amber-500/20 text-amber-500' : i === 1 ? 'bg-zinc-400/20 text-zinc-400' : i === 2 ? 'bg-orange-500/20 text-orange-500' : 'bg-indigo-600/20 text-indigo-400'} flex items-center justify-center font-bold text-sm">
+            #${i+1}
+          </div>
+          <div>
+            <p class="text-sm font-semibold text-white">${st ? esc(st.name) : 'Unknown'}</p>
+            <p class="text-[10px] text-zinc-500">Roll: ${st ? esc(st.roll) : 'N/A'}</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span class="text-emerald-500 font-bold text-lg">${r.score}</span>
+          <span class="text-zinc-500 text-xs">/ ${r.total} pts</span>
+        </div>
+      </div>
+    `;
+  }).join('') || '<p class="text-xs text-zinc-600">No results available yet.</p>';
+
+  return `
+    <div class="flex items-center gap-4 mb-6">
+      <button onclick="S.showLdBd=null;nav('online-exams')" class="btn btn-g btn-sm w-8 h-8 p-0 flex items-center justify-center rounded-full">${ic('arrow-left', 'w-4 h-4')}</button>
+      <div>
+        <h1 class="text-xl font-bold text-white">Leaderboard</h1>
+        <p class="text-xs text-zinc-500">${esc(e.title)}</p>
+      </div>
+    </div>
+    <div class="card max-w-2xl" style="transform:none!important">
+      ${html}
     </div>
   `;
 }
 
 // ══════════ TEACHER VIEWS ══════════
 function tView() {
-  return { dashboard: tDash, timetable: tTT, attendance: tAtt, notes: tNt, questions: tQ, homework: tHW, exams: tEx, notices: tNc, students: tSt }[S.view] || tDash();
+  const views = { dashboard: tDash, timetable: tTT, attendance: tAtt, notes: tNt, questions: tQ, homework: tHW, exams: tEx, notices: tNc, students: tSt, 'online-exams': tOEx };
+  return (views[S.view] || tDash)();
 }
 
 function tDash() {
@@ -1081,7 +1297,7 @@ function tDash() {
     <div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div class="w-8 h-8 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs flex-shrink-0">${esc(q.nm.charAt(0))}</div>
       <div class="min-w-0 flex-1">
-        <p class="text-xs font-semibold">${esc(q.nm)}</p>
+        <p class="text-xs font-semibold text-white">${esc(q.nm)}</p>
         <p class="text-[11px] text-zinc-600 truncate">${esc(q.q)}</p>
       </div>
       ${!q.replies.length ? '<span class="bt bt-r ml-auto flex-shrink-0">New</span>' : '<span class="bt bt-g ml-auto flex-shrink-0">Replied</span>'}
@@ -1098,38 +1314,38 @@ function tDash() {
 
   return `
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-xl font-bold">Welcome, ${esc(S.user.name.split(' ').pop())} 📚</h1>
+      <h1 class="text-xl font-bold text-white">Welcome, ${esc(S.user.name.split(' ').pop())} 📚</h1>
       <span class="bt bt-pu">${esc(ms)}</span>
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       <div class="stat-card">
         <div class="ico bg-indigo-500/10 text-indigo-400 mb-3">${ic('users')}</div>
-        <p class="text-2xl font-bold">${DB.students.length}</p>
+        <p class="text-2xl font-bold text-white">${DB.students.length}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Students</p>
       </div>
       <div class="stat-card">
         <div class="ico bg-amber-500/10 text-amber-400 mb-3">${ic('message-circle')}</div>
-        <p class="text-2xl font-bold">${uq}</p>
+        <p class="text-2xl font-bold text-white">${uq}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Unanswered Qs</p>
       </div>
       <div class="stat-card">
         <div class="ico bg-emerald-500/10 text-emerald-400 mb-3">${ic('file-text')}</div>
-        <p class="text-2xl font-bold">${mn}</p>
+        <p class="text-2xl font-bold text-white">${mn}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Notes</p>
       </div>
       <div class="stat-card">
         <div class="ico bg-red-500/10 text-red-400 mb-3">${ic('calendar')}</div>
-        <p class="text-2xl font-bold">${DB.timetable[0].p.length}</p>
+        <p class="text-2xl font-bold text-white">${DB.timetable[0].p.length}</p>
         <p class="text-[10px] text-zinc-600 mt-1">Daily Periods</p>
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <div class="card">
-        <h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('message-circle', 'w-4 h-4 text-amber-400')}Recent Questions</h3>
+        <h3 class="text-sm font-bold mb-4 flex items-center gap-2 text-white">${ic('message-circle', 'w-4 h-4 text-amber-400')}Recent Questions</h3>
         <div class="space-y-3">${qHtml}</div>
       </div>
       <div class="card">
-        <h3 class="text-sm font-bold mb-4 flex items-center gap-2">${ic('users', 'w-4 h-4 text-indigo-400')}Class X-A</h3>
+        <h3 class="text-sm font-bold mb-4 flex items-center gap-2 text-white">${ic('users', 'w-4 h-4 text-indigo-400')}Class X-A</h3>
         <div class="space-y-2">
           ${stHtml}
           <p class="text-[11px] text-zinc-700 mt-2">+${DB.students.length - 5} more</p>
@@ -1156,7 +1372,7 @@ function tTT() {
   `).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('calendar', 'w-5 h-5 text-indigo-400')}Timetable</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('calendar', 'w-5 h-5 text-indigo-400')}Timetable</h1>
     <div class="card mb-6" style="transform:none!important">
       <div class="tw">
         <table>
@@ -1180,7 +1396,7 @@ function tAtt() {
         <div class="flex items-center gap-3">
           <div class="w-8 h-8 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-xs">${esc(s.name.charAt(0))}</div>
           <div>
-            <p class="text-xs font-semibold">${esc(s.name)}</p>
+            <p class="text-xs font-semibold text-white">${esc(s.name)}</p>
             <p class="text-[10px] text-zinc-700">Roll ${esc(s.roll)}</p>
           </div>
         </div>
@@ -1194,7 +1410,7 @@ function tAtt() {
   }).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('user-check', 'w-5 h-5 text-indigo-400')}Take Attendance</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('user-check', 'w-5 h-5 text-indigo-400')}Take Attendance</h1>
     <div class="card mb-6" style="transform:none!important">
       <div class="flex flex-col sm:flex-row gap-3 mb-5">
         <div>
@@ -1230,7 +1446,7 @@ function tNt() {
     <div class="flex items-center gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div class="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center flex-shrink-0">${ic('file-text', 'w-4 h-4 text-indigo-400')}</div>
       <div class="flex-1 min-w-0">
-        <p class="text-xs font-semibold truncate">${esc(n.title)}</p>
+        <p class="text-xs font-semibold truncate text-white">${esc(n.title)}</p>
         <p class="text-[10px] text-zinc-700">${esc(n.ch)} · ${n.sz} · ${fmt(n.date)}</p>
       </div>
       <button onclick="toast('Download (demo)')" class="btn btn-g btn-sm">${ic('download', 'w-3 h-3')}</button>
@@ -1238,10 +1454,10 @@ function tNt() {
   `).join('') || '<p class="text-xs text-zinc-600">No notes yet</p>';
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-text', 'w-5 h-5 text-indigo-400')}Upload Notes</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('file-text', 'w-5 h-5 text-indigo-400')}Upload Notes</h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">Upload New</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">Upload New</h3>
         <div class="space-y-3">
           <div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="nt-ti" class="input" placeholder="Chapter 5 Notes"></div>
           <div><label class="block text-xs text-zinc-500 mb-1">Chapter</label><input id="nt-ch" class="input" placeholder="Ch 5"></div>
@@ -1253,7 +1469,7 @@ function tNt() {
         </div>
       </div>
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">My Uploads (${mn.length})</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">My Uploads (${mn.length})</h3>
         <div class="space-y-3">${html}</div>
       </div>
     </div>
@@ -1283,7 +1499,7 @@ function tQ() {
       <div class="flex items-center gap-3 mb-3">
         <div class="w-9 h-9 rounded-full bg-indigo-600/20 flex items-center justify-center text-indigo-400 font-bold text-sm">${esc(q.nm.charAt(0))}</div>
         <div>
-          <p class="text-sm font-semibold">${esc(q.nm)}</p>
+          <p class="text-sm font-semibold text-white">${esc(q.nm)}</p>
           <p class="text-[10px] text-zinc-700">${esc(q.sub)} · ${fmt(q.d)}</p>
         </div>
         ${!q.replies.length ? '<span class="bt bt-r ml-auto">Needs Reply</span>' : '<span class="bt bt-g ml-auto">Replied</span>'}
@@ -1302,7 +1518,7 @@ function tQ() {
     </div>
   `).join('') || `<div class="card" style="transform:none!important"><p class="text-sm text-zinc-600 text-center py-8">No questions for ${esc(S.user.subject)}</p></div>`;
   
-  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('message-circle', 'w-5 h-5 text-indigo-400')}Student Questions</h1><div class="space-y-4">${html}</div>`;
+  return `<h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('message-circle', 'w-5 h-5 text-indigo-400')}Student Questions</h1><div class="space-y-4">${html}</div>`;
 }
 function repQ(qid) {
   const r = $('rp-' + qid).value.trim();
@@ -1321,7 +1537,7 @@ function tHW() {
   let html = mh.map(h => `
     <div class="p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div class="flex justify-between mb-1">
-        <p class="text-xs font-semibold">${esc(h.title)}</p>
+        <p class="text-xs font-semibold text-white">${esc(h.title)}</p>
         ${hs(h.status)}
       </div>
       <p class="text-[11px] text-zinc-600">Due: ${fmt(h.due)}</p>
@@ -1329,10 +1545,10 @@ function tHW() {
   `).join('') || '<p class="text-xs text-zinc-600">None yet</p>';
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('book-open', 'w-5 h-5 text-indigo-400')}Assign Homework</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('book-open', 'w-5 h-5 text-indigo-400')}Assign Homework</h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">New Assignment</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">New Assignment</h3>
         <div class="space-y-3">
           <div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="hw-ti" class="input" placeholder="Ch 5 Exercise"></div>
           <div><label class="block text-xs text-zinc-500 mb-1">Description</label><textarea id="hw-ds" class="input" placeholder="Details..."></textarea></div>
@@ -1341,7 +1557,7 @@ function tHW() {
         </div>
       </div>
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">Assigned (${mh.length})</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">Assigned (${mh.length})</h3>
         <div class="space-y-3">${html}</div>
       </div>
     </div>
@@ -1369,7 +1585,7 @@ function tEx() {
   let html = me.map(e => `
     <div class="flex items-center justify-between p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div>
-        <p class="text-xs font-semibold">${esc(e.ch)}</p>
+        <p class="text-xs font-semibold text-white">${esc(e.ch)}</p>
         <p class="text-[10px] text-zinc-700">${fmt(e.date)} · ${esc(e.time)} · ${esc(e.room)}</p>
       </div>
       <span class="bt bt-pu">${esc(e.type)}</span>
@@ -1377,9 +1593,9 @@ function tEx() {
   `).join('') || '<p class="text-xs text-zinc-600">None</p>';
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('file-check', 'w-5 h-5 text-indigo-400')}Exam Schedule</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('file-check', 'w-5 h-5 text-indigo-400')}Exam Schedule</h1>
     <div class="card mb-6" style="transform:none!important">
-      <h3 class="text-sm font-bold mb-4">Schedule New Exam</h3>
+      <h3 class="text-sm font-bold mb-4 text-white">Schedule New Exam</h3>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div><label class="block text-xs text-zinc-500 mb-1">Chapters</label><input id="ex-ch" class="input" placeholder="Ch 1-5"></div>
         <div><label class="block text-xs text-zinc-500 mb-1">Date</label><input id="ex-dt" type="date" class="input"></div>
@@ -1394,7 +1610,7 @@ function tEx() {
       <button onclick="adEx()" class="btn btn-p btn-sm mt-4">Schedule</button>
     </div>
     <div class="card" style="transform:none!important">
-      <h3 class="text-sm font-bold mb-4">${esc(S.user.subject)} Exams</h3>
+      <h3 class="text-sm font-bold mb-4 text-white">${esc(S.user.subject)} Exams</h3>
       <div class="space-y-3">${html}</div>
     </div>
   `;
@@ -1417,22 +1633,101 @@ function adEx() {
   nav('exams');
 }
 
+// ══════════ ONLINE EXAMS (TEACHER) ══════════
+function tOEx() {
+  const myExams = DB.onlineExams.filter(e => e.sub === S.user.subject);
+  
+  let html = myExams.map(e => `
+    <div class="card mb-4" style="transform:none!important">
+      <div class="flex justify-between items-center mb-1">
+        <h3 class="text-sm font-bold text-white">${esc(e.title)}</h3>
+        <span class="bt bt-pu">${e.questions.length} Qs</span>
+      </div>
+      <p class="text-[10px] text-zinc-500 mb-4">Date: ${fmt(e.date)} · Duration: ${e.dur} mins</p>
+      
+      <div class="border-t border-white/5 pt-4">
+        <h4 class="text-xs font-semibold mb-2 text-white">Add Question</h4>
+        <input id="oq-${e.id}" class="input mb-2 py-2" placeholder="Enter question text...">
+        <div class="grid grid-cols-2 gap-2 mb-2">
+          <input id="o0-${e.id}" class="input py-1.5" placeholder="Option 1">
+          <input id="o1-${e.id}" class="input py-1.5" placeholder="Option 2">
+          <input id="o2-${e.id}" class="input py-1.5" placeholder="Option 3">
+          <input id="o3-${e.id}" class="input py-1.5" placeholder="Option 4">
+        </div>
+        <div class="flex gap-2">
+          <select id="oa-${e.id}" class="input py-1.5 flex-1">
+            <option value="0">Correct Ans: Option 1</option>
+            <option value="1">Correct Ans: Option 2</option>
+            <option value="2">Correct Ans: Option 3</option>
+            <option value="3">Correct Ans: Option 4</option>
+          </select>
+          <button onclick="addOQ(${e.id})" class="btn btn-p btn-sm px-6">Add</button>
+        </div>
+      </div>
+    </div>
+  `).join('') || '<p class="text-xs text-zinc-600">No online exams created yet.</p>';
+
+  return `
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('monitor-play', 'w-5 h-5 text-indigo-400')}Manage Online Exams</h1>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card" style="transform:none!important">
+        <h3 class="text-sm font-bold mb-4 text-white">Create New Exam</h3>
+        <div class="space-y-3">
+          <div><label class="block text-xs text-zinc-500 mb-1">Exam Title</label><input id="oe-ti" class="input" placeholder="e.g., Chapter 1 Quiz"></div>
+          <div><label class="block text-xs text-zinc-500 mb-1">Date Available</label><input id="oe-dt" type="date" class="input"></div>
+          <div><label class="block text-xs text-zinc-500 mb-1">Duration (Minutes)</label><input id="oe-du" type="number" class="input" value="15"></div>
+          <button onclick="addOEx()" class="btn btn-p btn-sm w-full justify-center">Create Exam Set</button>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-bold mb-4 text-white">My Created Exams</h3>
+        ${html}
+      </div>
+    </div>
+  `;
+}
+
+function addOEx() {
+  const t = $('oe-ti').value.trim();
+  const d = $('oe-dt').value;
+  const du = $('oe-du').value;
+  if (!t || !d || !du) return toast('Please fill all fields');
+  DB.onlineExams.push({ id: DB.onlineExams.length + 1, sub: S.user.subject, title: t, date: d, dur: du, questions: [] });
+  toast('Online Exam Set Created!');
+  nav('online-exams');
+}
+
+function addOQ(eid) {
+  const q = $('oq-'+eid).value.trim();
+  const o0 = $('o0-'+eid).value.trim();
+  const o1 = $('o1-'+eid).value.trim();
+  const o2 = $('o2-'+eid).value.trim();
+  const o3 = $('o3-'+eid).value.trim();
+  const ans = parseInt($('oa-'+eid).value);
+  if (!q || !o0 || !o1 || !o2 || !o3) return toast('Please fill question and all options');
+  
+  const ex = DB.onlineExams.find(x => x.id === eid);
+  ex.questions.push({ q, opts: [o0, o1, o2, o3], ans });
+  toast('Question Added to Paper!');
+  nav('online-exams');
+}
+
 function tNc() {
   let html = DB.notices.map(n => `
     <div class="flex items-start gap-3 p-3 rounded-lg bg-white/[.02] border border-white/[.04]">
       <div class="w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${n.imp ? 'bg-red-500' : 'bg-zinc-700'}"></div>
       <div>
-        <p class="text-xs font-semibold">${esc(n.title)}</p>
+        <p class="text-xs font-semibold text-white">${esc(n.title)}</p>
         <p class="text-[10px] text-zinc-700">${fmt(n.date)} · ${esc(n.by)}</p>
       </div>
     </div>
   `).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('bell', 'w-5 h-5 text-indigo-400')}Notices</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('bell', 'w-5 h-5 text-indigo-400')}Notices</h1>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">Post Notice</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">Post Notice</h3>
         <div class="space-y-3">
           <div><label class="block text-xs text-zinc-500 mb-1">Title</label><input id="nc-ti" class="input" placeholder="Notice title"></div>
           <div><label class="block text-xs text-zinc-500 mb-1">Message</label><textarea id="nc-ms" class="input" placeholder="Details..."></textarea></div>
@@ -1444,7 +1739,7 @@ function tNc() {
         </div>
       </div>
       <div class="card" style="transform:none!important">
-        <h3 class="text-sm font-bold mb-4">All Notices (${DB.notices.length})</h3>
+        <h3 class="text-sm font-bold mb-4 text-white">All Notices (${DB.notices.length})</h3>
         <div class="space-y-3">${html}</div>
       </div>
     </div>
@@ -1482,7 +1777,7 @@ function tSt() {
   `).join('');
 
   return `
-    <h1 class="text-xl font-bold mb-6 flex items-center gap-2">${ic('users', 'w-5 h-5 text-indigo-400')}Students</h1>
+    <h1 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">${ic('users', 'w-5 h-5 text-indigo-400')}Students</h1>
     <div class="card mb-4" style="transform:none!important">
       <div class="flex flex-col sm:flex-row gap-3">
         <input id="st-sr" class="input flex-1" placeholder="Search students..." oninput="filSt()">

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DentalCare Pro — Advanced Dental Clinic & Implant Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config={theme:{extend:{colors:{teal:{50:'#F0FDFA',100:'#CCFBF1',200:'#99F6E4',300:'#5EEAD4',400:'#2DD4BF',500:'#14B8A6',600:'#0D9488',700:'#0F766E',800:'#115E59',900:'#134E4A'},coral:'#E8734A','coral-light':'#FDE8E0','coral-dark':'#C45A32',sand:'#F8F6F3','sand-dark':'#EFECE7',charcoal:'#1A1D21','charcoal-mid':'#4A4E54','gray-warm':'#8A8580','gray-light':'#C4BFB8'},fontFamily:{sans:['DM Sans','sans-serif'],serif:['Playfair Display','serif']}}}}
+    </script>
+    <style>
+        *{scroll-behavior:smooth}
+        body{font-family:'DM Sans',sans-serif;background:#fff;color:#1A1D21}
+        .reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.22,1,.36,1)}
+        .reveal.vis{opacity:1;transform:translateY(0)}
+        .reveal-l{opacity:0;transform:translateX(-45px);transition:all .8s cubic-bezier(.22,1,.36,1)}
+        .reveal-l.vis{opacity:1;transform:translateX(0)}
+        .reveal-r{opacity:0;transform:translateX(45px);transition:all .8s cubic-bezier(.22,1,.36,1)}
+        .reveal-r.vis{opacity:1;transform:translateX(0)}
+        .d1{transition-delay:.1s!important}.d2{transition-delay:.2s!important}.d3{transition-delay:.3s!important}.d4{transition-delay:.4s!important}.d5{transition-delay:.5s!important}.d6{transition-delay:.6s!important}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+        .fl{animation:float 5s ease-in-out infinite}.fl2{animation:float 5s ease-in-out infinite;animation-delay:.6s}
+        @keyframes scrollB{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(8px);opacity:.3}}
+        .scroll-ind{animation:scrollB 2s ease-in-out infinite}
+        .text-grad{background:linear-gradient(135deg,#0F766E,#0D9488);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .nav-scrolled{background:rgba(255,255,255,.97)!important;backdrop-filter:blur(20px);box-shadow:0 1px 25px rgba(0,0,0,.05)}
+        .deco-l{width:45px;height:2px;background:linear-gradient(90deg,#E8734A,transparent);border-radius:2px}
+        .blob{border-radius:40% 60% 55% 45%/55% 40% 60% 45%;filter:blur(70px);opacity:.08}
+        .img-z{transition:transform .8s cubic-bezier(.22,1,.36,1)}.img-z:hover{transform:scale(1.05)}
+        .modal-ov{opacity:0;pointer-events:none;transition:opacity .35s}
+        .modal-ov.open{opacity:1;pointer-events:all}
+        .modal-ct{transform:translateY(30px) scale(.97);transition:all .45s cubic-bezier(.22,1,.36,1)}
+        .modal-ov.open .modal-ct{transform:translateY(0) scale(1)}
+        .mob-menu{transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1)}
+        .mob-menu.open{transform:translateX(0)}
+        @keyframes toastIn{from{opacity:0;transform:translateY(-15px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .toast-a{animation:toastIn .35s ease-out}
+        .faq-bd{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.22,1,.36,1)}
+        .faq-bd.open{max-height:350px}
+        .faq-ch{transition:transform .3s}.faq-ch.open{transform:rotate(180deg)}
+        .slot-btn{transition:all .25s}.slot-btn:hover:not(.unavailable){border-color:#0F766E;background:#F0FDFA}
+        .slot-btn.selected{background:#0F766E!important;color:#fff!important;border-color:#0F766E!important}
+        .slot-btn.unavailable{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+        .cal-day{transition:all .2s}.cal-day:hover:not(.disabled):not(.empty){background:#F0FDFA;border-color:#0D9488}
+        .cal-day.selected{background:#0F766E!important;color:#fff!important;border-color:#0F766E!important}
+        .cal-day.disabled{opacity:.3;cursor:not-allowed}
+        .cal-day.empty{cursor:default}
+        .service-card{transition:all .45s cubic-bezier(.22,1,.36,1)}
+        .service-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px -12px rgba(15,118,110,.12)}
+        @keyframes pulse-ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.6);opacity:0}}
+        .pulse-live::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:#22C55E;animation:pulse-ring 1.5s ease-out infinite}
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+<div id="toast-box" class="fixed top-6 right-6 z-[300] flex flex-col gap-3"></div>
+
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="flex items-center justify-between py-4">
+            <a href="#home" class="flex items-center gap-2.5">
+                <div class="w-10 h-10 bg-teal-700 rounded-xl flex items-center justify-center"><i data-lucide="cross" class="w-5 h-5 text-white"></i></div>
+                <div><span class="text-lg font-bold text-charcoal tracking-tight">DentalCare</span><span class="block text-[8px] uppercase tracking-[0.2em] text-gray-warm -mt-0.5">Pro Clinic</span></div>
+            </a>
+            <div class="hidden lg:flex items-center gap-7">
+                <a href="#home" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Home</a>
+                <a href="#services" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Services</a>
+                <a href="#doctors" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Doctors</a>
+                <a href="#equipment" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Technology</a>
+                <a href="#feedback" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Reviews</a>
+                <a href="#contact" class="text-[13px] font-medium text-charcoal-mid hover:text-teal-700 transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="tel:+911234567890" class="hidden md:flex items-center gap-2 text-sm text-gray-warm hover:text-teal-700 transition-colors"><i data-lucide="phone" class="w-4 h-4"></i><span class="text-xs font-medium">+91 12345 67890</span></a>
+                <a href="#book" class="hidden md:inline-flex items-center gap-2 bg-coral text-white px-5 py-2.5 rounded-full text-[13px] font-semibold hover:bg-teal-700 transition-all duration-300">Book Appointment</a>
+                <button id="mob-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200"><i data-lucide="menu" class="w-5 h-5"></i></button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="mob-menu" class="mob-menu fixed inset-0 z-[100] bg-white">
+    <div class="p-6 h-full flex flex-col">
+        <div class="flex items-center justify-between mb-10"><span class="text-lg font-bold">DentalCare Pro</span><button id="mob-close" class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200"><i data-lucide="x" class="w-5 h-5"></i></button></div>
+        <div class="flex flex-col gap-1 flex-1">
+            <a href="#home" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Home</a>
+            <a href="#services" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Services</a>
+            <a href="#doctors" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Doctors</a>
+            <a href="#equipment" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Technology</a>
+            <a href="#feedback" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Reviews</a>
+            <a href="#contact" class="ml text-2xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-teal-700 mob-link">Contact</a>
+        </div>
+        <a href="#book" class="mob-link block text-center bg-coral text-white py-4 rounded-full font-semibold">Book Appointment</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="absolute inset-0"><img src="https://picsum.photos/seed/dental-hero-clinic/1920/1080.jpg" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-r from-white via-white/93 to-white/30"></div><div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/20"></div></div>
+    <div class="blob absolute top-20 right-40 w-[500px] h-[500px] bg-teal-600 hidden lg:block"></div>
+    <div class="relative max-w-[1800px] mx-auto px-6 lg:px-14 py-32 lg:py-0 w-full">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-teal-50 text-teal-700 px-4 py-2 rounded-full text-sm font-medium mb-8 reveal"><span class="relative w-2 h-2 bg-green-500 rounded-full pulse-live"></span>NABH Accredited · ISO 9001:2015</div>
+                <h1 class="font-serif text-5xl md:text-6xl lg:text-[4.2rem] font-bold text-charcoal leading-[1.08] tracking-tight mb-7 reveal d1">Your Smile, Our <span class="relative inline-block"><span class="text-grad italic">Passion</span><svg class="absolute -bottom-2 left-0 w-full" height="10" viewBox="0 0 200 10" fill="none"><path d="M2 8C50 3 150 3 198 8" stroke="#E8734A" stroke-width="2.5" stroke-linecap="round"/></svg></span></h1>
+                <p class="text-lg text-gray-warm leading-relaxed max-w-lg mb-10 reveal d2">Advanced dental care with cutting-edge technology, expert specialists, and a gentle touch. From routine cleanings to full-mouth implants — experience dentistry like never before.</p>
+                <div class="flex flex-wrap gap-4 mb-14 reveal d3">
+                    <a href="#book" class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full font-semibold hover:bg-teal-700 transition-all duration-400 group">Book Appointment <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i></a>
+                    <a href="#services" class="inline-flex items-center gap-2 bg-white border-2 border-charcoal/10 text-charcoal px-7 py-4 rounded-full font-semibold hover:border-teal-700 hover:bg-teal-700 hover:text-white transition-all duration-400">Our Services</a>
+                </div>
+                <div class="grid grid-cols-3 gap-6 reveal d4">
+                    <div><div class="text-3xl font-bold text-charcoal" data-count="25">0</div><div class="text-xs text-gray-warm mt-1">Years Experience</div></div>
+                    <div class="border-l border-gray-200 pl-6"><div class="text-3xl font-bold text-charcoal" data-count="50000">0</div><div class="text-xs text-gray-warm mt-1">Happy Patients</div></div>
+                    <div class="border-l border-gray-200 pl-6"><div class="text-3xl font-bold text-charcoal" data-count="15">0</div><div class="text-xs text-gray-warm mt-1">Specialist Doctors</div></div>
+                </div>
+            </div>
+            <div class="hidden lg:block relative h-[580px] reveal-r">
+                <div class="absolute top-0 right-0 w-[340px] h-[440px] rounded-[2rem] overflow-hidden shadow-2xl fl"><img src="https://picsum.photos/seed/dental-smile-patient/680/880.jpg" class="w-full h-full object-cover img-z"></div>
+                <div class="absolute bottom-0 left-0 w-[260px] h-[260px] rounded-[2rem] overflow-hidden shadow-2xl fl2"><img src="https://picsum.photos/seed/dental-chair-modern/520/520.jpg" class="w-full h-full object-cover img-z"></div>
+                <div class="absolute top-1/2 left-1/3 -translate-y-1/2 bg-white rounded-2xl p-4 shadow-xl"><div class="flex items-center gap-3"><div class="flex gap-0.5"><i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-4 h-4 text-amber-400 fill-amber-400"></i></div><div><div class="text-sm font-bold text-charcoal">4.9/5 Rating</div><div class="text-[11px] text-gray-warm">2,800+ Google Reviews</div></div></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-ind hidden md:block"><div class="w-7 h-11 border-2 border-charcoal/20 rounded-full flex justify-center pt-2"><div class="w-1.5 h-2.5 bg-teal-600 rounded-full"></div></div></div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="py-4 bg-teal-700"><div class="max-w-[1800px] mx-auto px-6 lg:px-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-white/80 text-sm"><span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-teal-300"></i>NABH Accredited</span><span class="flex items-center gap-2"><i data-lucide="award" class="w-4 h-4 text-teal-300"></i>ISO 9001:2015</span><span class="flex items-center gap-2"><i data-lucide="sparkles" class="w-4 h-4 text-teal-300"></i>Digital X-Ray</span><span class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-teal-300"></i>Laser Dentistry</span><span class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-teal-300"></i>Open 7 Days</span><span class="flex items-center gap-2"><i data-lucide="credit-card" class="w-4 h-4 text-teal-300"></i>Insurance Accepted</span></div></div>
+
+<!-- SERVICES -->
+<section id="services" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="blob absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-teal-600"></div>
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal"><div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Our Services</span><div class="deco-l" style="transform:rotate(180deg)"></div></div><h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight">Comprehensive Dental <span class="text-grad italic">Care</span></h2><p class="text-gray-warm text-lg mt-4">From preventive care to complex rehabilitations — every treatment under one roof by specialists you can trust.</p></div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d1"><div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-5"><i data-lucide="scan" class="w-7 h-7 text-teal-700"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Dental Implants</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Titanium root replacements that look, feel, and function like natural teeth. Single implants, All-on-4, All-on-6, and full-arch rehabilitation with Nobel Biocare & Straumann systems.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Single Implant</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">All-on-4</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Immediate Load</span></div><div class="text-sm"><span class="text-gray-light line-through">₹45,000</span> <span class="text-xl font-bold text-charcoal">₹25,000</span> <span class="text-gray-warm text-xs">onwards</span></div></div>
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d2"><div class="w-14 h-14 bg-coral-light rounded-2xl flex items-center justify-center mb-5"><i data-lucide="sparkles" class="w-7 h-7 text-coral"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Teeth Whitening</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Professional in-office whitening using LED-accelerated Zoom! technology. Up to 8 shades lighter in a single 60-minute session. Also available: custom take-home whitening trays.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Zoom Whitening</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Laser Whitening</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Take-Home Kit</span></div><div class="text-sm"><span class="text-gray-light line-through">₹15,000</span> <span class="text-xl font-bold text-charcoal">₹8,999</span> <span class="text-gray-warm text-xs">per session</span></div></div>
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d3"><div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-5"><i data-lucide="smile" class="w-7 h-7 text-teal-700"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Braces & Aligners</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Metal braces, ceramic braces, and clear aligners (Invisalign partner clinic). 3D digital treatment planning with predictable results. Treatment for adults and children.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Metal Braces</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Ceramic</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Invisalign</span></div><div class="text-sm"><span class="text-gray-light line-through">₹80,000</span> <span class="text-xl font-bold text-charcoal">₹35,000</span> <span class="text-gray-warm text-xs">onwards</span></div></div>
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d1"><div class="w-14 h-14 bg-coral-light rounded-2xl flex items-center justify-center mb-5"><i data-lucide="crown" class="w-7 h-7 text-coral"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Crowns & Bridges</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Zirconia, E-max, and PFM crowns with CAD/CAM precision. Same-day crowns using CEREC technology. Fixed bridges to replace missing teeth with natural-looking results.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Zirconia</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">E-max</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Same-Day CEREC</span></div><div class="text-sm"><span class="text-gray-light line-through">₹12,000</span> <span class="text-xl font-bold text-charcoal">₹5,500</span> <span class="text-gray-warm text-xs">per crown</span></div></div>
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d2"><div class="w-14 h-14 bg-teal-50 rounded-2xl flex items-center justify-center mb-5"><i data-lucide="heart" class="w-7 h-7 text-teal-700"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Root Canal (RCT)</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Painless single-sitting root canals using rotary endodontics and apex locators. Microscopic RCT for complex cases. 95%+ success rate with our specialists.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Single Sitting</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Microscopic RCT</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Retreatment</span></div><div class="text-sm"><span class="text-gray-light line-through">₹8,000</span> <span class="text-xl font-bold text-charcoal">₹4,500</span> <span class="text-gray-warm text-xs">per tooth</span></div></div>
+            <div class="service-card bg-white rounded-2xl border border-gray-100 p-7 reveal d3"><div class="w-14 h-14 bg-coral-light rounded-2xl flex items-center justify-center mb-5"><i data-lucide="baby" class="w-7 h-7 text-coral"></i></div><h3 class="text-lg font-bold text-charcoal mb-2">Pediatric Dentistry</h3><p class="text-gray-warm text-sm leading-relaxed mb-4">Gentle, fear-free dental care for children. Fluoride treatments, sealants, pulpotomies, space maintainers, and habit-breaking appliances. Kid-friendly environment with dedicated play area.</p><div class="flex flex-wrap gap-2 mb-4"><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Fluoride</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Sealants</span><span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid">Habit Breaking</span></div><div class="text-sm"><span class="text-gray-light line-through">₹2,000</span> <span class="text-xl font-bold text-charcoal">₹800</span> <span class="text-gray-warm text-xs">onwards</span></div></div>
+        </div>
+        <div class="text-center mt-10 reveal"><p class="text-gray-warm text-sm">Also offering: <span class="font-medium text-charcoal">Dentures · Gum Treatment · Wisdom Tooth Extraction · Smile Design · Full Mouth Rehabilitation · Night Guards · TMJ Treatment</span></p></div>
+    </div>
+</section>
+
+<!-- EQUIPMENT & TECHNOLOGY -->
+<section id="equipment" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal"><div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Our Technology</span><div class="deco-l" style="transform:rotate(180deg)"></div></div><h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight">State-of-the-Art <span class="text-grad italic">Equipment</span></h2><p class="text-gray-warm text-lg mt-4">We invest in the latest dental technology to ensure precise diagnosis, comfortable treatment, and superior results.</p></div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-2xl p-6 reveal d1"><div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4"><i data-lucide="scan-line" class="w-6 h-6 text-teal-700"></i></div><h4 class="font-bold text-charcoal mb-2">3D CBCT Scanner</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Cone Beam Computed Tomography for 3D imaging of jaws, teeth, nerves, and sinuses. Essential for implant planning and complex cases.</p><div class="text-[11px] text-teal-700 font-medium bg-teal-50 px-2 py-1 rounded inline-block">Carestream CS 9600</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d2"><div class="w-12 h-12 bg-coral-light rounded-xl flex items-center justify-center mb-4"><i data-lucide="microscope" class="w-6 h-6 text-coral"></i></div><h4 class="font-bold text-charcoal mb-2">Dental Microscope</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">16x magnification for root canals and microsurgery. See canals invisible to the naked eye for higher success rates.</p><div class="text-[11px] text-coral font-medium bg-coral-light px-2 py-1 rounded inline-block">Zeiss EXTARO 300</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d3"><div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4"><i data-lucide="printer" class="w-6 h-6 text-teal-700"></i></div><h4 class="font-bold text-charcoal mb-2">CEREC CAD/CAM</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Same-day crowns, veneers, and inlays. Digital impression → design → mill → fit — all in one visit. No messy molds.</p><div class="text-[11px] text-teal-700 font-medium bg-teal-50 px-2 py-1 rounded inline-block">Dentsply Sirona CEREC MC XL</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d4"><div class="w-12 h-12 bg-coral-light rounded-xl flex items-center justify-center mb-4"><i data-lucide="zap" class="w-6 h-6 text-coral"></i></div><h4 class="font-bold text-charcoal mb-2">Laser System</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Painless soft tissue procedures, gum contouring, and bacteria reduction. Faster healing, less bleeding, no sutures.</p><div class="text-[11px] text-coral font-medium bg-coral-light px-2 py-1 rounded inline-block">Biolase Epic X</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d1"><div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4"><i data-lucide="camera" class="w-6 h-6 text-teal-700"></i></div><h4 class="font-bold text-charcoal mb-2">Intraoral Scanner</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Digital impressions replacing traditional molds. Comfortable, fast, and extremely accurate for aligners and crowns.</p><div class="text-[11px] text-teal-700 font-medium bg-teal-50 px-2 py-1 rounded inline-block">Trios 3Shape</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d2"><div class="w-12 h-12 bg-coral-light rounded-xl flex items-center justify-center mb-4"><i data-lucide="image" class="w-6 h-6 text-coral"></i></div><h4 class="font-bold text-charcoal mb-2">Digital X-Ray</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">90% less radiation than traditional X-rays. Instant images with RVG sensors for precise diagnosis of cavities and bone loss.</p><div class="text-[11px] text-coral font-medium bg-coral-light px-2 py-1 rounded inline-block">Kodak RVG 6100</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d3"><div class="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center mb-4"><i data-lucide="grid-3x3" class="w-6 h-6 text-teal-700"></i></div><h4 class="font-bold text-charcoal mb-2">3D Printer</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Print surgical guides for implant placement, models for aligner planning, and temporary prosthetics with sub-millimeter accuracy.</p><div class="text-[11px] text-teal-700 font-medium bg-teal-50 px-2 py-1 rounded inline-block">Formlabs Form 3B</div></div>
+            <div class="bg-white rounded-2xl p-6 reveal d4"><div class="w-12 h-12 bg-coral-light rounded-xl flex items-center justify-center mb-4"><i data-lucide="monitor" class="w-6 h-6 text-coral"></i></div><h4 class="font-bold text-charcoal mb-2">Chairside Monitor</h4><p class="text-gray-warm text-sm leading-relaxed mb-3">Every chair has a patient-facing monitor for viewing X-rays, treatment plans, and before/after photos during consultation.</p><div class="text-[11px] text-coral font-medium bg-coral-light px-2 py-1 rounded inline-block">22" HD + Patient Education Software</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- DOCTORS -->
+<section id="doctors" class="py-24 md:py-32">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal"><div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Our Specialists</span><div class="deco-l" style="transform:rotate(180deg)"></div></div><h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight">Meet Our <span class="text-grad italic">Doctors</span></h2></div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-7">
+            <div class="text-center group reveal d1"><div class="relative rounded-2xl overflow-hidden mb-5 aspect-[3/4]"><img src="https://picsum.photos/seed/doc-implant/500/667.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-5 gap-2"><a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a></div></div><h4 class="font-bold text-charcoal">Dr. Rajesh Sharma</h4><p class="text-sm text-teal-700 font-medium">MDS — Oral Implantology</p><p class="text-xs text-gray-warm mt-1">Implant Specialist · 18 yrs exp</p></div>
+            <div class="text-center group reveal d2"><div class="relative rounded-2xl overflow-hidden mb-5 aspect-[3/4]"><img src="https://picsum.photos/seed/doc-ortho/500/667.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-5 gap-2"><a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a></div></div><h4 class="font-bold text-charcoal">Dr. Priya Mehta</h4><p class="text-sm text-teal-700 font-medium">MDS — Orthodontics</p><p class="text-xs text-gray-warm mt-1">Braces & Aligners · 14 yrs exp</p></div>
+            <div class="text-center group reveal d3"><div class="relative rounded-2xl overflow-hidden mb-5 aspect-[3/4]"><img src="https://picsum.photos/seed/doc-endo/500/667.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-5 gap-2"><a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a></div></div><h4 class="font-bold text-charcoal">Dr. Amit Verma</h4><p class="text-sm text-teal-700 font-medium">MDS — Endodontics</p><p class="text-xs text-gray-warm mt-1">Root Canal Specialist · 12 yrs exp</p></div>
+            <div class="text-center group reveal d4"><div class="relative rounded-2xl overflow-hidden mb-5 aspect-[3/4]"><img src="https://picsum.photos/seed/doc-pedo/500/667.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"><div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-5 gap-2"><a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a></div></div><h4 class="font-bold text-charcoal">Dr. Sneha Iyer</h4><p class="text-sm text-teal-700 font-medium">MDS — Pedodontics</p><p class="text-xs text-gray-warm mt-1">Children's Dentist · 10 yrs exp</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- APPOINTMENT BOOKING -->
+<section id="book" class="py-24 md:py-32 bg-sand relative overflow-hidden">
+    <div class="blob absolute top-0 left-0 w-[400px] h-[400px] bg-teal-600"></div>
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal"><div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Book Online</span><div class="deco-l" style="transform:rotate(180deg)"></div></div><h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight">Book Your <span class="text-grad italic">Appointment</span></h2><p class="text-gray-warm text-lg mt-4">Select a date, choose a time slot, pick your doctor — all in under 2 minutes.</p></div>
+        <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-sm overflow-hidden reveal">
+            <div class="grid lg:grid-cols-3">
+                <!-- Left: Calendar + Time -->
+                <div class="lg:col-span-2 p-6 md:p-8 border-r border-gray-100">
+                    <!-- Calendar -->
+                    <h4 class="font-bold text-charcoal mb-4 flex items-center gap-2"><i data-lucide="calendar" class="w-5 h-5 text-teal-700"></i>Select Date</h4>
+                    <div class="flex items-center justify-between mb-4"><button id="cal-prev" class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button><span id="cal-month" class="font-bold text-charcoal"></span><button id="cal-next" class="w-8 h-8 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-teal-50 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button></div>
+                    <div class="grid grid-cols-7 gap-1 mb-2"><div class="text-center text-[11px] font-bold text-gray-warm py-2">Sun</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Mon</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Tue</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Wed</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Thu</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Fri</div><div class="text-center text-[11px] font-bold text-gray-warm py-2">Sat</div></div>
+                    <div id="cal-grid" class="grid grid-cols-7 gap-1 mb-6"></div>
+                    <!-- Time Slots -->
+                    <h4 class="font-bold text-charcoal mb-4 flex items-center gap-2"><i data-lucide="clock" class="w-5 h-5 text-teal-700"></i>Available Time Slots <span id="slot-date-label" class="text-sm font-normal text-gray-warm"></span></h4>
+                    <div id="slots-grid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"><p class="col-span-full text-sm text-gray-warm text-center py-6">Please select a date to see available slots</p></div>
+                </div>
+                <!-- Right: Form -->
+                <div class="p-6 md:p-8">
+                    <h4 class="font-bold text-charcoal mb-5 flex items-center gap-2"><i data-lucide="user-check" class="w-5 h-5 text-teal-700"></i>Your Details</h4>
+                    <form id="appt-form" class="space-y-4">
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Full Name *</label><input type="text" id="ap-name" required class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm" placeholder="Your full name"></div>
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Phone *</label><input type="tel" id="ap-phone" required class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm" placeholder="+91 98765 43210"></div>
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Email</label><input type="email" id="ap-email" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm" placeholder="your@email.com"></div>
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Treatment *</label><select id="ap-treatment" required class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm text-gray-warm"><option value="">Select treatment</option><option>General Checkup</option><option>Dental Implant</option><option>Teeth Whitening</option><option>Braces / Aligners</option><option>Crown / Bridge</option><option>Root Canal</option><option>Child Dental</option><option>Gum Treatment</option><option>Wisdom Tooth</option><option>Cleaning / Scaling</option><option>Other</option></select></div>
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Preferred Doctor</label><select id="ap-doctor" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm text-gray-warm"><option value="">Any available doctor</option><option>Dr. Rajesh Sharma (Implants)</option><option>Dr. Priya Mehta (Orthodontics)</option><option>Dr. Amit Verma (Root Canal)</option><option>Dr. Sneha Iyer (Children)</option></select></div>
+                        <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Notes (optional)</label><textarea id="ap-notes" rows="2" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm resize-none" placeholder="Any specific concern..."></textarea></div>
+                        <!-- Summary -->
+                        <div id="ap-summary" class="bg-teal-50 rounded-xl p-4 text-sm space-y-1.5" style="display:none">
+                            <div class="flex justify-between"><span class="text-gray-warm">Date</span><span class="font-medium text-charcoal" id="sum-date">—</span></div>
+                            <div class="flex justify-between"><span class="text-gray-warm">Time</span><span class="font-medium text-charcoal" id="sum-time">—</span></div>
+                            <div class="flex justify-between"><span class="text-gray-warm">Treatment</span><span class="font-medium text-charcoal" id="sum-treat">—</span></div>
+                        </div>
+                        <button type="submit" id="ap-submit" class="w-full bg-coral text-white py-3.5 rounded-xl font-bold hover:bg-teal-700 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" disabled><i data-lucide="calendar-check" class="w-4 h-4"></i>Confirm Appointment</button>
+                        <p class="text-center text-[11px] text-gray-warm">Free cancellation up to 2 hours before · No hidden charges</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEEDBACK -->
+<section id="feedback" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="grid lg:grid-cols-2 gap-16 items-start">
+            <div class="reveal-l">
+                <div class="flex items-center gap-3 mb-4"><div class="deco-l"></div><span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Patient Reviews</span></div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight mb-6">What Our Patients <span class="text-grad italic">Say</span></h2>
+                <div class="flex items-center gap-4 mb-6"><div class="text-5xl font-bold text-charcoal">4.9</div><div><div class="flex gap-0.5 mb-1"><i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i><i data-lucide="star" class="w-5 h-5 text-amber-400 fill-amber-400"></i></div><div class="text-sm text-gray-warm">Based on 2,847 Google Reviews</div></div></div>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3 text-sm"><span class="w-8 text-right text-gray-warm">5★</span><div class="flex-1 h-3 bg-sand rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:82%"></div></div><span class="w-10 text-gray-warm">82%</span></div>
+                    <div class="flex items-center gap-3 text-sm"><span class="w-8 text-right text-gray-warm">4★</span><div class="flex-1 h-3 bg-sand rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:12%"></div></div><span class="w-10 text-gray-warm">12%</span></div>
+                    <div class="flex items-center gap-3 text-sm"><span class="w-8 text-right text-gray-warm">3★</span><div class="flex-1 h-3 bg-sand rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:4%"></div></div><span class="w-10 text-gray-warm">4%</span></div>
+                    <div class="flex items-center gap-3 text-sm"><span class="w-8 text-right text-gray-warm">2★</span><div class="flex-1 h-3 bg-sand rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:1%"></div></div><span class="w-10 text-gray-warm">1%</span></div>
+                    <div class="flex items-center gap-3 text-sm"><span class="w-8 text-right text-gray-warm">1★</span><div class="flex-1 h-3 bg-sand rounded-full overflow-hidden"><div class="h-full bg-amber-400 rounded-full" style="width:1%"></div></div><span class="w-10 text-gray-warm">1%</span></div>
+                </div>
+                <div class="rounded-2xl overflow-hidden h-64 shadow-lg"><img src="https://picsum.photos/seed/dental-clinic-interior/800/500.jpg" class="w-full h-full object-cover img-z"></div>
+            </div>
+            <div class="reveal-r">
+                <div id="reviews-list" class="space-y-5"></div>
+                <!-- Write Review -->
+                <div class="bg-sand rounded-2xl p-6 mt-6">
+                    <h4 class="font-bold text-charcoal mb-4">Write a Review</h4>
+                    <form id="review-form" class="space-y-3">
+                        <div class="grid sm:grid-cols-2 gap-3"><input type="text" required placeholder="Your Name *" class="px-4 py-2.5 bg-white border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm"><input type="text" placeholder="Treatment (e.g., Implant)" class="px-4 py-2.5 bg-white border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm"></div>
+                        <div class="flex items-center gap-2"><span class="text-sm text-gray-warm">Rating:</span><div id="star-select" class="flex gap-1">${[1,2,3,4,5].map(i=>`<button type="button" class="star-btn text-gray-300 hover:text-amber-400 transition-colors" data-star="${i}"><i data-lucide="star" class="w-6 h-6"></i></button>`).join('')}</div></div>
+                        <textarea required rows="3" placeholder="Share your experience..." class="w-full px-4 py-2.5 bg-white border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm resize-none"></textarea>
+                        <button type="submit" class="bg-teal-700 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-800 transition-colors">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="py-24 md:py-32 bg-sand">
+    <div class="max-w-4xl mx-auto px-6 lg:px-14">
+        <div class="text-center mb-14 reveal"><h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight">Common <span class="text-grad italic">Questions</span></h2></div>
+        <div class="space-y-3 reveal d1">
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-5 text-left"><span class="font-semibold text-charcoal pr-4">Is dental implant surgery painful?</span><i data-lucide="chevron-down" class="w-5 h-5 text-teal-700 faq-ch flex-shrink-0"></i></button><div class="faq-bd px-5 pb-5"><p class="text-gray-warm text-sm leading-relaxed">Not at all. We perform implants under local anesthesia — you feel no pain during the procedure. Post-surgery, mild discomfort is managed with prescribed painkillers. Most patients return to normal activities within 1-2 days. Our advanced techniques including flapless surgery and PRF (Platelet Rich Fibrin) ensure faster healing.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-5 text-left"><span class="font-semibold text-charcoal pr-4">How long do dental implants last?</span><i data-lucide="chevron-down" class="w-5 h-5 text-teal-700 faq-ch flex-shrink-0"></i></button><div class="faq-bd px-5 pb-5"><p class="text-gray-warm text-sm leading-relaxed">With proper care, dental implants can last a lifetime. The titanium fixture fuses with your jawbone (osseointegration) becoming a permanent part of your body. The crown on top may need replacement after 10-15 years due to normal wear. We provide a 15-year warranty on Nobel Biocare implants and a lifetime warranty on Straumann.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-5 text-left"><span class="font-semibold text-charcoal pr-4">Do you accept dental insurance?</span><i data-lucide="chevron-down" class="w-5 h-5 text-teal-700 faq-ch flex-shrink-0"></i></button><div class="faq-bd px-5 pb-5"><p class="text-gray-warm text-sm leading-relaxed">Yes! We are empaneled with all major insurance providers including ICICI Lombard, Star Health, HDFC Ergo, Bajaj Allianz, New India Assurance, and many more. Our insurance desk handles all paperwork. Cashless facility is available for most corporate tie-ups. We also offer 0% EMI options through Bajaj Finserv and Simpl.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-5 text-left"><span class="font-semibold text-charcoal pr-4">What if I'm scared of dental procedures?</span><i data-lucide="chevron-down" class="w-5 h-5 text-teal-700 faq-ch flex-shrink-0"></i></button><div class="faq-bd px-5 pb-5"><p class="text-gray-warm text-sm leading-relaxed">We completely understand dental anxiety. We offer conscious sedation (laughing gas), oral sedation, and IV sedation for anxious patients. Our clinic is designed to be calming — with music, aromatherapy, and warm blankets. We also offer the "gentle start" program where your first visit is just a conversation, no treatment.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-5 text-left"><span class="font-semibold text-charcoal pr-4">How often should I visit the dentist?</span><i data-lucide="chevron-down" class="w-5 h-5 text-teal-700 faq-ch flex-shrink-0"></i></button><div class="faq-bd px-5 pb-5"><p class="text-gray-warm text-sm leading-relaxed">We recommend a check-up and cleaning every 6 months for most adults. If you have gum disease, diabetes, or are undergoing orthodontic treatment, every 3-4 months. Children should have their first dental visit by age 1, then every 6 months. Regular visits help catch problems early when they're simpler and cheaper to treat.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 md:py-32">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="bg-teal-800 rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-teal-600/30 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative grid lg:grid-cols-2 gap-16">
+                <div class="reveal-l">
+                    <span class="text-coral font-medium text-sm uppercase tracking-[0.15em]">Contact Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight mt-4 mb-6">Visit Our <span class="text-teal-300 italic">Clinic</span></h2>
+                    <p class="text-white/50 text-lg leading-relaxed mb-10">Walk in for a free consultation or call us anytime. We're open 7 days a week for your convenience.</p>
+                    <div class="space-y-5 mb-10">
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0"><i data-lucide="map-pin" class="w-5 h-5 text-teal-300"></i></div><div><div class="text-white font-medium">Address</div><div class="text-white/40 text-sm">42, MG Road, Connaught Place<br>New Delhi - 110001</div></div></div>
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0"><i data-lucide="phone" class="w-5 h-5 text-teal-300"></i></div><div><div class="text-white font-medium">Phone / WhatsApp</div><div class="text-white/40 text-sm">+91 12345 67890 · +91 98765 43210</div></div></div>
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0"><i data-lucide="clock" class="w-5 h-5 text-teal-300"></i></div><div><div class="text-white font-medium">Timings</div><div class="text-white/40 text-sm">Mon-Sat: 9:00 AM - 8:00 PM<br>Sunday: 10:00 AM - 2:00 PM</div></div></div>
+                        <div class="flex items-start gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0"><i data-lucide="mail" class="w-5 h-5 text-teal-300"></i></div><div><div class="text-white font-medium">Email</div><div class="text-white/40 text-sm">info@dentalcarepro.in</div></div></div>
+                    </div>
+                    <div class="flex gap-3"><a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-coral transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a><a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-coral transition-colors"><i data-lucide="facebook" class="w-4 h-4 text-white"></i></a><a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-coral transition-colors"><i data-lucide="youtube" class="w-4 h-4 text-white"></i></a><a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-coral transition-colors"><i data-lucide="twitter" class="w-4 h-4 text-white"></i></a></div>
+                </div>
+                <div class="reveal-r">
+                    <div class="bg-white rounded-3xl p-8">
+                        <h3 class="text-xl font-bold text-charcoal mb-1">Quick Inquiry</h3>
+                        <p class="text-gray-warm text-sm mb-6">We reply within 30 minutes</p>
+                        <form id="contact-form" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4"><input type="text" required placeholder="Name *" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm"><input type="tel" required placeholder="Phone *" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm"></div>
+                            <input type="email" placeholder="Email" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm">
+                            <textarea rows="3" placeholder="How can we help?" class="w-full px-4 py-2.5 bg-sand border-2 border-transparent rounded-xl focus:border-teal-700 focus:outline-none text-sm resize-none"></textarea>
+                            <button type="submit" class="w-full bg-teal-700 text-white py-3.5 rounded-xl font-bold hover:bg-coral transition-all duration-300 flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i>Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-charcoal pt-20 pb-8">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-16">
+            <div class="col-span-2 md:col-span-3 lg:col-span-2">
+                <div class="flex items-center gap-2.5 mb-5"><div class="w-10 h-10 bg-teal-700 rounded-xl flex items-center justify-center"><i data-lucide="cross" class="w-5 h-5 text-white"></i></div><div><span class="text-lg font-bold text-white">DentalCare Pro</span><span class="block text-[8px] uppercase tracking-[0.2em] text-white/40 -mt-0.5">Advanced Dental Clinic</span></div></div>
+                <p class="text-white/35 leading-relaxed mb-5 max-w-sm text-sm">NABH accredited, ISO certified multi-specialty dental clinic with 25 years of excellence. Your trusted partner for a healthy, beautiful smile.</p>
+                <div class="flex gap-3"><a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a><a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="facebook" class="w-4 h-4 text-white"></i></a><a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="youtube" class="w-4 h-4 text-white"></i></a><a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-teal-600 transition-colors"><i data-lucide="twitter" class="w-4 h-4 text-white"></i></a></div>
+            </div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Treatments</h4><ul class="space-y-2.5"><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Dental Implants</a></li><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Teeth Whitening</a></li><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Braces & Aligners</a></li><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Root Canal</a></li><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Crowns & Bridges</a></li><li><a href="#services" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Dentures</a></li></ul></div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Quick Links</h4><ul class="space-y-2.5"><li><a href="#about" class="text-white/35 hover:text-teal-400 transition-colors text-sm">About Us</a></li><li><a href="#doctors" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Our Doctors</a></li><li><a href="#equipment" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Technology</a></li><li><a href="#feedback" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Reviews</a></li><li><a href="#book" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Book Appointment</a></li><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Careers</a></li></ul></div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legal</h4><ul class="space-y-2.5"><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Privacy Policy</a></li><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Terms of Service</a></li><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Cancellation Policy</a></li><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">Payment Policy</a></li><li><a href="#" class="text-white/35 hover:text-teal-400 transition-colors text-sm">NABH Certificate</a></li></ul></div>
+        </div>
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-white/20 text-sm">© 2024 DentalCare Pro Clinic. All rights reserved. CIN: U85110DL1999PTC123456</p>
+            <p class="text-white/20 text-sm">Registration: DCI-NOC-2024-4567 · GST: 07AADCD1234A1Z5</p>
+        </div>
+    </div>
+</footer>
+
+<button id="btt" class="fixed bottom-8 right-8 bg-teal-700 text-white rounded-full shadow-xl flex items-center justify-center hover:bg-coral transition-all duration-500 opacity-0 translate-y-4 pointer-events-none z-50 p-3.5">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+</button>
+
+<script>
+lucide.createIcons();
+
+// ===== CALENDAR & BOOKING SYSTEM =====
+let calYear, calMonth, selectedDate = null, selectedTime = null, selectedStars = 0;
+const bookedSlots = {};
+
+// Generate some random bookings for realism
+(function(){
+    const now = new Date();
+    for(let d = 1; d <= 30; d++){
+        const dt = new Date(now.getFullYear(), now.getMonth(), now.getDate() + d);
+        const key = dt.toISOString().split('T')[0];
+        const slots = ['09:00 AM','09:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','02:00 PM','02:30 PM','03:00 PM','03:30 PM','04:00 PM','04:30 PM','05:00 PM','05:30 PM','06:00 PM','06:30 PM','07:00 PM'];
+        const booked = new Set();
+        if(dt.getDay() === 0){ slots.forEach(s => { if(Math.random() > 0.7) booked.add(s); }); }
+        else { const n = 3 + Math.floor(Math.random() * 6); for(let i = 0; i < n; i++) booked.add(slots[Math.floor(Math.random() * slots.length)]); }
+        bookedSlots[key] = booked;
+    }
+})();
+
+function initCalendar(){
+    const now = new Date();
+    calYear = now.getFullYear();
+    calMonth = now.getMonth();
+    renderCalendar();
+}
+
+function renderCalendar(){
+    const grid = document.getElementById('cal-grid');
+    const label = document.getElementById('cal-month');
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    label.textContent = months[calMonth] + ' ' + calYear;
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const today = new Date(); today.setHours(0,0,0,0);
+    let html = '';
+    for(let i = 0; i < firstDay; i++) html += '<div class="cal-day empty"></div>';
+    for(let d = 1; d <= daysInMonth; d++){
+        const dt = new Date(calYear, calMonth, d);
+        const key = dt.toISOString().split('T')[0];
+        const isPast = dt < today;
+        const isSun = dt.getDay() === 0;
+        const isDisabled = isPast;
+        const isSel = selectedDate === key;
+        const cls = `cal-day w-full aspect-square rounded-xl border-2 ${isSel ? 'selected border-teal-700' : 'border-transparent'} ${isDisabled ? 'disabled' : 'cursor-pointer'} text-center flex flex-col items-center justify-center text-sm font-medium`;
+        const remaining = bookedSlots[key] ? (17 - bookedSlots[key].size) : 17;
+        const dotColor = remaining <= 3 ? 'bg-red-400' : remaining <= 8 ? 'bg-amber-400' : 'bg-green-400';
+        html += `<div class="${cls}" onclick="${isDisabled ? '' : `selectDate('${key}')`}"><span>${d}</span>${!isPast ? `<span class="w-1.5 h-1.5 rounded-full ${dotColor} mt-0.5"></span>` : ''}</div>`;
+    }
+    grid.innerHTML = html;
+}
+
+function selectDate(key){
+    selectedDate = key;
+    selectedTime = null;
+    renderCalendar();
+    renderSlots();
+    updateSummary();
+    document.getElementById('slot-date-label').textContent = '— ' + new Date(key + 'T00:00:00').toLocaleDateString('en-IN', {weekday:'long', day:'numeric', month:'short'});
+}
+
+function renderSlots(){
+    const grid = document.getElementById('slots-grid');
+    if(!selectedDate){ grid.innerHTML = '<p class="col-span-full text-sm text-gray-warm text-center py-6">Please select a date to see available slots</p>'; return; }
+    const dt = new Date(selectedDate + 'T00:00:00');
+    const isSun = dt.getDay() === 0;
+    const allSlots = isSun
+        ? ['10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM']
+        : ['09:00 AM','09:30 AM','10:00 AM','10:30 AM','11:00 AM','11:30 AM','02:00 PM','02:30 PM','03:00 PM','03:30 PM','04:00 PM','04:30 PM','05:00 PM','05:30 PM','06:00 PM','06:30 PM','07:00 PM'];
+    const booked = bookedSlots[selectedDate] || new Set();
+    grid.innerHTML = allSlots.map(s => {
+        const isBooked = booked.has(s);
+        const isSel = selectedTime === s;
+        return `<button type="button" class="slot-btn border-2 ${isSel ? 'selected border-teal-700' : 'border-gray-200'} ${isBooked ? 'unavailable' : ''} rounded-xl py-2.5 text-sm font-medium text-center" onclick="${isBooked ? '' : `selectTime('${s}')`}">${s}${isBooked ? '<br><span class="text-[10px]">Booked</span>' : ''}</button>`;
+    }).join('');
+}
+
+function selectTime(t){ selectedTime = t; renderSlots(); updateSummary(); }
+
+function updateSummary(){
+    const s = document.getElementById('ap-summary');
+    const btn = document.getElementById('ap-submit');
+    if(selectedDate && selectedTime){
+        s.style.display = 'block';
+        document.getElementById('sum-date').textContent = new Date(selectedDate + 'T00:00:00').toLocaleDateString('en-IN', {weekday:'short', day:'numeric', month:'short'});
+        document.getElementById('sum-time').textContent = selectedTime;
+        const treat = document.getElementById('ap-treatment');
+        document.getElementById('sum-treat').textContent = treat.value || '—';
+        btn.disabled = false;
+    } else {
+        s.style.display = 'none';
+        btn.disabled = true;
+    }
+}
+
+document.getElementById('ap-treatment').addEventListener('change', updateSummary);
+document.getElementById('cal-prev').addEventListener('click', () => { calMonth--; if(calMonth < 0){ calMonth = 11; calYear--; } renderCalendar(); });
+document.getElementById('cal-next').addEventListener('click', () => { calMonth++; if(calMonth > 11){ calMonth = 0; calYear++; } renderCalendar(); });
+
+// Appointment form submit
+document.getElementById('appt-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const key = selectedDate;
+    if(!bookedSlots[key]) bookedSlots[key] = new Set();
+    bookedSlots[key].add(selectedTime);
+    const name = document.getElementById('ap-name').value;
+    const dateStr = new Date(key + 'T00:00:00').toLocaleDateString('en-IN', {weekday:'long', day:'numeric', month:'long'});
+    showToast(`✅ Appointment confirmed! ${name}, you're booked on ${dateStr} at ${selectedTime}. Confirmation sent to your phone.`, 'success');
+    selectedDate = null; selectedTime = null;
+    document.getElementById('ap-form').reset();
+    document.getElementById('ap-summary').style.display = 'none';
+    document.getElementById('ap-submit').disabled = true;
+    document.getElementById('slot-date-label').textContent = '';
+    renderCalendar();
+    renderSlots();
+});
+
+// ===== REVIEWS =====
+const reviews = [
+    { name:'Ankit Gupta', treatment:'Dental Implant', rating:5, text:'Got two implants placed by Dr. Sharma. Absolutely painless procedure. The CBCT scan before surgery gave me complete confidence. It\'s been 2 years and they feel exactly like natural teeth. The clinic is spotless and the staff is wonderful.', date:'2 weeks ago' },
+    { name:'Sneha Kapoor', treatment:'Invisalign', rating:5, text:'Dr. Priya is magical! My teeth were horribly crooked and I was skeptical about aligners. 14 months later, I have a perfect smile. The 3D scan was so cool — I could see my final result before even starting. Worth every penny!', date:'1 month ago' },
+    { name:'Rajiv Malhotra', treatment:'Root Canal', rating:5, text:'I was terrified of RCT but Dr. Amit made it completely painless. Single sitting, done in 45 minutes. He even used the microscope to show me the infected root on screen. Very transparent and professional approach.', date:'3 weeks ago' },
+    { name:'Pooja Sharma', treatment:'Teeth Whitening', rating:4, text:'Zoom whitening session was amazing — went 6 shades lighter in one hour! My only suggestion would be to provide better post-whitening care instructions. The results are fantastic though, everyone notices!', date:'1 week ago' },
+    { name:'Vikram Joshi', treatment:'Crown (CEREC)', rating:5, text:'Same-day crown blew my mind. Walked in with a broken tooth, walked out 2 hours later with a perfect zirconia crown. No temporary, no second visit. The CAD/CAM technology is incredible. Highly recommend!', date:'5 days ago' },
+    { name:'Neha Reddy', treatment:'Pediatric (Child)', rating:5, text:'My 5-year-old was so scared but Dr. Sneha handled her like a pro. The play area helped a lot. She actually looks forward to her dental visits now! Got sealants and fluoride done. Very patient doctor.', date:'2 months ago' }
+];
+
+function renderReviews(){
+    document.getElementById('reviews-list').innerHTML = reviews.map(r => `
+    <div class="bg-sand rounded-2xl p-5">
+        <div class="flex gap-0.5 mb-3">${Array(5).fill(0).map((_,i) => `<i data-lucide="star" class="w-4 h-4 ${i < r.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-300'}"></i>`).join('')}</div>
+        <p class="text-charcoal-mid text-sm leading-relaxed mb-4">"${r.text}"</p>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3"><div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-sm font-bold text-teal-700">${r.name.charAt(0)}</div><div><div class="font-bold text-charcoal text-sm">${r.name}</div><div class="text-[11px] text-gray-warm">${r.treatment} · ${r.date}</div></div></div>
+        </div>
+    </div>`).join('');
+    lucide.createIcons();
+}
+
+// Star rating select
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        selectedStars = parseInt(btn.dataset.star);
+        document.querySelectorAll('.star-btn').forEach(b => {
+            const s = parseInt(b.dataset.star);
+            b.classList.toggle('text-amber-400', s <= selectedStars);
+            b.classList.toggle('fill-amber-400', s <= selectedStars);
+            b.classList.toggle('text-gray-300', s > selectedStars);
+            b.querySelector('i').classList.toggle('fill-amber-400', s <= selectedStars);
+        });
+    });
+    btn.addEventListener('mouseenter', () => {
+        const hover = parseInt(btn.dataset.star);
+        document.querySelectorAll('.star-btn').forEach(b => {
+            const s = parseInt(b.dataset.star);
+            if(s <= hover){ b.classList.add('text-amber-400'); b.classList.remove('text-gray-300'); }
+            else if(s > selectedStars){ b.classList.remove('text-amber-400'); b.classList.add('text-gray-300'); }
+        });
+    });
+    btn.parentElement.addEventListener('mouseleave', () => {
+        document.querySelectorAll('.star-btn').forEach(b => {
+            const s = parseInt(b.dataset.star);
+            if(s <= selectedStars){ b.classList.add('text-amber-400'); b.classList.remove('text-gray-300'); }
+            else { b.classList.remove('text-amber-400'); b.classList.add('text-gray-300'); }
+        });
+    });
+});
+
+// Review form submit
+document.getElementById('review-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const name = fd.get('name') || e.target.querySelector('input[type="text"]').value;
+    const treat = e.target.querySelectorAll('input')[1].value || 'General';
+    const text = e.target.querySelector('textarea').value;
+    if(selectedStars === 0){ showToast('Please select a star rating', 'error'); return; }
+    reviews.unshift({ name, treatment: treat, rating: selectedStars, text, date: 'Just now' });
+    renderReviews();
+    e.target.reset();
+    selectedStars = 0;
+    document.querySelectorAll('.star-btn').forEach(b => { b.classList.remove('text-amber-400','fill-amber-400'); b.classList.add('text-gray-300'); b.querySelector('i').classList.remove('fill-amber-400'); });
+    showToast('Thank you for your review! It will appear after moderation. 🦷', 'success');
+});
+
+// ===== TOAST =====
+function showToast(msg, type='success'){
+    const box = document.getElementById('toast-box');
+    const t = document.createElement('div');
+    t.className = `toast-a ${type === 'success' ? 'bg-teal-800' : 'bg-red-600'} text-white px-6 py-4 rounded-2xl shadow-2xl max-w-sm`;
+    t.innerHTML = `<p class="text-sm leading-relaxed">${msg}</p>`;
+    box.appendChild(t);
+    setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(100px)'; t.style.transition='all .4s'; setTimeout(()=>t.remove(),400); }, 6000);
+}
+
+// ===== NAV SCROLL =====
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+    const b = document.getElementById('btt');
+    if(window.scrollY > 600){ b.classList.remove('opacity-0','translate-y-4','pointer-events-none'); b.classList.add('opacity-100','translate-y-0'); }
+    else { b.classList.add('opacity-0','translate-y-4','pointer-events-none'); b.classList.remove('opacity-100','translate-y-0'); }
+});
+document.getElementById('btt').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+// ===== MOBILE MENU =====
+document.getElementById('mob-btn').addEventListener('click', () => document.getElementById('mob-menu').classList.add('open'));
+document.getElementById('mob-close').addEventListener('click', () => document.getElementById('mob-menu').classList.remove('open'));
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => document.getElementById('mob-menu').classList.remove('open')));
+
+// ===== SCROLL REVEAL =====
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('vis'); }), {threshold:.06, rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => obs.observe(el));
+
+// ===== COUNTER =====
+function animC(el){ if(el.dataset.done) return; el.dataset.done='1'; const t=parseInt(el.dataset.count),s=performance.now(); (function tick(n){const p=Math.min((n-s)/2000,1),e=1-Math.pow(1-p,4); el.textContent=Math.floor(e*t).toLocaleString()+'+'; if(p<1)requestAnimationFrame(tick); else el.textContent=t.toLocaleString()+'+';})(s); }
+document.querySelectorAll('[data-count]').forEach(c=>{const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){animC(c);o.unobserve(x.target)}}),{threshold:.5});o.observe(c.closest('section,div')||c)});
+
+// ===== FAQ =====
+document.querySelectorAll('.faq-b').forEach(btn=>{btn.addEventListener('click',()=>{const bd=btn.nextElementSibling,ch=btn.querySelector('.faq-ch'),open=bd.classList.contains('open');document.querySelectorAll('.faq-bd').forEach(b=>b.classList.remove('open'));document.querySelectorAll('.faq-ch').forEach(c=>c.classList.remove('open'));if(!open){bd.classList.add('open');ch.classList.add('open')}})});
+
+// ===== CONTACT FORM =====
+document.getElementById('contact-form').addEventListener('submit',(e)=>{e.preventDefault();showToast('Message sent! Our team will call you within 30 minutes. 🦷');e.target.reset()});
+
+// ===== INIT =====
+initCalendar();
+renderReviews();
+</script>
+</body>
+</html>

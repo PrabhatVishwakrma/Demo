@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrailBlazers — Trekking & Adventure Expeditions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: '#1B4332',
+                        'forest-light': '#2D6A4F',
+                        'forest-pale': '#E8F0E8',
+                        terra: '#C45D3E',
+                        'terra-light': '#F5DDD5',
+                        'terra-dark': '#A34830',
+                        sand: '#F7F4F0',
+                        'sand-dark': '#EDE8E1',
+                        charcoal: '#1A1A1A',
+                        'charcoal-mid': '#4A4A4A',
+                        'gray-warm': '#8A8279',
+                        'gray-light': '#C4BEB6',
+                        snow: '#FAFAF8',
+                        slate: '#64748B',
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        display: ['Playfair Display', 'serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *{scroll-behavior:smooth}
+        body{font-family:'DM Sans',sans-serif;background:#FFFFFF;color:#1A1A1A}
+        .reveal{opacity:0;transform:translateY(45px);transition:all .85s cubic-bezier(.22,1,.36,1)}
+        .reveal.vis{opacity:1;transform:translateY(0)}
+        .reveal-l{opacity:0;transform:translateX(-50px);transition:all .85s cubic-bezier(.22,1,.36,1)}
+        .reveal-l.vis{opacity:1;transform:translateX(0)}
+        .reveal-r{opacity:0;transform:translateX(50px);transition:all .85s cubic-bezier(.22,1,.36,1)}
+        .reveal-r.vis{opacity:1;transform:translateX(0)}
+        .reveal-s{opacity:0;transform:scale(.93);transition:all .85s cubic-bezier(.22,1,.36,1)}
+        .reveal-s.vis{opacity:1;transform:scale(1)}
+        .d1{transition-delay:.1s!important}.d2{transition-delay:.2s!important}.d3{transition-delay:.3s!important}.d4{transition-delay:.4s!important}.d5{transition-delay:.5s!important}.d6{transition-delay:.6s!important}
+
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+        .fl{animation:float 5s ease-in-out infinite}
+        .fl2{animation:float 5s ease-in-out infinite;animation-delay:.6s}
+        .fl3{animation:float 5s ease-in-out infinite;animation-delay:1.2s}
+        @keyframes scrollB{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(10px);opacity:.3}}
+        .scroll-ind{animation:scrollB 2s ease-in-out infinite}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-t{animation:marquee 35s linear infinite}
+
+        .nav-scrolled{background:rgba(255,255,255,.97)!important;backdrop-filter:blur(20px);box-shadow:0 1px 30px rgba(0,0,0,.06)}
+        .trek-card{transition:all .5s cubic-bezier(.22,1,.36,1)}
+        .trek-card:hover{transform:translateY(-8px);box-shadow:0 25px 60px -12px rgba(27,67,50,.12)}
+        .img-z{transition:transform .9s cubic-bezier(.22,1,.36,1)}.img-z:hover{transform:scale(1.06)}
+        .text-grad{background:linear-gradient(135deg,#1B4332,#2D6A4F);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .deco-l{width:50px;height:1px;background:linear-gradient(90deg,#C45D3E,transparent)}
+        .blob{border-radius:35% 65% 55% 45%/55% 40% 60% 45%;filter:blur(70px);opacity:.1}
+
+        /* Modal */
+        .modal-overlay{opacity:0;pointer-events:none;transition:opacity .4s ease}
+        .modal-overlay.open{opacity:1;pointer-events:all}
+        .modal-content{transform:translateY(40px) scale(.97);transition:all .5s cubic-bezier(.22,1,.36,1)}
+        .modal-overlay.open .modal-content{transform:translateY(0) scale(1)}
+
+        /* Seat bar */
+        .seat-bar{height:6px;border-radius:999px;background:#EDE8E1;overflow:hidden}
+        .seat-fill{height:100%;border-radius:999px;transition:width 1s ease}
+
+        /* Difficulty dots */
+        .diff-dot{width:8px;height:8px;border-radius:50%;background:#EDE8E1}
+        .diff-dot.active{background:#C45D3E}
+
+        /* Mobile menu */
+        .mob-menu{transform:translateX(100%);transition:transform .45s cubic-bezier(.22,1,.36,1)}
+        .mob-menu.open{transform:translateX(0)}
+
+        /* Toast */
+        @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .toast-a{animation:toastIn .4s ease-out}
+
+        /* Tabs */
+        .tab-btn{transition:all .3s}
+        .tab-btn.active{background:#1B4332;color:#fff}
+
+        /* Booking steps */
+        .step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;transition:all .4s}
+        .step-circle.active{background:#1B4332;color:#fff}
+        .step-circle.done{background:#2D6A4F;color:#fff}
+        .step-line{height:2px;flex:1;background:#EDE8E1;transition:background .4s}
+        .step-line.done{background:#2D6A4F}
+
+        .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        /* Pulse */
+        @keyframes pulse-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
+        .pulse-live::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:#22C55E;animation:pulse-ring 1.5s ease-out infinite}
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+<!-- Toast -->
+<div id="toast-box" class="fixed top-6 right-6 z-[300] flex flex-col gap-3"></div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="flex items-center justify-between py-4">
+            <a href="#home" class="flex items-center gap-2.5">
+                <div class="w-10 h-10 bg-forest rounded-xl flex items-center justify-center">
+                    <i data-lucide="mountain" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <span class="text-lg font-bold text-charcoal tracking-tight">TrailBlazers</span>
+                    <span class="block text-[8px] uppercase tracking-[0.2em] text-gray-warm -mt-0.5">Adventures</span>
+                </div>
+            </a>
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="#home" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Home</a>
+                <a href="#treks" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Upcoming Treks</a>
+                <a href="#destinations" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Destinations</a>
+                <a href="#about" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">About</a>
+                <a href="#gallery" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Gallery</a>
+                <a href="#testimonials" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Reviews</a>
+                <a href="#contact" class="text-[13px] font-medium text-charcoal-mid hover:text-forest transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="#treks" class="hidden md:inline-flex items-center gap-2 bg-forest text-white px-5 py-2.5 rounded-full text-[13px] font-semibold hover:bg-terra transition-all duration-300">
+                    Book a Trek
+                </a>
+                <button id="mob-btn" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mob-menu" class="mob-menu fixed inset-0 z-[100] bg-white">
+    <div class="p-6 h-full flex flex-col">
+        <div class="flex items-center justify-between mb-10">
+            <span class="text-lg font-bold">TrailBlazers</span>
+            <button id="mob-close" class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div class="flex flex-col gap-1 flex-1">
+            <a href="#home" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Home</a>
+            <a href="#treks" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Upcoming Treks</a>
+            <a href="#destinations" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Destinations</a>
+            <a href="#about" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">About</a>
+            <a href="#gallery" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Gallery</a>
+            <a href="#testimonials" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Reviews</a>
+            <a href="#contact" class="ml text-2xl font-display text-charcoal py-3 border-b border-gray-100 hover:text-forest mob-link">Contact</a>
+        </div>
+        <a href="#treks" class="mob-link block text-center bg-forest text-white py-4 rounded-full font-semibold">Book a Trek</a>
+    </div>
+</div>
+
+<!-- ===== HERO ===== -->
+<section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+        <img src="https://picsum.photos/seed/trek-hero-mountain/1920/1080.jpg" alt="Mountain trek" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/92 to-white/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/20"></div>
+    </div>
+    <div class="blob absolute top-20 right-40 w-[500px] h-[500px] bg-forest hidden lg:block"></div>
+    <div class="relative max-w-[1800px] mx-auto px-6 lg:px-14 py-32 lg:py-0 w-full">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-forest-pale text-forest px-4 py-2 rounded-full text-sm font-medium mb-8 reveal">
+                    <span class="relative w-2 h-2 bg-green-500 rounded-full pulse-live"></span>
+                    3 Treks Starting This Week
+                </div>
+                <h1 class="font-display text-5xl md:text-6xl lg:text-[4.2rem] xl:text-[4.8rem] font-bold text-charcoal leading-[1.08] tracking-tight mb-7 reveal d1">
+                    Conquer Peaks,<br>
+                    <span class="relative inline-block">
+                        <span class="text-grad italic">Discover</span>
+                        <svg class="absolute -bottom-2 left-0 w-full" height="10" viewBox="0 0 200 10" fill="none"><path d="M2 8C50 3 150 3 198 8" stroke="#C45D3E" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </span>
+                    Your Soul
+                </h1>
+                <p class="text-lg md:text-xl text-gray-warm leading-relaxed max-w-lg mb-10 reveal d2">
+                    Expert-led treks across the Himalayas, Western Ghats & beyond. From beginner-friendly trails to extreme expeditions — your next adventure starts here.
+                </p>
+                <div class="flex flex-wrap gap-4 mb-14 reveal d3">
+                    <a href="#treks" class="inline-flex items-center gap-2 bg-forest text-white px-7 py-4 rounded-full font-semibold hover:bg-terra transition-all duration-400 group">
+                        Explore Treks <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#how" class="inline-flex items-center gap-2 bg-white border-2 border-charcoal/10 text-charcoal px-7 py-4 rounded-full font-semibold hover:border-forest hover:bg-forest hover:text-white transition-all duration-400">
+                        <i data-lucide="play-circle" class="w-5 h-5"></i> How It Works
+                    </a>
+                </div>
+                <div class="grid grid-cols-3 gap-6 reveal d4">
+                    <div><div class="text-3xl font-bold text-charcoal" data-count="1200">0</div><div class="text-xs text-gray-warm mt-1">Treks Completed</div></div>
+                    <div class="border-l border-gray-200 pl-6"><div class="text-3xl font-bold text-charcoal" data-count="15000">0</div><div class="text-xs text-gray-warm mt-1">Happy Trekkers</div></div>
+                    <div class="border-l border-gray-200 pl-6"><div class="text-3xl font-bold text-charcoal" data-count="85">0</div><div class="text-xs text-gray-warm mt-1">Routes & Counting</div></div>
+                </div>
+            </div>
+            <div class="hidden lg:block relative h-[600px] reveal-r">
+                <div class="absolute top-0 right-0 w-[340px] h-[440px] rounded-[2rem] overflow-hidden shadow-2xl fl">
+                    <img src="https://picsum.photos/seed/trek-hero-camp/680/880.jpg" alt="Camp" class="w-full h-full object-cover img-z">
+                </div>
+                <div class="absolute bottom-0 left-0 w-[280px] h-[280px] rounded-[2rem] overflow-hidden shadow-2xl fl2">
+                    <img src="https://picsum.photos/seed/trek-hero-peak/560/560.jpg" alt="Peak" class="w-full h-full object-cover img-z">
+                </div>
+                <div class="absolute top-1/2 left-1/3 -translate-y-1/2 bg-white rounded-2xl p-5 shadow-xl fl3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 bg-terra-light rounded-xl flex items-center justify-center"><i data-lucide="shield-check" class="w-5 h-5 text-terra"></i></div>
+                        <div><div class="text-sm font-bold text-charcoal">Safety First</div><div class="text-[11px] text-gray-warm">Certified Guides & Equipment</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-ind hidden md:block">
+        <div class="w-7 h-11 border-2 border-charcoal/20 rounded-full flex justify-center pt-2"><div class="w-1.5 h-2.5 bg-forest rounded-full"></div></div>
+    </div>
+</section>
+
+<!-- ===== STATS BAR ===== -->
+<div class="py-5 bg-forest relative overflow-hidden">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14 flex flex-wrap items-center justify-center gap-x-12 gap-y-3 text-white/80 text-sm">
+        <span class="flex items-center gap-2"><i data-lucide="mountain-snow" class="w-4 h-4 text-terra"></i> Himalayan Expert</span>
+        <span class="flex items-center gap-2"><i data-lucide="award" class="w-4 h-4 text-terra"></i> Govt. Certified</span>
+        <span class="flex items-center gap-2"><i data-lucide="heart-pulse" class="w-4 h-4 text-terra"></i> Medical Backup</span>
+        <span class="flex items-center gap-2"><i data-lucide="radio" class="w-4 h-4 text-terra"></i> Satellite Comm</span>
+        <span class="flex items-center gap-2"><i data-lucide="tent" class="w-4 h-4 text-terra"></i> Premium Camping</span>
+        <span class="flex items-center gap-2"><i data-lucide="utensils" class="w-4 h-4 text-terra"></i> Meals Included</span>
+    </div>
+</div>
+
+<!-- ===== UPCOMING TREKS ===== -->
+<section id="treks" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="blob absolute -top-40 -right-40 w-[500px] h-[500px] bg-forest"></div>
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+            <div class="reveal">
+                <div class="flex items-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">Upcoming Treks</span></div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight">Choose Your Next <span class="text-grad italic">Adventure</span></h2>
+            </div>
+            <!-- Filter Tabs -->
+            <div class="flex gap-2 reveal d1 flex-wrap">
+                <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium" data-filter="all">All</button>
+                <button class="tab-btn bg-sand text-charcoal-mid px-4 py-2 rounded-full text-sm font-medium" data-filter="easy">Easy</button>
+                <button class="tab-btn bg-sand text-charcoal-mid px-4 py-2 rounded-full text-sm font-medium" data-filter="moderate">Moderate</button>
+                <button class="tab-btn bg-sand text-charcoal-mid px-4 py-2 rounded-full text-sm font-medium" data-filter="difficult">Difficult</button>
+                <button class="tab-btn bg-sand text-charcoal-mid px-4 py-2 rounded-full text-sm font-medium" data-filter="extreme">Extreme</button>
+            </div>
+        </div>
+
+        <div id="trek-grid" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7">
+            <!-- Trek cards injected by JS -->
+        </div>
+
+        <div class="text-center mt-12 reveal">
+            <button onclick="loadMoreTreks()" id="load-more-btn" class="inline-flex items-center gap-2 border-2 border-forest/20 text-forest px-8 py-3.5 rounded-full font-semibold hover:bg-forest hover:text-white transition-all duration-300">
+                View All Treks <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TREK DETAIL MODAL ===== -->
+<div id="trek-modal" class="modal-overlay fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-8 px-4">
+    <div class="modal-content bg-white rounded-3xl max-w-5xl w-full my-auto relative">
+        <button onclick="closeModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-terra hover:text-white transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<!-- ===== BOOKING MODAL ===== -->
+<div id="book-modal" class="modal-overlay fixed inset-0 z-[210] bg-black/50 backdrop-blur-sm flex items-start justify-center overflow-y-auto py-8 px-4">
+    <div class="modal-content bg-white rounded-3xl max-w-3xl w-full my-auto relative">
+        <button onclick="closeBookModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md hover:bg-terra hover:text-white transition-all">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div id="book-body"></div>
+    </div>
+</div>
+
+<!-- ===== DESTINATIONS ===== -->
+<section id="destinations" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">Destinations</span><div class="deco-l" style="transform:rotate(180deg)"></div></div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight mb-5">Trek Through <span class="text-grad italic">Paradise</span></h2>
+            <p class="text-gray-warm text-lg">From snow-capped Himalayan passes to lush Western Ghats rainforests — explore India's most spectacular trails.</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="group relative rounded-2xl overflow-hidden h-80 cursor-pointer reveal d1">
+                <img src="https://picsum.photos/seed/dest-himalaya/600/800.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-5 left-5"><h3 class="text-white font-bold text-xl">Himalayas</h3><p class="text-white/60 text-sm">45+ Routes</p></div>
+            </div>
+            <div class="group relative rounded-2xl overflow-hidden h-80 cursor-pointer reveal d2">
+                <img src="https://picsum.photos/seed/dest-ghats/600/800.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-5 left-5"><h3 class="text-white font-bold text-xl">Western Ghats</h3><p class="text-white/60 text-sm">20+ Routes</p></div>
+            </div>
+            <div class="group relative rounded-2xl overflow-hidden h-80 cursor-pointer reveal d3">
+                <img src="https://picsum.photos/seed/dest-northeast/600/800.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-5 left-5"><h3 class="text-white font-bold text-xl">Northeast India</h3><p class="text-white/60 text-sm">12+ Routes</p></div>
+            </div>
+            <div class="group relative rounded-2xl overflow-hidden h-80 cursor-pointer reveal d4">
+                <img src="https://picsum.photos/seed/dest-desert/600/800.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-5 left-5"><h3 class="text-white font-bold text-xl">Desert & Trails</h3><p class="text-white/60 text-sm">8+ Routes</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div class="relative reveal-l">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="rounded-[2rem] overflow-hidden shadow-lg h-[280px] md:h-[380px]"><img src="https://picsum.photos/seed/about-trek-team/600/800.jpg" class="w-full h-full object-cover img-z"></div>
+                    <div class="rounded-[2rem] overflow-hidden shadow-lg h-[280px] md:h-[380px] mt-12"><img src="https://picsum.photos/seed/about-trek-gear/600/800.jpg" class="w-full h-full object-cover img-z"></div>
+                </div>
+                <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-forest text-white rounded-2xl px-8 py-4 shadow-xl text-center">
+                    <div class="text-2xl font-bold">8+ Years</div>
+                    <div class="text-xs text-white/60 uppercase tracking-wider">Leading Expeditions</div>
+                </div>
+            </div>
+            <div>
+                <div class="reveal"><div class="flex items-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">About Us</span></div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight mb-6">We Don't Just Trek, We <span class="text-grad italic">Transform</span></h2></div>
+                <div class="reveal d1"><p class="text-gray-warm text-lg leading-relaxed mb-6">TrailBlazers was born from a campfire conversation between three mountaineering friends who believed that the mountains change people for the better. Since 2016, we've guided over 15,000 adventurers through some of India's most challenging and beautiful terrain.</p></div>
+                <div class="reveal d2"><p class="text-gray-warm leading-relaxed mb-8">Every trek is meticulously planned with safety as the non-negotiable priority. Our team includes certified mountaineers, wilderness first responders, and local experts who know every rock and stream of the trails we operate on.</p></div>
+                <div class="grid sm:grid-cols-2 gap-5 reveal d3">
+                    <div class="bg-sand rounded-2xl p-5"><i data-lucide="shield-check" class="w-6 h-6 text-forest mb-3"></i><h4 class="font-bold text-charcoal text-sm mb-1">Safety Certified</h4><p class="text-xs text-gray-warm">IMF & NOLS certified guides with wilderness first aid training</p></div>
+                    <div class="bg-sand rounded-2xl p-5"><i data-lucide="leaf" class="w-6 h-6 text-forest mb-3"></i><h4 class="font-bold text-charcoal text-sm mb-1">Eco-Conscious</h4><p class="text-xs text-gray-warm">Leave No Trace principles. Zero-waste camps since day one</p></div>
+                    <div class="bg-sand rounded-2xl p-5"><i data-lucide="users" class="w-6 h-6 text-forest mb-3"></i><h4 class="font-bold text-charcoal text-sm mb-1">Small Groups</h4><p class="text-xs text-gray-warm">Max 15 trekkers per group for personalized experience</p></div>
+                    <div class="bg-sand rounded-2xl p-5"><i data-lucide="headphones" class="w-6 h-6 text-forest mb-3"></i><h4 class="font-bold text-charcoal text-sm mb-1">24/7 Support</h4><p class="text-xs text-gray-warm">Satellite phones, emergency evacuation, ground team backup</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section id="how" class="py-24 md:py-32 bg-sand">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">How It Works</span><div class="deco-l" style="transform:rotate(180deg)"></div></div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight">From Click to <span class="text-grad italic">Summit</span></h2>
+        </div>
+        <div class="grid md:grid-cols-4 gap-8 relative">
+            <div class="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-px bg-forest/10"></div>
+            <div class="text-center reveal d1"><div class="relative inline-block mb-6"><div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm"><i data-lucide="search" class="w-12 h-12 text-forest"></i></div><div class="absolute -top-1 -right-1 w-9 h-9 bg-forest text-white rounded-full flex items-center justify-center text-sm font-bold">1</div></div><h4 class="font-bold text-charcoal mb-2">Browse & Choose</h4><p class="text-gray-warm text-sm">Explore upcoming treks, check difficulty, dates, and availability</p></div>
+            <div class="text-center reveal d2"><div class="relative inline-block mb-6"><div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm"><i data-lucide="user-check" class="w-12 h-12 text-terra"></i></div><div class="absolute -top-1 -right-1 w-9 h-9 bg-terra text-white rounded-full flex items-center justify-center text-sm font-bold">2</div></div><h4 class="font-bold text-charcoal mb-2">Book Your Seat</h4><p class="text-gray-warm text-sm">Fill the form, pay booking amount, get instant confirmation</p></div>
+            <div class="text-center reveal d3"><div class="relative inline-block mb-6"><div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm"><i data-lucide="backpack" class="w-12 h-12 text-forest"></i></div><div class="absolute -top-1 -right-1 w-9 h-9 bg-forest text-white rounded-full flex items-center justify-center text-sm font-bold">3</div></div><h4 class="font-bold text-charcoal mb-2">Get Ready</h4><p class="text-gray-warm text-sm">Receive packing list, training plan, and pre-trek briefing session</p></div>
+            <div class="text-center reveal d4"><div class="relative inline-block mb-6"><div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto shadow-sm"><i data-lucide="flag" class="w-12 h-12 text-terra"></i></div><div class="absolute -top-1 -right-1 w-9 h-9 bg-terra text-white rounded-full flex items-center justify-center text-sm font-bold">4</div></div><h4 class="font-bold text-charcoal mb-2">Conquer the Trail</h4><p class="text-gray-warm text-sm">Hit the trail with expert guides, create memories that last forever</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WHAT'S INCLUDED ===== -->
+<section class="py-24 md:py-32">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">What's Included</span><div class="deco-l" style="transform:rotate(180deg)"></div></div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight">Everything You Need, <span class="text-grad italic">Covered</span></h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d1"><i data-lucide="tent" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Camping Tents</div><div class="text-[11px] text-gray-warm mt-1">3-season premium</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d1"><i data-lucide="utensils" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">All Meals</div><div class="text-[11px] text-gray-warm mt-1">Veg & Non-veg</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d2"><i data-lucide="user-check" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Expert Guides</div><div class="text-[11px] text-gray-warm mt-1">1:5 ratio</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d2"><i data-lucide="heart-pulse" class="w-8 h-8 text-terra mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">First Aid</div><div class="text-[11px] text-gray-warm mt-1">Complete medical kit</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d3"><i data-lucide="camera" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Photography</div><div class="text-[11px] text-gray-warm mt-1">Free trek photos</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d3"><i data-lucide="badge-check" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Certificates</div><div class="text-[11px] text-gray-warm mt-1">Digital + Physical</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d4"><i data-lucide="radio" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Satellite Com</div><div class="text-[11px] text-gray-warm mt-1">Emergency use</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d4"><i data-lucide="bus" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Transport</div><div class="text-[11px] text-gray-warm mt-1">Base to base</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d5"><i data-lucide="bed" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Stay</div><div class="text-[11px] text-gray-warm mt-1">Guesthouse + tents</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d5"><i data-lucide="map" class="w-8 h-8 text-terra mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Permits</div><div class="text-[11px] text-gray-warm mt-1">Forest & entry</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d6"><i data-lucide="flame" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Campfire</div><div class="text-[11px] text-gray-warm mt-1">Evening bonfire</div></div>
+            <div class="bg-sand rounded-2xl p-6 text-center reveal d6"><i data-lucide="insurance" class="w-8 h-8 text-forest mx-auto mb-3"></i><div class="text-sm font-bold text-charcoal">Insurance</div><div class="text-[11px] text-gray-warm mt-1">Trek insurance</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section id="gallery" class="py-24 md:py-32 bg-charcoal">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">Gallery</span>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-white leading-tight mt-4 mb-5">Moments from the <span class="text-terra italic">Trail</span></h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d1"><img src="https://picsum.photos/seed/gal-1-trek/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-[3/4] row-span-2 reveal-s d2"><img src="https://picsum.photos/seed/gal-2-camp/500/700.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d3"><img src="https://picsum.photos/seed/gal-3-sunrise/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d4"><img src="https://picsum.photos/seed/gal-4-river/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d1"><img src="https://picsum.photos/seed/gal-5-snow/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d2"><img src="https://picsum.photos/seed/gal-6-group/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+            <div class="rounded-2xl overflow-hidden aspect-square reveal-s d3"><img src="https://picsum.photos/seed/gal-7-peak/500/500.jpg" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" class="py-24 md:py-32">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <div class="flex items-center justify-center gap-3 mb-4"><div class="deco-l"></div><span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">Testimonials</span><div class="deco-l" style="transform:rotate(180deg)"></div></div>
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight">Stories from the <span class="text-grad italic">Summit</span></h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-7">
+            <div class="bg-sand rounded-3xl p-8 reveal d1">
+                <div class="flex gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i></div>
+                <p class="text-charcoal-mid leading-relaxed mb-6">"My first ever high-altitude trek was with TrailBlazers — Hampta Pass. The guides were incredibly patient, the food was surprisingly delicious, and watching the sunrise over the pass was a life-changing moment. Already booked my second trek!"</p>
+                <div class="flex items-center gap-3"><img src="https://picsum.photos/seed/rev-1/80/80.jpg" class="w-11 h-11 rounded-full object-cover"><div><div class="font-bold text-charcoal text-sm">Ananya Reddy</div><div class="text-xs text-gray-warm">Hampta Pass • Aug 2024</div></div></div>
+            </div>
+            <div class="bg-sand rounded-3xl p-8 reveal d2">
+                <div class="flex gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i></div>
+                <p class="text-charcoal-mid leading-relaxed mb-6">"Did the Rupin Pass trek with these guys and it was absolutely phenomenal. The organization was military-level precise, safety protocols were top-notch, and our lead guide had 15 years of mountaineering experience. Worth every rupee."</p>
+                <div class="flex items-center gap-3"><img src="https://picsum.photos/seed/rev-2/80/80.jpg" class="w-11 h-11 rounded-full object-cover"><div><div class="font-bold text-charcoal text-sm">Rahul Verma</div><div class="text-xs text-gray-warm">Rupin Pass • Jun 2024</div></div></div>
+            </div>
+            <div class="bg-sand rounded-3xl p-8 reveal d3">
+                <div class="flex gap-1 mb-4"><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i><i data-lucide="star" class="w-4 h-4 text-terra fill-terra"></i></div>
+                <p class="text-charcoal-mid leading-relaxed mb-6">"As a solo female trekker, safety was my biggest concern. TrailBlazers made me feel completely at ease. The group became like family in 5 days. The Kodachadri trek was the perfect introduction to the Western Ghats. Highly recommend!"</p>
+                <div class="flex items-center gap-3"><img src="https://picsum.photos/seed/rev-3/80/80.jpg" class="w-11 h-11 rounded-full object-cover"><div><div class="font-bold text-charcoal text-sm">Meera Joshi</div><div class="text-xs text-gray-warm">Kodachadri • Oct 2024</div></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="py-24 md:py-32 bg-sand">
+    <div class="max-w-4xl mx-auto px-6 lg:px-14">
+        <div class="text-center mb-14 reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-charcoal leading-tight">Frequently Asked <span class="text-grad italic">Questions</span></h2>
+        </div>
+        <div class="space-y-4 reveal d1">
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-6 text-left"><span class="font-semibold text-charcoal pr-4">I'm a complete beginner. Can I join?</span><i data-lucide="chevron-down" class="w-5 h-5 text-terra faq-ch flex-shrink-0"></i></button><div class="faq-bd px-6 pb-6"><p class="text-gray-warm leading-relaxed">Absolutely! We have specially designed "Easy" category treks perfect for first-timers. Our Hampta Pass, Kodachadri, and Valley of Flowers treks are beginner-friendly. We also send a pre-trek training plan 4 weeks before the trek to help you prepare physically.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-6 text-left"><span class="font-semibold text-charcoal pr-4">What is the cancellation & refund policy?</span><i data-lucide="chevron-down" class="w-5 h-5 text-terra faq-ch flex-shrink-0"></i></button><div class="faq-bd px-6 pb-6"><p class="text-gray-warm leading-relaxed">30+ days before trek: 90% refund. 15-30 days: 50% refund. 7-15 days: 25% refund. Less than 7 days: No refund. However, you can transfer your seat to a friend at no extra cost up to 48 hours before the trek. We also offer TrekShield — our flexible rebooking add-on for ₹499.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-6 text-left"><span class="font-semibold text-charcoal pr-4">What should I carry? Do you provide equipment?</span><i data-lucide="chevron-down" class="w-5 h-5 text-terra faq-ch flex-shrink-0"></i></button><div class="faq-bd px-6 pb-6"><p class="text-gray-warm leading-relaxed">We provide tents, sleeping bags, sleeping mats, cooking equipment, first aid kits, and safety gear. You need to carry personal clothing, trekking shoes, a backpack (40-50L), water bottles, headlamp, and personal medications. A detailed packing list is shared upon booking.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-6 text-left"><span class="font-semibold text-charcoal pr-4">How do you handle medical emergencies?</span><i data-lucide="chevron-down" class="w-5 h-5 text-terra faq-ch flex-shrink-0"></i></button><div class="faq-bd px-6 pb-6"><p class="text-gray-warm leading-relaxed">Every trek has at least one Wilderness First Responder (WFR) certified guide. We carry a comprehensive medical kit including altitude sickness medication (Diamox), oxygen cylinders (for high-altitude treks), and a portable altitude chamber. We have satellite phones for communication and pre-arranged evacuation routes to the nearest medical facility.</p></div></div>
+            <div class="bg-white rounded-2xl overflow-hidden"><button class="faq-b w-full flex items-center justify-between p-6 text-left"><span class="font-semibold text-charcoal pr-4">What about food and water during the trek?</span><i data-lucide="chevron-down" class="w-5 h-5 text-terra faq-ch flex-shrink-0"></i></button><div class="faq-bd px-6 pb-6"><p class="text-gray-warm leading-relaxed">All meals from Day 1 breakfast to last day lunch are included. Our kitchen team prepares fresh, nutritious meals — both vegetarian and non-vegetarian options. We provide purified drinking water throughout the trek. Special dietary requirements (vegan, Jain, gluten-free) can be accommodated with prior notice.</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="py-24 md:py-32 relative overflow-hidden">
+    <div class="blob absolute bottom-0 right-0 w-[500px] h-[500px] bg-forest"></div>
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+        <div class="bg-forest rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-terra/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="relative grid lg:grid-cols-2 gap-16 items-start">
+                <div class="reveal-l">
+                    <span class="text-terra font-medium text-sm uppercase tracking-[0.15em]">Get in Touch</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white leading-tight mt-4 mb-6">Ready for Your Next <span class="text-terra italic">Adventure?</span></h2>
+                    <p class="text-white/50 text-lg leading-relaxed mb-10">Have questions about a trek? Want a custom group booking? Need help choosing the right trail? Our team is here to help.</p>
+                    <div class="space-y-5 mb-10">
+                        <div class="flex items-center gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center"><i data-lucide="phone" class="w-5 h-5 text-terra"></i></div><div><div class="text-white font-medium text-sm">Call / WhatsApp</div><div class="text-white/40 text-sm">+91 98765 43210</div></div></div>
+                        <div class="flex items-center gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center"><i data-lucide="mail" class="w-5 h-5 text-terra"></i></div><div><div class="text-white font-medium text-sm">Email</div><div class="text-white/40 text-sm">hello@trailblazers.in</div></div></div>
+                        <div class="flex items-center gap-4"><div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center"><i data-lucide="map-pin" class="w-5 h-5 text-terra"></i></div><div><div class="text-white font-medium text-sm">Office</div><div class="text-white/40 text-sm">24, Mall Road, Manali, HP - 175131</div></div></div>
+                    </div>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="youtube" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="facebook" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="twitter" class="w-4 h-4 text-white"></i></a>
+                    </div>
+                </div>
+                <div class="reveal-r">
+                    <div class="bg-white rounded-3xl p-8">
+                        <h3 class="text-xl font-bold text-charcoal mb-1">Quick Inquiry</h3>
+                        <p class="text-gray-warm text-sm mb-6">We reply within 2 hours</p>
+                        <form id="contact-form" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <input type="text" required placeholder="Full Name *" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm">
+                                <input type="tel" required placeholder="Phone *" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm">
+                            </div>
+                            <input type="email" required placeholder="Email Address *" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm">
+                            <select class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm text-gray-warm">
+                                <option>Interested Trek</option>
+                                <option>Hampta Pass</option><option>Rupin Pass</option><option>Kodachadri</option><option>Valley of Flowers</option><option>Brahmatal</option><option>Sandakphu</option><option>Custom Group Trek</option>
+                            </select>
+                            <textarea rows="3" placeholder="Your message..." class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm resize-none"></textarea>
+                            <button type="submit" class="w-full bg-forest text-white py-3.5 rounded-xl font-bold hover:bg-terra transition-all duration-300 flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i>Send Inquiry</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-charcoal pt-20 pb-8">
+    <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-16">
+            <div class="col-span-2 md:col-span-3 lg:col-span-2">
+                <div class="flex items-center gap-2.5 mb-6"><div class="w-10 h-10 bg-forest rounded-xl flex items-center justify-center"><i data-lucide="mountain" class="w-5 h-5 text-white"></i></div><div><span class="text-lg font-bold text-white">TrailBlazers</span><span class="block text-[8px] uppercase tracking-[0.2em] text-white/40 -mt-0.5">Adventures</span></div></div>
+                <p class="text-white/35 leading-relaxed mb-6 max-w-sm text-sm">India's most trusted trekking company since 2016. Certified by IMF, recognized by Ministry of Tourism. Making mountains accessible to everyone.</p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                    <a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="youtube" class="w-4 h-4 text-white"></i></a>
+                    <a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="facebook" class="w-4 h-4 text-white"></i></a>
+                    <a href="#" class="w-9 h-9 bg-white/5 rounded-lg flex items-center justify-center hover:bg-terra transition-colors"><i data-lucide="twitter" class="w-4 h-4 text-white"></i></a>
+                </div>
+            </div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Popular Treks</h4><ul class="space-y-2.5"><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Hampta Pass</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Rupin Pass</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Brahmatal</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Valley of Flowers</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Sandakphu</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Kodachadri</a></li></ul></div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Company</h4><ul class="space-y-2.5"><li><a href="#about" class="text-white/35 hover:text-terra transition-colors text-sm">About Us</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Our Guides</a></li><li><a href="#gallery" class="text-white/35 hover:text-terra transition-colors text-sm">Gallery</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Blog</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Careers</a></li><li><a href="#contact" class="text-white/35 hover:text-terra transition-colors text-sm">Contact</a></li></ul></div>
+            <div><h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legal</h4><ul class="space-y-2.5"><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Terms of Service</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Cancellation Policy</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Privacy Policy</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Liability Waiver</a></li><li><a href="#" class="text-white/35 hover:text-terra transition-colors text-sm">Refund Policy</a></li></ul></div>
+        </div>
+        <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-white/20 text-sm">© 2024 TrailBlazers Adventures Pvt. Ltd. All rights reserved.</p>
+            <p class="text-white/20 text-sm">CIN: U92412HP2016PTC012345 • GST: 05AADCT1234A1Z5</p>
+        </div>
+    </div>
+</footer>
+
+<button id="btt" class="fixed bottom-8 right-8 w-13 h-13 bg-forest text-white rounded-full shadow-xl flex items-center justify-center hover:bg-terra transition-all duration-500 opacity-0 translate-y-4 pointer-events-none z-50 p-3.5">
+    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+</button>
+
+<script>
+lucide.createIcons();
+
+// ===== TREK DATA =====
+const treks = [
+    { id:1, name:"Hampta Pass Trek", location:"Manali, Himachal Pradesh", difficulty:"moderate", altitude:"14,100 ft", days:"5 Days / 4 Nights", date:"Jul 12 - Jul 16, 2025", price:8999, originalPrice:11999, totalSeats:20, booked:14, image:"trek-hampta", rating:4.8, reviews:342, highlights:["Dramatic landscape change","Chandratal Lake visit","Snow bridge crossing","River valley camping"], itinerary:[{day:"Day 1",title:"Manali to Jobra → Chika",desc:"Drive to Jobra, trek through pine forests alongside the Hampta river. Camp at beautiful Chika meadow.",distance:"8 km",time:"4 hrs"},{day:"Day 2",title:"Chika to Balu Ka Ghera",desc:"Gradual ascent through birch forests. Stunning views of Deo Tibba peak. Camp near the river.",distance:"10 km",time:"5 hrs"},{day:"Day 3",title:"Balu Ka Ghera → Hampta Pass → Siagoru",desc:"The big day! Cross the 14,100 ft pass. Descend to the stark Lahaul side. Dramatic scenery change.",distance:"12 km",time:"7 hrs"},{day:"Day 4",title:"Siagoru → Chandratal → Chatru",desc:"Visit the iconic Chandratal Lake. Drive to Chatru. Celebrate with campfire.",distance:"6 km",time:"3 hrs"},{day:"Day 5",title:"Chatru → Manali",desc:"Scenic drive back through Rohtang Pass. Reach Manali by afternoon. Trip concludes.",distance:"-",time:"5 hrs drive"}], inclusions:["Tents & sleeping bags","All meals (veg/non-veg)","Certified trek leader","First aid & oxygen","Permits & forest fees","Transport (Manali-Chatru-Manali)"], exclusions:["Personal clothing & shoes","Insurance (optional ₹299)","Any personal expenses","Tips for guides"], fitness:"Moderate — should be able to jog 5km in 35 mins", bestTime:"June - September", nearestRail:"Joginder Nagar (165 km)", nearestAir:"Bhuntar (50 km)" },
+    { id:2, name:"Rupin Pass Trek", location:"Shimla to Uttarakhand Border", difficulty:"difficult", altitude:"15,250 ft", days:"7 Days / 6 Nights", date:"May 20 - May 26, 2025", price:14999, originalPrice:18999, totalSeats:16, booked:11, image:"trek-rupin", rating:4.9, reviews:218, highlights:["Three-tier waterfall","Snow bridge traverse","Dhanda meadows","Kinnaur to Uttarakhand transition"], itinerary:[{day:"Day 1",title:"Shimla → Dhaula",desc:"Scenic drive through apple orchards. Overnight at Dhaula guesthouse.",distance:"-",time:"7 hrs drive"},{day:"Day 2",title:"Dhaula → Sewa",desc:"Easy walk alongside the Rupin river. First taste of village life in the Himalayas.",distance:"8 km",time:"4 hrs"},{day:"Day 3",title:"Sewa → Jhaka",desc:"Ascend through pine forests. Reach the hanging village of Jhaka — houses literally cling to the cliff.",distance:"10 km",time:"5 hrs"},{day:"Day 4",title:"Jhaka → Saruwas Thatch",desc:"Enter the magical upper valley. Three-tier waterfall en route. Camp at Saruwas Thatch meadow.",distance:"12 km",time:"6 hrs"},{day:"Day 5",title:"Saruwas → Rupin Pass Camp",desc:"Push towards the pass. Snow camping. Prepare for next day's pass crossing.",distance:"8 km",time:"5 hrs"},{day:"Day 6",title:"Rupin Pass Crossing → Ronti Gad",desc:"The summit day! Cross the 15,250 ft pass. Incredible views. Descend to Ronti Gad.",distance:"14 km",time:"8 hrs"},{day:"Day 7",title:"Ronti Gad → Sangla → Shimla",desc:"Descend to Sangla. Drive back to Shimla.",distance:"10 km",time:"9 hrs total"}], inclusions:["All camping equipment","All meals","Lead guide + assistant","First aid + oxygen","Permits","Transport Shimla-Sangla-Shimla"], exclusions:["Personal gear","Insurance","Personal expenses","Tips"], fitness:"High — should be able to jog 5km in 28 mins", bestTime:"May - June, September - October", nearestRail:"Shimla (not connected — drive from Kalka)", nearestAir:"Shimla Airport / Chandigarh" },
+    { id:3, name:"Kodachadri Trek", location:"Western Ghats, Karnataka", difficulty:"easy", altitude:"4,430 ft", days:"2 Days / 1 Night", date:"Jan 18 - Jan 19, 2025", price:3499, originalPrice:4999, totalSeats:25, booked:8, image:"trek-kodachadri", rating:4.6, reviews:456, highlights:["Sunrise at peak","Hidlumane Falls","Dense forest trail","Ancient Mookambika Temple visit"], itinerary:[{day:"Day 1",title:"Bangalore → Kodachadri Base → Trek Start",desc:"Overnight bus from Bangalore. Reach base camp by morning. Freshen up, start trek through lush forests.",distance:"12 km",time:"5 hrs"},{day:"Day 2",title:"Summit Push → Sunrise → Descend → Bangalore",desc:"2 AM start for sunrise summit. Watch the spectacular sunrise over the Arabian Sea. Descend and head back.",distance:"14 km",time:"7 hrs"}], inclusions:["Transport (Bangalore return)","Breakfast & lunch","Trek guide","Forest permits","First aid"], exclusions:["Dinner on Day 1","Personal expenses","Insurance"], fitness:"Easy — should be able to walk 5km comfortably", bestTime:"October - February", nearestRail:"Udupi (85 km)", nearestAir:"Mangalore (130 km)" },
+    { id:4, name:"Valley of Flowers", location:"Chamoli, Uttarakhand", difficulty:"easy", altitude:"12,500 ft", days:"6 Days / 5 Nights", date:"Aug 5 - Aug 10, 2025", price:11999, originalPrice:14999, totalSeats:20, booked:17, image:"trek-valley", rating:4.9, reviews:567, highlights:["UNESCO World Heritage Site","300+ alpine flower species","Rare Brahma Kamal","Hemkund Sahib visit"], itinerary:[{day:"Day 1",title:"Haridwar → Joshimath",desc:"Scenic drive through Rudraprayag. Overnight at Joshimath hotel.",distance:"-",time:"9 hrs drive"},{day:"Day 2",title:"Joshimath → Govindghat → Ghangaria",desc:"Drive to Govindghat, trek to Ghangaria through dense forests alongside the Laxman Ganga.",distance:"13 km",time:"6 hrs"},{day:"Day 3",title:"Ghangaria → Valley of Flowers → Ghangaria",desc:"Full day exploration of the valley. 300+ species of flowering plants. Photographer's paradise.",distance:"8 km",time:"6 hrs round trip"},{day:"Day 4",title:"Ghangaria → Hemkund Sahib → Ghangaria",desc:"Trek to the sacred Hemkund Sahib lake at 14,200 ft. Challenging but deeply rewarding.",distance:"12 km",time:"7 hrs"},{day:"Day 5",title:"Ghangaria → Govindghat → Joshimath",desc:"Descend back. Celebrate with a hot meal at Joshimath.",distance:"13 km",time:"5 hrs"},{day:"Day 6",title:"Joshimath → Haridwar",desc:"Drive back to Haridwar. Trip concludes.",distance:"-",time:"9 hrs drive"}], inclusions:["Hotel stays (Joshimath)","Camping (Ghangaria)","All meals","Guide & permits","Transport Haridwar-Haridwar"], exclusions:["Personal expenses","Insurance","Horse ride (if needed)","Tips"], fitness:"Easy-Moderate — 5km in 35 mins", bestTime:"July - September (monsoon)", nearestRail:"Haridwar", nearestAir:"Dehradun (Jolly Grant)" },
+    { id:5, name:"Brahmatal Trek", location:"Chamoli, Uttarakhand", difficulty:"moderate", altitude:"12,250 ft", days:"4 Days / 3 Nights", date:"Dec 20 - Dec 23, 2025", price:7999, originalPrice:10999, totalSeats:18, booked:6, image:"trek-brahmatal", rating:4.7, reviews:289, highlights:["Winter snow trek","Frozen lake","360° Himalayan views","Campfire in snow"], itinerary:[{day:"Day 1",title:"Lohajung → Bekaltal",desc:"Drive to Lohajung from Kathgodam. Trek through oak forests to the frozen Bekaltal lake.",distance:"6 km",time:"3.5 hrs"},{day:"Day 2",title:"Bekaltal → Brahmatal",desc:"Ascend through snow. Reach the mystical Brahmatal lake. Camp surrounded by snow peaks.",distance:"8 km",time:"5 hrs"},{day:"Day 3",title:"Brahmatal → Brahmatal Top → Tilandi",desc:"Summit push to Brahmatal Top for panoramic views. Descend to Tilandi campsite.",distance:"10 km",time:"6 hrs"},{day:"Day 4",title:"Tilandi → Lohajung → Kathgodam",desc:"Easy descent through villages. Drive back to Kathgodam.",distance:"4 km",time:"2 hrs + drive"}], inclusions:["Camping gear","All meals","Guide + cook","First aid","Permits","Transport Kathgodam-Kathgodam"], exclusions:["Personal gear","Insurance","Personal expenses"], fitness:"Moderate — 5km in 32 mins", bestTime:"December - March (winter)", nearestRail:"Kathgodam", nearestAir:"Pantnagar (120 km)" },
+    { id:6, name:"Sandakphu Trek", location:"Darjeeling, West Bengal", difficulty:"moderate", altitude:"11,930 ft", days:"6 Days / 5 Nights", date:"Apr 10 - Apr 15, 2025", price:12999, originalPrice:16999, totalSeats:15, booked:10, image:"trek-sandakphu", rating:4.8, reviews:198, highlights:["Sleeping Buddha view of Kanchenjunga","Four of world's five highest peaks visible","Singalila Ridge walk","Rhododendron forests"], itinerary:[{day:"Day 1",title:"Siliguri → Jaubari → Tumbling",desc:"Drive to Jaubari. Trek start through tea gardens. Camp at Tumbling.",distance:"11 km",time:"5 hrs"},{day:"Day 2",title:"Tumbling → Kalapokhri",desc:"Walk the famous Singalila Ridge. Views of Nepal and India on both sides.",distance:"12 km",time:"6 hrs"},{day:"Day 3",title:"Kalapokhri → Sandakphu",desc:"The big day. Reach the highest point in West Bengal. Views of Everest, Kanchenjunga, Lhotse, Makalu.",distance:"14 km",time:"7 hrs"},{day:"Day 4",title:"Sandakphu → Phalut",desc:"Ridge walk to Phalut. Arguably the best views of the entire trek.",distance:"16 km",time:"7 hrs"},{day:"Day 5",title:"Phalut → Gorkhey",desc:"Descend through rhododendron forests. Beautiful camp at Gorkhey village.",distance:"15 km",time:"6 hrs"},{day:"Day 6",title:"Gorkhey → Sirikhola → Siliguri",desc:"Final descent to Sirikhola. Drive back to Siliguri.",distance:"8 km",time:"3 hrs + drive"}], inclusions:["Camping & lodging","All meals","Guide + permits","Transport Siliguri-Siliguri","First aid"], exclusions:["Personal gear","Insurance","Personal expenses","Tips"], fitness:"Moderate — 5km in 33 mins", bestTime:"April - May, October - December", nearestRail:"New Jalpaiguri (NJP)", nearestAir:"Bagdogra (12 km)" },
+    { id:7, name:"Kashmir Great Lakes", location:"Ganderbal, Jammu & Kashmir", difficulty:"difficult", altitude:"13,800 ft", days:"7 Days / 6 Nights", date:"Jul 25 - Jul 31, 2025", price:18999, originalPrice:23999, totalSeats:14, booked:12, image:"trek-kashmir", rating:5.0, reviews:156, highlights:["7 alpine lakes in 7 days","Kashmir Valley meadows","Snow-capped peaks all around","Wildflower paradise"], itinerary:[{day:"Day 1",title:"Srinagar → Sonamarg → Nichnai",desc:"Drive to Sonamarg. Trek to first camp at Nichnai through pine forests.",distance:"9 km",time:"4 hrs"},{day:"Day 2",title:"Nichnai → Vishansar Lake",desc:"Cross the Nichnai pass. First glimpse of the stunning Vishansar Lake.",distance:"11 km",time:"6 hrs"},{day:"Day 3",title:"Vishansar → Kishansar Lake → Gadsar Pass",desc:"Twin lakes, high pass crossing. Camp near Gadsar Lake.",distance:"14 km",time:"7 hrs"},{day:"Day 4",title:"Gadsar → Satsar → Gangabal Twin Lakes",desc:"Visit Satsar lakes. Camp at the magnificent Gangabal twin lakes.",distance:"12 km",time:"6 hrs"},{day:"Day 5",title:"Rest Day at Gangabal",desc:"Explore the area, fishing, photography, or just soak in the beauty.",distance:"-",time:"Rest"},{day:"Day 6",title:"Gangabal → Naranag",desc:"Long descent through maple trees. Reach Naranag. Hot shower at guesthouse!",distance:"15 km",time:"7 hrs"},{day:"Day 7",title:"Naranag → Srinagar",desc:"Drive back to Srinagar. Trip concludes with farewell lunch.",distance:"-",time:"2 hrs drive"}], inclusions:["All camping","All meals","Lead guide + assistant + cook","First aid + oxygen","Permits","Transport Srinagar-Srinagar"], exclusions:["Personal gear","Insurance","Personal expenses","Shikara ride in Srinagar","Tips"], fitness:"High — 5km in 28 mins, previous trekking experience preferred", bestTime:"July - September", nearestRail:"Srinagar (not connected — Jammu is nearest)", nearestAir:"Srinagar (Sheikh ul-Alam)" },
+    { id:8, name:"Chadar Trek (Frozen River)", location:"Zanskar, Ladakh", difficulty:"extreme", altitude:"11,100 ft", days:"9 Days / 8 Nights", date:"Jan 15 - Jan 23, 2026", price:34999, originalPrice:42999, totalSeats:12, booked:9, image:"trek-chadar", rating:4.9, reviews:87, highlights:["Walk on frozen Zanskar River","Ice caves & formations","Extreme winter camping","Nerak Waterfall frozen"], itinerary:[{day:"Day 1",title:"Leh → Chilling → Trek Start",desc:"Acclimatization day in Leh. Drive to Chilling. First steps on the frozen river.",distance:"5 km",time:"3 hrs"},{day:"Day 2-3",title:"Trek on Frozen River",desc:"Walk on the Chadar (frozen river sheet). Navigate ice formations. Camp in caves.",distance:"12-15 km/day",time:"6-7 hrs/day"},{day:"Day 4",title:"Trek to Naerak Camp",desc:"Continue on the Zanskar. The ice gets more dramatic. Camp near the frozen waterfall.",distance:"14 km",time:"7 hrs"},{day:"Day 5",title:"Naerak Waterfall → Return Begin",desc:"Visit the spectacular frozen waterfall. Begin return journey.",distance:"12 km",time:"6 hrs"},{day:"Day 6-8",title:"Return Trek on Chadar",desc:"Retrace steps on the ever-changing frozen river. The ice pattern changes daily.",distance:"12-15 km/day",time:"6-7 hrs/day"},{day:"Day 9",title:"Trek End → Leh",desc:"Complete the trek. Drive back to Leh. Celebration dinner!",distance:"8 km",time:"4 hrs"}], inclusions:["All camping (extreme cold rated)","All meals (hot meals on ice)","2 guides per 6 trekkers","Complete medical kit + oxygen","Satellite phone","Permits","Transport Leh-Leh","Porter support"], exclusions:["Extreme cold weather gear (rental ₹3000)","Insurance (mandatory ₹999)","Personal expenses","Flights to Leh","Accommodation in Leh (pre/post)"], fitness:"Very High — must have prior high-altitude experience, able to walk 5km in 25 mins in cold conditions", bestTime:"January - February only", nearestRail:"Not connected", nearestAir:"Leh (Kushok Bakula)" }
+];
+
+let displayedCount = 8;
+let currentFilter = 'all';
+let currentTrekId = null;
+
+// ===== RENDER TREKS =====
+function renderTreks() {
+    const grid = document.getElementById('trek-grid');
+    let filtered = currentFilter === 'all' ? treks : treks.filter(t => t.difficulty === currentFilter);
+    let toShow = filtered.slice(0, displayedCount);
+    grid.innerHTML = toShow.map(t => {
+        const seatsLeft = t.totalSeats - t.booked;
+        const seatPercent = (t.booked / t.totalSeats) * 100;
+        const seatColor = seatsLeft <= 3 ? 'bg-red-500' : seatsLeft <= 8 ? 'bg-amber-500' : 'bg-forest';
+        const diffDots = t.difficulty === 'easy' ? 1 : t.difficulty === 'moderate' ? 2 : t.difficulty === 'difficult' ? 3 : 4;
+        const diffColor = t.difficulty === 'easy' ? 'text-green-600 bg-green-50' : t.difficulty === 'moderate' ? 'text-amber-600 bg-amber-50' : t.difficulty === 'difficult' ? 'text-orange-600 bg-orange-50' : 'text-red-600 bg-red-50';
+        return `
+        <div class="trek-card bg-white rounded-2xl overflow-hidden border border-gray-100 reveal" data-diff="${t.difficulty}">
+            <div class="relative h-52 overflow-hidden cursor-pointer" onclick="openTrekDetail(${t.id})">
+                <img src="https://picsum.photos/seed/${t.image}/700/450.jpg" alt="${t.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                <div class="absolute top-3 left-3 flex gap-2">
+                    <span class="${diffColor} px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">${t.difficulty}</span>
+                </div>
+                <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <i data-lucide="star" class="w-3 h-3 text-terra fill-terra"></i>
+                    <span class="text-xs font-bold text-charcoal">${t.rating}</span>
+                </div>
+                ${seatsLeft <= 3 ? '<div class="absolute bottom-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-[11px] font-bold animate-pulse">🔥 Only ' + seatsLeft + ' left!</div>' : ''}
+            </div>
+            <div class="p-5">
+                <h3 class="font-bold text-charcoal text-lg mb-1 cursor-pointer hover:text-forest transition-colors" onclick="openTrekDetail(${t.id})">${t.name}</h3>
+                <div class="flex items-center gap-1 text-gray-warm text-sm mb-3"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i>${t.location}</div>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid"><i data-lucide="mountain-snow" class="w-3 h-3 inline mr-1"></i>${t.altitude}</span>
+                    <span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>${t.days}</span>
+                    <span class="bg-sand px-2.5 py-1 rounded-md text-[11px] font-medium text-charcoal-mid"><i data-lucide="clock" class="w-3 h-3 inline mr-1"></i>${t.date.split(',')[0]}</span>
+                </div>
+                <!-- Seat Availability -->
+                <div class="mb-4">
+                    <div class="flex justify-between text-[11px] mb-1.5"><span class="text-gray-warm">Seat Availability</span><span class="font-bold ${seatsLeft <= 3 ? 'text-red-500' : seatsLeft <= 8 ? 'text-amber-600' : 'text-forest'}">${seatsLeft} of ${t.totalSeats} left</span></div>
+                    <div class="seat-bar"><div class="seat-fill ${seatColor}" style="width:${seatPercent}%"></div></div>
+                </div>
+                <!-- Difficulty Dots -->
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-[11px] text-gray-warm">Difficulty:</span>
+                    <div class="flex gap-1.5">${[1,2,3,4].map(i => `<div class="diff-dot ${i <= diffDots ? 'active' : ''}"></div>`).join('')}</div>
+                </div>
+                <!-- Price & Book -->
+                <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div><span class="text-xs text-gray-light line-through">₹${t.originalPrice.toLocaleString()}</span><span class="text-xl font-bold text-charcoal ml-1">₹${t.price.toLocaleString()}</span><span class="text-[11px] text-gray-warm"> /person</span></div>
+                    <button onclick="openTrekDetail(${t.id})" class="bg-forest text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-terra transition-all duration-300 flex items-center gap-1.5">View <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+    lucide.createIcons();
+
+    document.getElementById('load-more-btn').style.display = filtered.length <= displayedCount ? 'none' : '';
+
+    // Re-observe
+    document.querySelectorAll('.trek-card.reveal:not(.vis)').forEach(el => obs.observe(el));
+}
+
+function loadMoreTreks() { displayedCount += 4; renderTreks(); }
+
+// ===== FILTER TABS =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active','bg-forest','text-white'); b.classList.add('bg-sand','text-charcoal-mid'); });
+        btn.classList.add('active','bg-forest','text-white'); btn.classList.remove('bg-sand','text-charcoal-mid');
+        currentFilter = btn.dataset.filter; displayedCount = 8; renderTreks();
+    });
+});
+
+// ===== TREK DETAIL MODAL =====
+function openTrekDetail(id) {
+    currentTrekId = id;
+    const t = treks.find(x => x.id === id);
+    const seatsLeft = t.totalSeats - t.booked;
+    const seatPercent = (t.booked / t.totalSeats) * 100;
+    const seatColor = seatsLeft <= 3 ? 'bg-red-500' : seatsLeft <= 8 ? 'bg-amber-500' : 'bg-forest';
+    const diffColor = t.difficulty === 'easy' ? 'text-green-600 bg-green-50' : t.difficulty === 'moderate' ? 'text-amber-600 bg-amber-50' : t.difficulty === 'difficult' ? 'text-orange-600 bg-orange-50' : 'text-red-600 bg-red-50';
+    const discount = Math.round(((t.originalPrice - t.price) / t.originalPrice) * 100);
+
+    document.getElementById('modal-body').innerHTML = `
+    <div class="relative h-72 md:h-96 overflow-hidden rounded-t-3xl">
+        <img src="https://picsum.photos/seed/${t.image}-detail/1200/600.jpg" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <div class="absolute bottom-6 left-6 right-6">
+            <span class="${diffColor} px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-3">${t.difficulty}</span>
+            <h2 class="text-white text-3xl md:text-4xl font-display font-bold">${t.name}</h2>
+            <div class="flex items-center gap-1 text-white/70 text-sm mt-2"><i data-lucide="map-pin" class="w-4 h-4"></i>${t.location}</div>
+        </div>
+    </div>
+    <div class="p-6 md:p-10">
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-sand rounded-xl p-4 text-center"><i data-lucide="mountain-snow" class="w-5 h-5 text-forest mx-auto mb-1"></i><div class="text-lg font-bold text-charcoal">${t.altitude}</div><div class="text-[11px] text-gray-warm">Max Altitude</div></div>
+            <div class="bg-sand rounded-xl p-4 text-center"><i data-lucide="calendar" class="w-5 h-5 text-forest mx-auto mb-1"></i><div class="text-lg font-bold text-charcoal">${t.days}</div><div class="text-[11px] text-gray-warm">Duration</div></div>
+            <div class="bg-sand rounded-xl p-4 text-center"><i data-lucide="star" class="w-5 h-5 text-terra mx-auto mb-1"></i><div class="text-lg font-bold text-charcoal">${t.rating} (${t.reviews})</div><div class="text-[11px] text-gray-warm">Rating</div></div>
+            <div class="bg-sand rounded-xl p-4 text-center"><i data-lucide="users" class="w-5 h-5 ${seatsLeft <= 3 ? 'text-red-500' : 'text-forest'} mx-auto mb-1"></i><div class="text-lg font-bold ${seatsLeft <= 3 ? 'text-red-500' : 'text-charcoal'}">${seatsLeft} Left</div><div class="text-[11px] text-gray-warm">of ${t.totalSeats} seats</div></div>
+        </div>
+
+        <!-- Date & Seat Bar -->
+        <div class="bg-forest-pale rounded-2xl p-5 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
+                <div class="flex items-center gap-3"><i data-lucide="calendar-check" class="w-5 h-5 text-forest"></i><span class="font-bold text-charcoal">${t.date}</span></div>
+                <div class="flex items-center gap-2"><span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs font-bold">${discount}% OFF</span><span class="text-sm text-gray-light line-through">₹${t.originalPrice.toLocaleString()}</span><span class="text-2xl font-bold text-forest">₹${t.price.toLocaleString()}</span><span class="text-sm text-gray-warm">/person</span></div>
+            </div>
+            <div class="seat-bar"><div class="seat-fill ${seatColor}" style="width:${seatPercent}%"></div></div>
+            <div class="text-[11px] text-gray-warm mt-1.5">${t.booked} booked · ${seatsLeft} available</div>
+        </div>
+
+        <!-- Highlights -->
+        <h3 class="font-bold text-charcoal text-lg mb-3">Trail Highlights</h3>
+        <div class="flex flex-wrap gap-2 mb-8">${t.highlights.map(h => `<span class="bg-sand px-4 py-2 rounded-full text-sm text-charcoal-mid flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-forest"></i>${h}</span>`).join('')}</div>
+
+        <!-- Itinerary -->
+        <h3 class="font-bold text-charcoal text-lg mb-4">Day-by-Day Itinerary</h3>
+        <div class="space-y-4 mb-8">${t.itinerary.map((d,i) => `
+            <div class="border border-gray-100 rounded-xl p-5 hover:border-forest/20 transition-colors">
+                <div class="flex items-center gap-3 mb-2"><span class="bg-forest text-white text-xs font-bold px-2.5 py-1 rounded-lg">${d.day}</span><span class="font-bold text-charcoal">${d.title}</span></div>
+                <p class="text-gray-warm text-sm leading-relaxed mb-2">${d.desc}</p>
+                <div class="flex gap-4 text-[11px] text-gray-warm">${d.distance !== '-' ? `<span class="flex items-center gap-1"><i data-lucide="route" class="w-3 h-3"></i>${d.distance}</span>` : ''}${d.time !== '-' ? `<span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>${d.time}</span>` : ''}</div>
+            </div>`).join('')}</div>
+
+        <!-- Inclusions -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div><h3 class="font-bold text-charcoal text-lg mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5 text-forest"></i>What's Included</h3><ul class="space-y-2">${t.inclusions.map(i => `<li class="flex items-start gap-2 text-sm text-charcoal-mid"><i data-lucide="check" class="w-4 h-4 text-forest flex-shrink-0 mt-0.5"></i>${i}</li>`).join('')}</ul></div>
+            <div><h3 class="font-bold text-charcoal text-lg mb-3 flex items-center gap-2"><i data-lucide="x-circle" class="w-5 h-5 text-gray-light"></i>What's Not Included</h3><ul class="space-y-2">${t.exclusions.map(e => `<li class="flex items-start gap-2 text-sm text-gray-warm"><i data-lucide="x" class="w-4 h-4 text-gray-light flex-shrink-0 mt-0.5"></i>${e}</li>`).join('')}</ul></div>
+        </div>
+
+        <!-- Info Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-sand rounded-xl p-4"><div class="text-[11px] text-gray-warm mb-1">Fitness Required</div><div class="text-sm font-bold text-charcoal">${t.fitness}</div></div>
+            <div class="bg-sand rounded-xl p-4"><div class="text-[11px] text-gray-warm mb-1">Best Time</div><div class="text-sm font-bold text-charcoal">${t.bestTime}</div></div>
+            <div class="bg-sand rounded-xl p-4"><div class="text-[11px] text-gray-warm mb-1">Nearest Railway</div><div class="text-sm font-bold text-charcoal">${t.nearestRail}</div></div>
+            <div class="bg-sand rounded-xl p-4"><div class="text-[11px] text-gray-warm mb-1">Nearest Airport</div><div class="text-sm font-bold text-charcoal">${t.nearestAir}</div></div>
+        </div>
+
+        <!-- Book CTA -->
+        <div class="bg-charcoal rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-5">
+            <div class="text-white text-center md:text-left">
+                <div class="text-3xl font-bold">₹${t.price.toLocaleString()} <span class="text-base font-normal text-white/50 line-through">₹${t.originalPrice.toLocaleString()}</span></div>
+                <div class="text-white/50 text-sm">${seatsLeft} seats remaining — ${t.date}</div>
+            </div>
+            <button onclick="openBooking(${t.id})" class="w-full md:w-auto bg-terra text-white px-10 py-4 rounded-xl font-bold text-lg hover:bg-forest transition-all duration-300 flex items-center justify-center gap-2 ${seatsLeft === 0 ? 'opacity-50 pointer-events-none' : ''}" ${seatsLeft === 0 ? 'disabled' : ''}>
+                <i data-lucide="zap" class="w-5 h-5"></i>${seatsLeft === 0 ? 'Sold Out' : 'Book Now'}
+            </button>
+        </div>
+    </div>`;
+    lucide.createIcons();
+    document.getElementById('trek-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('trek-modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+// ===== BOOKING MODAL =====
+let bookStep = 1;
+function openBooking(id) {
+    currentTrekId = id;
+    bookStep = 1;
+    renderBooking();
+    document.getElementById('book-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeBookModal() {
+    document.getElementById('book-modal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function renderBooking() {
+    const t = treks.find(x => x.id === currentTrekId);
+    const seatsLeft = t.totalSeats - t.booked;
+
+    document.getElementById('book-body').innerHTML = `
+    <div class="p-6 md:p-10">
+        <!-- Header -->
+        <div class="flex items-center gap-3 mb-6">
+            <img src="https://picsum.photos/seed/${t.image}-thumb/100/100.jpg" class="w-14 h-14 rounded-xl object-cover">
+            <div><h3 class="font-bold text-charcoal">${t.name}</h3><div class="text-sm text-gray-warm">${t.date} · ₹${t.price.toLocaleString()}/person</div></div>
+        </div>
+
+        <!-- Steps -->
+        <div class="flex items-center gap-2 mb-8 px-4">
+            <div class="step-circle ${bookStep >= 1 ? (bookStep > 1 ? 'done' : 'active') : 'bg-gray-200 text-gray-400'}">1</div>
+            <div class="step-line ${bookStep > 1 ? 'done' : ''}"></div>
+            <div class="step-circle ${bookStep >= 2 ? (bookStep > 2 ? 'done' : 'active') : 'bg-gray-200 text-gray-400'}">2</div>
+            <div class="step-line ${bookStep > 2 ? 'done' : ''}"></div>
+            <div class="step-circle ${bookStep >= 3 ? 'active' : 'bg-gray-200 text-gray-400'}">3</div>
+        </div>
+        <div class="flex justify-between text-[10px] text-gray-warm mb-8 px-2">
+            <span>Personal Info</span><span>Trek Details</span><span>Payment</span>
+        </div>
+
+        ${bookStep === 1 ? `
+        <form id="book-form-1" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Full Name *</label><input type="text" id="bk-name" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm" placeholder="As per ID"></div>
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Date of Birth *</label><input type="date" id="bk-dob" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Email *</label><input type="email" id="bk-email" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm" placeholder="your@email.com"></div>
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Phone *</label><input type="tel" id="bk-phone" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm" placeholder="+91 98765 43210"></div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Gender *</label><select id="bk-gender" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm text-gray-warm"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Blood Group</label><select id="bk-blood" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm text-gray-warm"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+            </div>
+            <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Emergency Contact Name & Number *</label><input type="text" id="bk-emergency" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm" placeholder="Name - Phone Number"></div>
+            <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Any Medical Conditions?</label><textarea id="bk-medical" rows="2" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm resize-none" placeholder="Asthma, diabetes, allergies, recent surgeries, etc."></textarea></div>
+            <button type="submit" class="w-full bg-forest text-white py-3.5 rounded-xl font-bold hover:bg-terra transition-all duration-300">Continue to Trek Details →</button>
+        </form>` : ''}
+
+        ${bookStep === 2 ? `
+        <form id="book-form-2" class="space-y-4">
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Number of Trekkers *</label><select id="bk-count" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm"><option value="1">1 Person</option>${seatsLeft >= 2 ? '<option value="2">2 Persons</option>' : ''}${seatsLeft >= 3 ? '<option value="3">3 Persons</option>' : ''}${seatsLeft >= 4 ? '<option value="4">4 Persons</option>' : ''}${seatsLeft >= 5 ? '<option value="5">5 Persons</option>' : ''}</select></div>
+                <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Food Preference *</label><select id="bk-food" required class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm"><option>Vegetarian</option><option>Non-Vegetarian</option><option>Vegan</option><option>Jain</option></select></div>
+            </div>
+            <div><label class="text-sm font-medium text-charcoal mb-1.5 block">Trekking Experience</label><select id="bk-exp" class="w-full px-4 py-3 bg-sand border-2 border-transparent rounded-xl focus:border-forest focus:outline-none text-sm text-gray-warm"><option>First Time</option><option>1-2 Treks</option><option>3-5 Treks</option><option>5+ Treks</option><option>Experienced Mountaineer</option></select></div>
+            <div class="flex items-start gap-3 bg-forest-pale rounded-xl p-4">
+                <input type="checkbox" id="bk-trekshield" class="w-5 h-5 rounded border-gray-300 text-forest mt-0.5">
+                <label for="bk-trekshield" class="text-sm"><span class="font-bold text-forest">Add TrekShield ₹499</span><span class="text-gray-warm"> — Full rebooking flexibility. Change your trek date up to 48hrs before for free. No questions asked.</span></label>
+            </div>
+            <div class="flex items-start gap-3 bg-sand rounded-xl p-4">
+                <input type="checkbox" id="bk-insurance" class="w-5 h-5 rounded border-gray-300 text-forest mt-0.5">
+                <label for="bk-insurance" class="text-sm"><span class="font-bold text-charcoal">Add Trek Insurance ₹${t.difficulty === 'extreme' ? '999' : '299'}</span><span class="text-gray-warm"> — Covers evacuation, medical, and trip cancellation. ${t.difficulty === 'extreme' ? '(Mandatory)' : '(Recommended)'}</span></label>
+            </div>
+            <div class="flex gap-3">
+                <button type="button" onclick="bookStep=1;renderBooking()" class="flex-1 border-2 border-gray-200 text-charcoal py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all">← Back</button>
+                <button type="submit" class="flex-1 bg-forest text-white py-3.5 rounded-xl font-bold hover:bg-terra transition-all">Continue to Payment →</button>
+            </div>
+        </form>` : ''}
+
+        ${bookStep === 3 ? `
+        <div>
+            <!-- Summary -->
+            <div class="bg-sand rounded-2xl p-5 mb-6">
+                <h4 class="font-bold text-charcoal mb-3">Booking Summary</h4>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span class="text-gray-warm">Trek</span><span class="font-medium text-charcoal">${t.name}</span></div>
+                    <div class="flex justify-between"><span class="text-gray-warm">Date</span><span class="font-medium text-charcoal">${t.date}</span></div>
+                    <div class="flex justify-between"><span class="text-gray-warm">Trekkers</span><span class="font-medium text-charcoal" id="sum-count">1</span></div>
+                    <div class="flex justify-between"><span class="text-gray-warm">Trek Cost</span><span class="font-medium text-charcoal" id="sum-cost">₹${t.price.toLocaleString()}</span></div>
+                    <div class="flex justify-between" id="sum-shield-row" style="display:none"><span class="text-gray-warm">TrekShield</span><span class="font-medium text-charcoal" id="sum-shield">₹499</span></div>
+                    <div class="flex justify-between" id="sum-insure-row" style="display:none"><span class="text-gray-warm">Trek Insurance</span><span class="font-medium text-charcoal" id="sum-insure">₹299</span></div>
+                    <div class="border-t border-gray-200 pt-2 mt-2 flex justify-between"><span class="font-bold text-charcoal">Total</span><span class="font-bold text-forest text-xl" id="sum-total">₹${t.price.toLocaleString()}</span></div>
+                </div>
+            </div>
+            <!-- Payment -->
+            <h4 class="font-bold text-charcoal mb-3">Payment Method</h4>
+            <div class="grid grid-cols-3 gap-3 mb-4">
+                <label class="border-2 border-forest bg-forest-pale rounded-xl p-3 text-center cursor-pointer"><input type="radio" name="pay" value="upi" checked class="hidden"><i data-lucide="smartphone" class="w-5 h-5 text-forest mx-auto mb-1"></i><div class="text-xs font-bold text-forest">UPI</div></label>
+                <label class="border-2 border-gray-200 rounded-xl p-3 text-center cursor-pointer hover:border-forest/30 transition-colors"><input type="radio" name="pay" value="card" class="hidden"><i data-lucide="credit-card" class="w-5 h-5 text-gray-warm mx-auto mb-1"></i><div class="text-xs font-medium text-gray-warm">Card</div></label>
+                <label class="border-2 border-gray-200 rounded-xl p-3 text-center cursor-pointer hover:border-forest/30 transition-colors"><input type="radio" name="pay" value="netbanking" class="hidden"><i data-lucide="landmark" class="w-5 h-5 text-gray-warm mx-auto mb-1"></i><div class="text-xs font-medium text-gray-warm">Net Banking</div></label>
+            </div>
+            <p class="text-[11px] text-gray-warm mb-6">🔒 Pay 30% now (₹<span id="pay-now">--</span>) to confirm your booking. Remaining 70% due 15 days before the trek.</p>
+            <div class="flex gap-3">
+                <button onclick="bookStep=2;renderBooking()" class="flex-1 border-2 border-gray-200 text-charcoal py-3.5 rounded-xl font-bold hover:bg-gray-50 transition-all">← Back</button>
+                <button onclick="confirmBooking()" class="flex-1 bg-terra text-white py-3.5 rounded-xl font-bold hover:bg-forest transition-all duration-300 flex items-center justify-center gap-2"><i data-lucide="lock" class="w-4 h-4"></i>Pay & Confirm</button>
+            </div>
+        </div>` : ''}
+    </div>`;
+
+    lucide.createIcons();
+
+    // Payment radio styling
+    document.querySelectorAll('input[name="pay"]').forEach(r => {
+        r.addEventListener('change', () => {
+            document.querySelectorAll('input[name="pay"]').forEach(x => { x.closest('label').classList.remove('border-forest','bg-forest-pale'); x.closest('label').classList.add('border-gray-200'); x.closest('label').querySelector('i').classList.remove('text-forest'); x.closest('label').querySelector('i').classList.add('text-gray-warm'); x.closest('label').querySelector('div').classList.remove('text-forest','font-bold'); x.closest('label').querySelector('div').classList.add('text-gray-warm','font-medium'); });
+            r.closest('label').classList.add('border-forest','bg-forest-pale'); r.closest('label').classList.remove('border-gray-200'); r.closest('label').querySelector('i').classList.add('text-forest'); r.closest('label').querySelector('i').classList.remove('text-gray-warm'); r.closest('label').querySelector('div').classList.add('text-forest','font-bold'); r.closest('label').querySelector('div').classList.remove('text-gray-warm','font-medium');
+        });
+    });
+
+    // Step 1 submit
+    if(bookStep === 1) {
+        document.getElementById('book-form-1').addEventListener('submit', (e) => { e.preventDefault(); bookStep = 2; renderBooking(); });
+    }
+
+    // Step 2 submit
+    if(bookStep === 2) {
+        document.getElementById('book-form-2').addEventListener('submit', (e) => {
+            e.preventDefault();
+            bookStep = 3;
+            renderBooking();
+            // Calculate summary
+            setTimeout(() => {
+                const count = parseInt(document.getElementById('bk-count')?.value || 1);
+                const shield = document.getElementById('bk-trekshield')?.checked;
+                const insure = document.getElementById('bk-insurance')?.checked;
+                const insPrice = t.difficulty === 'extreme' ? 999 : 299;
+                const trekCost = t.price * count;
+                let total = trekCost;
+                if(shield) total += 499 * count;
+                if(insure) total += insPrice * count;
+                const el = (id) => document.getElementById(id);
+                if(el('sum-count')) el('sum-count').textContent = count + (count > 1 ? ' Persons' : ' Person');
+                if(el('sum-cost')) el('sum-cost').textContent = '₹' + trekCost.toLocaleString();
+                if(shield) { if(el('sum-shield-row')) el('sum-shield-row').style.display = 'flex'; if(el('sum-shield')) el('sum-shield').textContent = '₹' + (499 * count).toLocaleString(); }
+                if(insure) { if(el('sum-insure-row')) el('sum-insure-row').style.display = 'flex'; if(el('sum-insure')) el('sum-insure').textContent = '₹' + (insPrice * count).toLocaleString(); }
+                if(el('sum-total')) el('sum-total').textContent = '₹' + total.toLocaleString();
+                if(el('pay-now')) el('pay-now').textContent = Math.round(total * 0.3).toLocaleString();
+            }, 50);
+        });
+    }
+}
+
+function confirmBooking() {
+    const t = treks.find(x => x.id === currentTrekId);
+    t.booked = Math.min(t.booked + 1, t.totalSeats);
+    closeBookModal();
+    closeModal();
+    renderTreks();
+    showToast(`🎉 Booking Confirmed! ${t.name} — ${t.date}. Confirmation sent to your email. Get ready for an amazing adventure!`, 'success');
+}
+
+// ===== TOAST =====
+function showToast(msg, type='success') {
+    const box = document.getElementById('toast-box');
+    const t = document.createElement('div');
+    t.className = `toast-a ${type === 'success' ? 'bg-forest' : 'bg-red-600'} text-white px-6 py-4 rounded-2xl shadow-2xl max-w-sm`;
+    t.innerHTML = `<p class="text-sm leading-relaxed">${msg}</p>`;
+    box.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(100px)'; t.style.transition = 'all .4s'; setTimeout(() => t.remove(), 400); }, 6000);
+}
+
+// ===== NAV SCROLL =====
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => { nav.classList.toggle('nav-scrolled', window.scrollY > 60); if(window.scrollY > 600){btt.classList.remove('opacity-0','translate-y-4','pointer-events-none');btt.classList.add('opacity-100','translate-y-0')}else{btt.classList.add('opacity-0','translate-y-4','pointer-events-none');btt.classList.remove('opacity-100','translate-y-0')}});
+const btt = document.getElementById('btt');
+btt.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+// ===== MOBILE MENU =====
+document.getElementById('mob-btn').addEventListener('click', () => document.getElementById('mob-menu').classList.add('open'));
+document.getElementById('mob-close').addEventListener('click', () => document.getElementById('mob-menu').classList.remove('open'));
+document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => document.getElementById('mob-menu').classList.remove('open')));
+
+// ===== SCROLL REVEAL =====
+const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); }); }, {threshold:0.06, rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-s').forEach(el => obs.observe(el));
+
+// ===== COUNTER =====
+function animCount(el) { if(el.dataset.done) return; el.dataset.done='1'; const target=parseInt(el.dataset.count), start=performance.now(), dur=2000; (function tick(now){const p=Math.min((now-start)/dur,1),ease=1-Math.pow(1-p,4); el.textContent=Math.floor(ease*target).toLocaleString()+'+'; if(p<1)requestAnimationFrame(tick); else el.textContent=target.toLocaleString()+'+';})(start); }
+document.querySelectorAll('[data-count]').forEach(c=>{const o=new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){animCount(c);o.unobserve(x.target)}})},{threshold:.5});o.observe(c.closest('section,div')||c)});
+
+// ===== FAQ =====
+document.querySelectorAll('.faq-b').forEach(btn=>{btn.addEventListener('click',()=>{const body=btn.nextElementSibling,ch=btn.querySelector('.faq-ch'),open=body.classList.contains('open');document.querySelectorAll('.faq-bd').forEach(b=>b.classList.remove('open'));document.querySelectorAll('.faq-ch').forEach(c=>c.classList.remove('open'));if(!open){body.classList.add('open');ch.classList.add('open')}})});
+
+// ===== CONTACT FORM =====
+document.getElementById('contact-form').addEventListener('submit',(e)=>{e.preventDefault();showToast(' Inquiry sent! Our team will call you within 2 hours. 🏔️');e.target.reset()});
+
+// ===== CLOSE MODALS ON OVERLAY CLICK =====
+document.getElementById('trek-modal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeModal()});
+document.getElementById('book-modal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeBookModal()});
+
+// ===== INIT =====
+renderTreks();
+</script>
+</body>
+</html>

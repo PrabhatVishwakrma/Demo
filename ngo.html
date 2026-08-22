@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HopeRise Foundation — Empowering Communities, Changing Lives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B3A36',
+                        accent: '#C46245',
+                        'accent-light': '#F0D9D3',
+                        warm: '#F8F5F1',
+                        'warm-dark': '#EDE7E0',
+                        sage: '#4A7C6F',
+                        'sage-light': '#E8F0ED',
+                        charcoal: '#2D2D2D',
+                        'gray-warm': '#6B6560',
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #2D2D2D; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes widthGrow {
+            from { width: 0%; }
+            to { width: var(--target-width); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animate-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .animate-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .animate-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .animate-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .animate-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .stagger-1 { transition-delay: 0.1s !important; }
+        .stagger-2 { transition-delay: 0.2s !important; }
+        .stagger-3 { transition-delay: 0.3s !important; }
+        .stagger-4 { transition-delay: 0.4s !important; }
+        .stagger-5 { transition-delay: 0.5s !important; }
+        .stagger-6 { transition-delay: 0.6s !important; }
+
+        .float-animation { animation: float 4s ease-in-out infinite; }
+        .float-delay-1 { animation-delay: 0.5s; }
+        .float-delay-2 { animation-delay: 1s; }
+        .float-delay-3 { animation-delay: 1.5s; }
+
+        /* Hero parallax */
+        .hero-bg {
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Card hover */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px -12px rgba(27, 58, 54, 0.15);
+        }
+
+        /* Progress bar */
+        .progress-fill {
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            width: 0%;
+        }
+        .progress-fill.animate {
+            width: var(--target-width);
+        }
+
+        /* Nav */
+        .nav-scrolled {
+            background: rgba(255,255,255,0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+        }
+
+        /* Testimonial slider */
+        .testimonial-track {
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s;
+        }
+        .faq-content.open {
+            max-height: 300px;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-icon.rotated {
+            transform: rotate(45deg);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #1B3A36, #4A7C6F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Decorative blob */
+        .blob {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            filter: blur(60px);
+            opacity: 0.15;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Toast */
+        .toast {
+            animation: slideDown 0.4s ease-out, fadeInUp 0.4s ease-out;
+        }
+
+        /* Scroll indicator */
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: 0.5; }
+        }
+        .scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+
+        /* Image zoom */
+        .img-zoom { transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+        .img-zoom:hover { transform: scale(1.05); }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-6 right-6 z-[200] flex flex-col gap-3"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="flex items-center justify-between py-5">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-11 h-11 bg-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="heart-handshake" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold text-primary tracking-tight">HopeRise</span>
+                        <span class="block text-[10px] uppercase tracking-[0.2em] text-gray-warm -mt-0.5">Foundation</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-10">
+                    <a href="#home" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#about" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#services" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Services
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#impact" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Impact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#programs" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Programs
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#feedback" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Feedback
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#contact" class="text-sm font-medium text-charcoal hover:text-primary transition-colors relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+
+                <!-- CTA + Mobile Toggle -->
+                <div class="flex items-center gap-4">
+                    <a href="#donate" class="hidden md:inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-primary transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                        <i data-lucide="heart" class="w-4 h-4"></i>
+                        Donate Now
+                    </a>
+                    <button id="menu-toggle" class="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-warm hover:bg-warm-dark transition-colors">
+                        <i data-lucide="menu" class="w-5 h-5 text-primary"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[100] bg-white">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-12">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 bg-primary rounded-xl flex items-center justify-center">
+                        <i data-lucide="heart-handshake" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-primary">HopeRise</span>
+                </div>
+                <button id="menu-close" class="w-11 h-11 flex items-center justify-center rounded-xl bg-warm">
+                    <i data-lucide="x" class="w-5 h-5 text-primary"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-1">
+                <a href="#home" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Home</a>
+                <a href="#about" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">About Us</a>
+                <a href="#services" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Services</a>
+                <a href="#impact" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Impact</a>
+                <a href="#programs" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Programs</a>
+                <a href="#feedback" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Feedback</a>
+                <a href="#contact" class="mobile-link text-2xl font-medium text-charcoal py-3 border-b border-gray-100 hover:text-primary transition-colors">Contact</a>
+            </div>
+            <a href="#donate" class="mobile-link mt-8 flex items-center justify-center gap-2 bg-accent text-white px-8 py-4 rounded-full text-lg font-semibold">
+                <i data-lucide="heart" class="w-5 h-5"></i>
+                Donate Now
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/ngo-hero-children/1920/1080.jpg" alt="Children smiling" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/60"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/30"></div>
+        </div>
+
+        <!-- Decorative Blobs -->
+        <div class="blob absolute top-20 right-20 w-96 h-96 bg-sage hidden lg:block"></div>
+        <div class="blob absolute bottom-20 right-40 w-72 h-72 bg-accent hidden lg:block"></div>
+
+        <div class="relative max-w-[1800px] mx-auto px-6 md:px-12 py-32 lg:py-0 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <!-- Left Content -->
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-sage-light text-sage px-4 py-2 rounded-full text-sm font-medium mb-8" style="animation: fadeInUp 0.8s ease-out forwards;">
+                        <span class="w-2 h-2 bg-sage rounded-full animate-pulse"></span>
+                        Serving Since 2009 · 15+ Years of Impact
+                    </div>
+
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-primary leading-[1.05] tracking-tight mb-6" style="animation: fadeInUp 0.8s ease-out 0.1s forwards; opacity:0;">
+                        Building a
+                        <span class="relative inline-block">
+                            <span class="gradient-text">Brighter</span>
+                            <svg class="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none">
+                                <path d="M2 6C50 2 150 2 198 6" stroke="#C46245" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        Future for Every Child
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-warm leading-relaxed max-w-xl mb-10" style="animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity:0;">
+                        HopeRise Foundation is dedicated to transforming lives through education, healthcare, and sustainable community development. Together, we can break the cycle of poverty and create lasting change.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mb-14" style="animation: fadeInUp 0.8s ease-out 0.3s forwards; opacity:0;">
+                        <a href="#donate" class="inline-flex items-center gap-2 bg-accent text-white px-8 py-4 rounded-full text-base font-semibold hover:bg-primary transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                            <i data-lucide="heart" class="w-5 h-5"></i>
+                            Make a Donation
+                        </a>
+                        <a href="#about" class="inline-flex items-center gap-2 bg-white border-2 border-primary/20 text-primary px-8 py-4 rounded-full text-base font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+                            <i data-lucide="play-circle" class="w-5 h-5"></i>
+                            Watch Our Story
+                        </a>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-3 gap-6" style="animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity:0;">
+                        <div class="text-center lg:text-left">
+                            <div class="text-3xl md:text-4xl font-bold text-primary" data-count="50000">0</div>
+                            <div class="text-sm text-gray-warm mt-1">Lives Impacted</div>
+                        </div>
+                        <div class="text-center lg:text-left border-l border-gray-200 pl-6">
+                            <div class="text-3xl md:text-4xl font-bold text-primary" data-count="120">0</div>
+                            <div class="text-sm text-gray-warm mt-1">Communities Served</div>
+                        </div>
+                        <div class="text-center lg:text-left border-l border-gray-200 pl-6">
+                            <div class="text-3xl md:text-4xl font-bold text-primary" data-count="500">0</div>
+                            <div class="text-sm text-gray-warm mt-1">Volunteers Strong</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Image Collage -->
+                <div class="hidden lg:block relative" style="animation: fadeInRight 1s ease-out 0.3s forwards; opacity:0;">
+                    <div class="relative w-full h-[600px]">
+                        <div class="absolute top-0 right-0 w-80 h-96 rounded-3xl overflow-hidden shadow-2xl float-animation">
+                            <img src="https://picsum.photos/seed/ngo-kids-school/640/800.jpg" alt="Children in school" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute bottom-8 left-0 w-72 h-72 rounded-3xl overflow-hidden shadow-2xl float-animation float-delay-1">
+                            <img src="https://picsum.photos/seed/ngo-community-help/600/600.jpg" alt="Community help" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-5 shadow-xl float-animation float-delay-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-sage-light rounded-full flex items-center justify-center">
+                                    <i data-lucide="award" class="w-6 h-6 text-sage"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-primary">FCRA Certified</div>
+                                    <div class="text-xs text-gray-warm">80G Tax Exemption</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator hidden md:block">
+            <div class="w-8 h-12 border-2 border-primary/30 rounded-full flex justify-center pt-2">
+                <div class="w-1.5 h-3 bg-primary/50 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TRUSTED BY ===== -->
+    <section class="py-12 bg-warm border-y border-warm-dark">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <p class="text-sm font-medium text-gray-warm uppercase tracking-wider whitespace-nowrap">Trusted & Supported By</p>
+                <div class="flex flex-wrap items-center justify-center gap-10 md:gap-16 opacity-40">
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">UNICEF</span>
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">WHO</span>
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">UNESCO</span>
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">UNDP</span>
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">USAID</span>
+                    <span class="text-2xl font-bold text-charcoal tracking-tight">GIVE India</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section id="about" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="blob absolute -top-40 -left-40 w-96 h-96 bg-sage"></div>
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <!-- Image Side -->
+                <div class="relative animate-left">
+                    <div class="relative">
+                        <div class="rounded-3xl overflow-hidden shadow-xl">
+                            <img src="https://picsum.photos/seed/ngo-about-team/800/900.jpg" alt="Our team at work" class="w-full h-[500px] md:h-[600px] object-cover img-zoom">
+                        </div>
+                        <!-- Experience Badge -->
+                        <div class="absolute -bottom-6 -right-6 md:-right-8 bg-primary text-white rounded-2xl p-6 md:p-8 shadow-xl">
+                            <div class="text-4xl md:text-5xl font-bold">15+</div>
+                            <div class="text-sm text-white/70 mt-1">Years of<br>Service</div>
+                        </div>
+                        <!-- Small floating card -->
+                        <div class="absolute -top-4 -left-4 bg-white rounded-xl p-4 shadow-lg float-animation">
+                            <div class="flex items-center gap-2">
+                                <div class="flex -space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-sage-light border-2 border-white flex items-center justify-center text-xs font-bold text-sage">A</div>
+                                    <div class="w-8 h-8 rounded-full bg-accent-light border-2 border-white flex items-center justify-center text-xs font-bold text-accent">R</div>
+                                    <div class="w-8 h-8 rounded-full bg-warm border-2 border-white flex items-center justify-center text-xs font-bold text-gray-warm">S</div>
+                                </div>
+                                <span class="text-xs font-medium text-charcoal">500+ Volunteers</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Side -->
+                <div>
+                    <div class="animate-on-scroll">
+                        <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">About Us</span>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                            A Legacy of Compassion and <span class="text-accent">Change</span>
+                        </h2>
+                    </div>
+                    <div class="animate-on-scroll stagger-1">
+                        <p class="text-gray-warm text-lg leading-relaxed mb-6">
+                            Founded in 2009, HopeRise Foundation began with a simple yet powerful vision — to ensure that no child is deprived of basic education, healthcare, and the opportunity to thrive. What started as a small group of passionate individuals in a single room has grown into a movement that touches over 50,000 lives across 120 communities.
+                        </p>
+                        <p class="text-gray-warm leading-relaxed mb-8">
+                            We believe that sustainable change comes not from charity alone, but from empowering communities to become self-reliant. Our holistic approach addresses the root causes of poverty through education programs, healthcare initiatives, women's empowerment, skill development, and environmental sustainability projects.
+                        </p>
+                    </div>
+
+                    <!-- Mission & Vision -->
+                    <div class="grid sm:grid-cols-2 gap-6 mb-10 animate-on-scroll stagger-2">
+                        <div class="bg-sage-light rounded-2xl p-6">
+                            <div class="w-12 h-12 bg-sage/10 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="target" class="w-6 h-6 text-sage"></i>
+                            </div>
+                            <h4 class="font-bold text-primary text-lg mb-2">Our Mission</h4>
+                            <p class="text-gray-warm text-sm leading-relaxed">To empower underserved communities through quality education, accessible healthcare, and sustainable livelihood programs.</p>
+                        </div>
+                        <div class="bg-accent-light rounded-2xl p-6">
+                            <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="eye" class="w-6 h-6 text-accent"></i>
+                            </div>
+                            <h4 class="font-bold text-primary text-lg mb-2">Our Vision</h4>
+                            <p class="text-gray-warm text-sm leading-relaxed">A world where every individual has equal access to opportunities, resources, and the chance to lead a dignified life.</p>
+                        </div>
+                    </div>
+
+                    <!-- Core Values -->
+                    <div class="flex flex-wrap gap-3 animate-on-scroll stagger-3">
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">📌 Transparency</span>
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">🤝 Integrity</span>
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">🌱 Sustainability</span>
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">💡 Innovation</span>
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">❤️ Compassion</span>
+                        <span class="px-4 py-2 bg-warm rounded-full text-sm font-medium text-charcoal">🌍 Inclusivity</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES SECTION ===== -->
+    <section id="services" class="py-24 md:py-32 bg-warm relative overflow-hidden">
+        <div class="blob absolute top-0 right-0 w-[500px] h-[500px] bg-primary"></div>
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12 relative">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">What We Do</span>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Our Services & <span class="text-accent">Interventions</span>
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    We provide comprehensive, multi-dimensional support to communities in need. Each of our programs is designed to create sustainable, long-term impact rather than temporary relief.
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-1">
+                    <div class="w-16 h-16 bg-sage-light rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="graduation-cap" class="w-8 h-8 text-sage"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Education & Scholarships</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Providing free quality education, school supplies, digital literacy programs, and merit-based scholarships to underprivileged children from primary through higher education.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> After-school tutoring centers</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> Digital learning labs</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> Career counseling workshops</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-2">
+                    <div class="w-16 h-16 bg-accent-light rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="stethoscope" class="w-8 h-8 text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Healthcare & Nutrition</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Running free medical camps, maternal health programs, immunization drives, and nutrition support to ensure healthy communities where no one suffers from preventable diseases.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> Monthly health check-up camps</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> Malnutrition rehabilitation</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> Mental health counseling</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-3">
+                    <div class="w-16 h-16 bg-warm rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="users" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Women Empowerment</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Enabling women through self-help groups, vocational training, micro-finance support, and awareness campaigns to become economically independent and socially empowered.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Self-help group formation</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Tailoring & handicraft training</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Legal rights awareness</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-1">
+                    <div class="w-16 h-16 bg-sage-light rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="home" class="w-8 h-8 text-sage"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Shelter & Rehabilitation</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Providing safe shelter, rehabilitation, and reintegration support for homeless individuals, orphaned children, and survivors of abuse and human trafficking.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> Children's shelter homes</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> De-addiction centers</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-sage"></i> Family reintegration support</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-2">
+                    <div class="w-16 h-16 bg-accent-light rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="sprout" class="w-8 h-8 text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Environment & Sustainability</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Promoting environmental conservation through tree plantation drives, water conservation projects, waste management programs, and climate change awareness.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> 100,000+ trees planted</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> Rainwater harvesting systems</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-accent"></i> Solar energy installations</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card bg-white rounded-3xl p-8 md:p-10 animate-on-scroll stagger-3">
+                    <div class="w-16 h-16 bg-warm rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="briefcase" class="w-8 h-8 text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Skill Development & Livelihood</h3>
+                    <p class="text-gray-warm leading-relaxed mb-6">
+                        Equipping youth and adults with market-relevant skills through vocational training, entrepreneurship development, and job placement assistance.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Computer & IT training</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Micro-enterprise incubation</li>
+                        <li class="flex items-center gap-2 text-sm text-charcoal"><i data-lucide="check-circle-2" class="w-4 h-4 text-primary"></i> Job placement partnerships</li>
+                    </ul>
+                    <a href="#programs" class="inline-flex items-center gap-1 text-accent font-semibold text-sm hover:gap-2 transition-all">
+                        Learn More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== IMPACT / STATISTICS SECTION ===== -->
+    <section id="impact" class="py-24 md:py-32 bg-primary relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 w-64 h-64 border border-white rounded-full"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 border border-white rounded-full"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white rounded-full"></div>
+        </div>
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12 relative">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Our Impact</span>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight mb-6">
+                    Numbers That Tell Our Story
+                </h2>
+                <p class="text-white/60 text-lg leading-relaxed">
+                    Every number represents a real life transformed. Here's a glimpse of the impact we've created together with our donors, volunteers, and partner organizations.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16">
+                <div class="text-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 animate-on-scroll stagger-1 hover:bg-white/10 transition-colors duration-300">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2" data-count="50000">0</div>
+                    <div class="text-accent font-medium mb-1">+</div>
+                    <div class="text-white/60 text-sm">Lives Directly Impacted</div>
+                </div>
+                <div class="text-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 animate-on-scroll stagger-2 hover:bg-white/10 transition-colors duration-300">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2" data-count="120">0</div>
+                    <div class="text-accent font-medium mb-1">+</div>
+                    <div class="text-white/60 text-sm">Communities Served</div>
+                </div>
+                <div class="text-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 animate-on-scroll stagger-3 hover:bg-white/10 transition-colors duration-300">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2" data-count="15000">0</div>
+                    <div class="text-accent font-medium mb-1">+</div>
+                    <div class="text-white/60 text-sm">Children Educated</div>
+                </div>
+                <div class="text-center bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 animate-on-scroll stagger-4 hover:bg-white/10 transition-colors duration-300">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2" data-count="8500">0</div>
+                    <div class="text-accent font-medium mb-1">+</div>
+                    <div class="text-white/60 text-sm">Medical Camps Held</div>
+                </div>
+            </div>
+
+            <!-- Progress Bars -->
+            <div class="max-w-4xl mx-auto space-y-8 animate-on-scroll stagger-3">
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white font-medium">Education Program Completion Rate</span>
+                        <span class="text-accent font-bold">94%</span>
+                    </div>
+                    <div class="h-3 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-fill h-full bg-gradient-to-r from-sage to-accent rounded-full" style="--target-width: 94%;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white font-medium">Women Empowerment Goal Achievement</span>
+                        <span class="text-accent font-bold">87%</span>
+                    </div>
+                    <div class="h-3 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-fill h-full bg-gradient-to-r from-sage to-accent rounded-full" style="--target-width: 87%;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white font-medium">Healthcare Outreach Coverage</span>
+                        <span class="text-accent font-bold">91%</span>
+                    </div>
+                    <div class="h-3 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-fill h-full bg-gradient-to-r from-sage to-accent rounded-full" style="--target-width: 91%;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="text-white font-medium">Environmental Targets Met</span>
+                        <span class="text-accent font-bold">78%</span>
+                    </div>
+                    <div class="h-3 bg-white/10 rounded-full overflow-hidden">
+                        <div class="progress-fill h-full bg-gradient-to-r from-sage to-accent rounded-full" style="--target-width: 78%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">How It Works</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Your Support, Our Process, Their <span class="text-accent">Future</span>
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    Every contribution goes through a transparent and efficient process to ensure maximum impact on the ground.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                <!-- Connecting Line -->
+                <div class="hidden lg:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-sage via-accent to-sage opacity-20"></div>
+
+                <div class="text-center animate-on-scroll stagger-1">
+                    <div class="relative inline-flex mb-6">
+                        <div class="w-32 h-32 bg-sage-light rounded-3xl flex items-center justify-center mx-auto">
+                            <i data-lucide="hand-heart" class="w-12 h-12 text-sage"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-primary mb-2">You Donate</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Your generous donation — whether one-time or recurring — fuels our programs on the ground.</p>
+                </div>
+
+                <div class="text-center animate-on-scroll stagger-2">
+                    <div class="relative inline-flex mb-6">
+                        <div class="w-32 h-32 bg-accent-light rounded-3xl flex items-center justify-center mx-auto">
+                            <i data-lucide="search" class="w-12 h-12 text-accent"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-primary mb-2">We Assess</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Our field teams identify the most pressing needs and design targeted interventions.</p>
+                </div>
+
+                <div class="text-center animate-on-scroll stagger-3">
+                    <div class="relative inline-flex mb-6">
+                        <div class="w-32 h-32 bg-warm rounded-3xl flex items-center justify-center mx-auto">
+                            <i data-lucide="rocket" class="w-12 h-12 text-primary"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-primary mb-2">We Execute</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Programs are implemented with rigorous monitoring, community participation, and expert guidance.</p>
+                </div>
+
+                <div class="text-center animate-on-scroll stagger-4">
+                    <div class="relative inline-flex mb-6">
+                        <div class="w-32 h-32 bg-sage-light rounded-3xl flex items-center justify-center mx-auto">
+                            <i data-lucide="bar-chart-3" class="w-12 h-12 text-sage"></i>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-primary mb-2">We Report</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Transparent impact reports with photos, data, and stories are shared with all our donors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROGRAMS SECTION ===== -->
+    <section id="programs" class="py-24 md:py-32 bg-warm relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Featured Programs</span>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Programs That <span class="text-accent">Transform</span> Lives
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    Each program is carefully designed to address specific community needs while creating pathways to self-sufficiency.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Program 1 -->
+                <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 animate-left">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/seed/ngo-edu-program/800/500.jpg" alt="Education program" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-sage text-white px-4 py-1.5 rounded-full text-sm font-medium">Active</div>
+                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-bold text-primary">₹2,500/child/year</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Shiksha Path — Education for All</h3>
+                        <p class="text-gray-warm leading-relaxed mb-6">A comprehensive education program covering 3,200+ children across 45 schools in rural and urban slum areas. Includes academic support, digital literacy, extracurricular activities, and mentorship.</p>
+                        <div class="flex items-center gap-6 text-sm text-gray-warm mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> 8 States</span>
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> 3,200+ Children</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> Since 2010</span>
+                        </div>
+                        <div class="h-2 bg-warm rounded-full overflow-hidden mb-2">
+                            <div class="progress-fill h-full bg-sage rounded-full" style="--target-width: 82%;"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-warm">
+                            <span>Fund Utilization</span>
+                            <span class="font-bold text-sage">82%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program 2 -->
+                <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 animate-right">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/seed/ngo-women-empower/800/500.jpg" alt="Women empowerment" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-accent text-white px-4 py-1.5 rounded-full text-sm font-medium">Active</div>
+                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-bold text-primary">₹5,000/woman/year</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Sakhi — Women Empowerment Initiative</h3>
+                        <p class="text-gray-warm leading-relaxed mb-6">Empowering 1,800+ women through 120 self-help groups, vocational training in tailoring, handicrafts, and food processing, along with micro-finance and entrepreneurship support.</p>
+                        <div class="flex items-center gap-6 text-sm text-gray-warm mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> 5 States</span>
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> 1,800+ Women</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> Since 2012</span>
+                        </div>
+                        <div class="h-2 bg-warm rounded-full overflow-hidden mb-2">
+                            <div class="progress-fill h-full bg-accent rounded-full" style="--target-width: 76%;"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-warm">
+                            <span>Fund Utilization</span>
+                            <span class="font-bold text-accent">76%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program 3 -->
+                <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 animate-left">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/seed/ngo-health-camp/800/500.jpg" alt="Healthcare program" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-sage text-white px-4 py-1.5 rounded-full text-sm font-medium">Active</div>
+                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-bold text-primary">₹500/person/camp</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Swasthya Seva — Health Outreach</h3>
+                        <p class="text-gray-warm leading-relaxed mb-6">Conducting 200+ free medical camps annually covering general health, eye care, dental care, maternal health, and pediatric services. Served over 25,000 patients last year alone.</p>
+                        <div class="flex items-center gap-6 text-sm text-gray-warm mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> 12 States</span>
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> 25,000+ Patients/yr</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> Since 2009</span>
+                        </div>
+                        <div class="h-2 bg-warm rounded-full overflow-hidden mb-2">
+                            <div class="progress-fill h-full bg-sage rounded-full" style="--target-width: 89%;"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-warm">
+                            <span>Fund Utilization</span>
+                            <span class="font-bold text-sage">89%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program 4 -->
+                <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 animate-right">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://picsum.photos/seed/ngo-green-earth/800/500.jpg" alt="Environment program" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium">Active</div>
+                        <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-bold text-primary">₹50/tree</div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-primary mb-3">Harit Bhoomi — Green Earth Project</h3>
+                        <p class="text-gray-warm leading-relaxed mb-6">An environmental conservation initiative that has planted over 100,000 trees, installed 50+ rainwater harvesting systems, and trained 2,000+ farmers in sustainable agriculture practices.</p>
+                        <div class="flex items-center gap-6 text-sm text-gray-warm mb-6">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> 6 States</span>
+                            <span class="flex items-center gap-1"><i data-lucide="trees" class="w-4 h-4"></i> 100K+ Trees</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4"></i> Since 2015</span>
+                        </div>
+                        <div class="h-2 bg-warm rounded-full overflow-hidden mb-2">
+                            <div class="progress-fill h-full bg-green-500 rounded-full" style="--target-width: 71%;"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-warm">
+                            <span>Fund Utilization</span>
+                            <span class="font-bold text-green-600">71%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DONATE CTA SECTION ===== -->
+    <section id="donate" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="bg-primary rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+                <!-- Decorative -->
+                <div class="absolute top-0 right-0 w-80 h-80 bg-sage/20 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-60 h-60 bg-accent/20 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+                <div class="relative grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-on-scroll">
+                        <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Make a Difference</span>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
+                            Your Small Act of Kindness Can Change Someone's World
+                        </h2>
+                        <p class="text-white/60 text-lg leading-relaxed mb-8">
+                            100% of your donation goes directly to our programs. Every rupee is accounted for and every life touched is reported back to you. Choose how you'd like to make an impact.
+                        </p>
+                        <div class="flex flex-wrap gap-6 text-white/80 text-sm">
+                            <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-5 h-5 text-accent"></i> 80G Tax Exemption</span>
+                            <span class="flex items-center gap-2"><i data-lucide="lock" class="w-5 h-5 text-accent"></i> SSL Secured</span>
+                            <span class="flex items-center gap-2"><i data-lucide="receipt" class="w-5 h-5 text-accent"></i> Instant Receipt</span>
+                        </div>
+                    </div>
+
+                    <!-- Donation Options -->
+                    <div class="animate-right">
+                        <div class="bg-white rounded-3xl p-8 md:p-10">
+                            <h3 class="text-2xl font-bold text-primary mb-2 text-center">Choose Your Impact</h3>
+                            <p class="text-gray-warm text-center text-sm mb-8">Select a cause close to your heart</p>
+
+                            <div class="grid grid-cols-2 gap-4 mb-8">
+                                <button class="donation-option active-donation bg-sage-light border-2 border-sage rounded-2xl p-4 text-center transition-all hover:scale-105" data-amount="500">
+                                    <div class="text-2xl font-bold text-primary">₹500</div>
+                                    <div class="text-xs text-gray-warm mt-1">School Supplies</div>
+                                </button>
+                                <button class="donation-option bg-warm border-2 border-transparent rounded-2xl p-4 text-center transition-all hover:scale-105" data-amount="1000">
+                                    <div class="text-2xl font-bold text-primary">₹1,000</div>
+                                    <div class="text-xs text-gray-warm mt-1">Health Check-up</div>
+                                </button>
+                                <button class="donation-option bg-warm border-2 border-transparent rounded-2xl p-4 text-center transition-all hover:scale-105" data-amount="2500">
+                                    <div class="text-2xl font-bold text-primary">₹2,500</div>
+                                    <div class="text-xs text-gray-warm mt-1">1 Year Education</div>
+                                </button>
+                                <button class="donation-option bg-warm border-2 border-transparent rounded-2xl p-4 text-center transition-all hover:scale-105" data-amount="5000">
+                                    <div class="text-2xl font-bold text-primary">₹5,000</div>
+                                    <div class="text-xs text-gray-warm mt-1">Woman Empowerment</div>
+                                </button>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Custom Amount (₹)</label>
+                                <input type="number" id="custom-amount" placeholder="Enter amount" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-sage focus:outline-none transition-colors text-lg font-medium">
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Full Name</label>
+                                <input type="text" id="donor-name" placeholder="Your full name" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-sage focus:outline-none transition-colors">
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Email Address</label>
+                                <input type="email" id="donor-email" placeholder="your@email.com" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-sage focus:outline-none transition-colors">
+                            </div>
+
+                            <div class="flex items-center gap-3 mb-8">
+                                <input type="checkbox" id="recurring" class="w-5 h-5 rounded border-gray-300 text-sage focus:ring-sage">
+                                <label for="recurring" class="text-sm text-gray-warm">Make this a monthly donation</label>
+                            </div>
+
+                            <button id="donate-btn" class="w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:bg-primary transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2">
+                                <i data-lucide="heart" class="w-5 h-5"></i>
+                                Donate Now
+                            </button>
+
+                            <p class="text-center text-xs text-gray-warm mt-4">🔒 Your payment information is secure and encrypted</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS / FEEDBACK SECTION ===== -->
+    <section id="feedback" class="py-24 md:py-32 bg-warm relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Testimonials & Feedback</span>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Voices of <span class="text-accent">Hope</span> & Gratitude
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    Hear from the people whose lives we've touched — beneficiaries, donors, volunteers, and community leaders.
+                </p>
+            </div>
+
+            <!-- Testimonial Slider -->
+            <div class="relative overflow-hidden mb-16 animate-scale">
+                <div id="testimonial-track" class="testimonial-track flex">
+                    <!-- Testimonial 1 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"HopeRise Foundation gave me what I thought was impossible — an education. Today, I'm the first person in my family to graduate from college. They didn't just teach me, they believed in me when no one else did."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-sage-light flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-priya/100/100.jpg" alt="Priya" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Priya Sharma</div>
+                                    <div class="text-sm text-gray-warm">Beneficiary, Shiksha Path Program</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"I've been donating to HopeRise for 5 years now. The transparency and regular impact reports give me complete confidence that my money is being used effectively. It's the most rewarding investment I've ever made."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-accent-light flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-rajesh/100/100.jpg" alt="Rajesh" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Rajesh Mehta</div>
+                                    <div class="text-sm text-gray-warm">Regular Donor, Mumbai</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"Volunteering with HopeRise changed my perspective on life. Seeing the smiles on children's faces when they receive their first book is indescribable. The team's dedication is truly inspiring and humbling."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-warm flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-anita/100/100.jpg" alt="Anita" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Anita Desai</div>
+                                    <div class="text-sm text-gray-warm">Volunteer since 2018</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"Through the Sakhi program, I learned tailoring and started my own small business. I now earn ₹12,000 per month and can send my children to good schools. HopeRise gave me my dignity back."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-sage-light flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-sunita/100/100.jpg" alt="Sunita" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Sunita Devi</div>
+                                    <div class="text-sm text-gray-warm">Beneficiary, Sakhi Program, Bihar</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"As a corporate partner, we've seen firsthand the professionalism and impact of HopeRise. Their quarterly reports are detailed and their field visits are always well-organized. A truly world-class NGO."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-accent-light flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-vikram/100/100.jpg" alt="Vikram" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Vikram Singh</div>
+                                    <div class="text-sm text-gray-warm">CSR Head, TechCorp India</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="w-full md:w-1/2 lg:w-1/3 flex-shrink-0 px-4">
+                        <div class="bg-white rounded-3xl p-8 h-full">
+                            <div class="flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i>
+                            </div>
+                            <p class="text-gray-warm leading-relaxed mb-6">"My daughter was treated for free at a HopeRise medical camp. The doctors were kind and thorough. They even followed up to ensure she was recovering well. Such dedication is rare and precious."</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-full overflow-hidden bg-warm flex items-center justify-center">
+                                    <img src="https://picsum.photos/seed/person-meena/100/100.jpg" alt="Meena" class="w-full h-full object-cover">
+                                </div>
+                                <div>
+                                    <div class="font-bold text-primary">Meena Kumari</div>
+                                    <div class="text-sm text-gray-warm">Beneficiary, Swasthya Seva, Jharkhand</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Controls -->
+                <div class="flex items-center justify-center gap-4 mt-8">
+                    <button id="prev-btn" class="w-12 h-12 rounded-full border-2 border-primary/20 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <div id="slider-dots" class="flex gap-2"></div>
+                    <button id="next-btn" class="w-12 h-12 rounded-full border-2 border-primary/20 flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Our Team</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    The People Behind the <span class="text-accent">Mission</span>
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    A dedicated team of professionals, social workers, and changemakers committed to creating lasting impact.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+                <div class="text-center group animate-on-scroll stagger-1">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-founder/400/533.jpg" alt="Dr. Anand Kumar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                </a>
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="twitter" class="w-4 h-4 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-primary">Dr. Anand Kumar</h4>
+                    <p class="text-sm text-gray-warm">Founder & Chairman</p>
+                </div>
+
+                <div class="text-center group animate-on-scroll stagger-2">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-director/400/533.jpg" alt="Neha Gupta" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-primary">Neha Gupta</h4>
+                    <p class="text-sm text-gray-warm">Executive Director</p>
+                </div>
+
+                <div class="text-center group animate-on-scroll stagger-3">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-finance/400/533.jpg" alt="Ramesh Iyer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-primary">Ramesh Iyer</h4>
+                    <p class="text-sm text-gray-warm">Director of Finance</p>
+                </div>
+
+                <div class="text-center group animate-on-scroll stagger-4">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-programs/400/533.jpg" alt="Dr. Kavita Rao" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-primary">Dr. Kavita Rao</h4>
+                    <p class="text-sm text-gray-warm">Head of Programs</p>
+                </div>
+
+                <div class="text-center group animate-on-scroll stagger-5">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-outreach/400/533.jpg" alt="Suresh Patel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                    <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-primary">Suresh Patel</h4>
+                    <p class="text-sm text-gray-warm">Outreach Coordinator</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GALLERY / EVENTS ===== -->
+    <section class="py-24 md:py-32 bg-warm">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Recent Events</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Moments That <span class="text-accent">Matter</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-1">
+                    <img src="https://picsum.photos/seed/event-book-dist/500/500.jpg" alt="Book distribution" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-2 md:row-span-2 md:aspect-auto">
+                    <img src="https://picsum.photos/seed/event-tree-plant/500/1000.jpg" alt="Tree plantation" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-3">
+                    <img src="https://picsum.photos/seed/event-health-camp2/500/500.jpg" alt="Health camp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-4">
+                    <img src="https://picsum.photos/seed/event-women-train/500/500.jpg" alt="Women training" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-1">
+                    <img src="https://picsum.photos/seed/event-child-happy/500/500.jpg" alt="Happy children" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-2">
+                    <img src="https://picsum.photos/seed/event-sports-day/500/500.jpg" alt="Sports day" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+                <div class="rounded-2xl overflow-hidden aspect-square group animate-on-scroll stagger-3">
+                    <img src="https://picsum.photos/seed/event-awareness/500/500.jpg" alt="Awareness rally" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VOLUNTEER SECTION ===== -->
+    <section class="py-24 md:py-32 relative overflow-hidden">
+        <div class="blob absolute bottom-0 right-0 w-96 h-96 bg-accent"></div>
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-left">
+                    <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Volunteer With Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                        Be the Change You Want to See
+                    </h2>
+                    <p class="text-gray-warm text-lg leading-relaxed mb-8">
+                        Join our growing family of 500+ volunteers across India. Whether you can spare a few hours a week or commit to a long-term placement, your time and skills can create extraordinary impact.
+                    </p>
+
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-light rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="clock" class="w-6 h-6 text-sage"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Flexible Scheduling</h4>
+                                <p class="text-gray-warm text-sm">Choose hours that work for you — weekends, evenings, or full-time placements available.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-accent-light rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="map" class="w-6 h-6 text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Multiple Locations</h4>
+                                <p class="text-gray-warm text-sm">Volunteer in your city or join our rural immersion programs across 8 states.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center flex-shrink-0 mt-1">
+                                <i data-lucide="award" class="w-6 h-6 text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Certification & Recognition</h4>
+                                <p class="text-gray-warm text-sm">Receive official certificates, letters of recommendation, and annual volunteer awards.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-semibold hover:bg-accent transition-all duration-300 hover:scale-105">
+                        <i data-lucide="hand-helping" class="w-5 h-5"></i>
+                        Apply to Volunteer
+                    </a>
+                </div>
+
+                <div class="animate-right">
+                    <div class="rounded-3xl overflow-hidden shadow-xl">
+                        <img src="https://picsum.photos/seed/ngo-volunteers-group/800/700.jpg" alt="Our volunteers" class="w-full h-[500px] object-cover img-zoom">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <section class="py-24 md:py-32 bg-warm">
+        <div class="max-w-4xl mx-auto px-6 md:px-12">
+            <div class="text-center mb-16 animate-on-scroll">
+                <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">FAQs</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                    Frequently Asked Questions
+                </h2>
+            </div>
+
+            <div class="space-y-4 animate-on-scroll stagger-1">
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">How is my donation used?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">90% of your donation goes directly to our programs on the ground. The remaining 10% covers essential administrative costs including salaries, office maintenance, audit fees, and compliance. We publish detailed annual financial reports audited by chartered accountants, and you can request a specific program-wise breakup at any time.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">Is my donation tax-deductible?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Yes! HopeRise Foundation is registered under Section 80G of the Income Tax Act, allowing you to claim a 50% tax deduction on your donations. We also have FCRA registration for receiving foreign contributions. Donations above ₹2,000 require your PAN number for the tax exemption certificate, which we email instantly after your donation.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">Can I sponsor a specific child?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Absolutely! Our "Sponsor a Child" program allows you to support a child's complete education, health, and wellbeing for ₹2,500/month. You'll receive the child's profile, regular progress reports, photos, and can even correspond with them through letters. You can choose the age group, location, and gender of the child you wish to sponsor.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">How can I volunteer remotely?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">We have a robust remote volunteering program! You can help with online tutoring, content creation, social media management, graphic design, fundraising campaigns, data analysis, translation services, and mentorship programs. All you need is a computer and internet connection. We provide orientation and ongoing support for all remote volunteers.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">How do you ensure transparency?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Transparency is at the core of everything we do. We publish audited annual reports, monthly expense breakdowns on our website, and send personalized impact reports to every donor. Our finances are audited by a reputed CA firm. We are also registered on platforms like GuideStar India and GiveIndia, which have their own due diligence and verification processes.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-toggle w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-primary pr-4">Can my company partner with HopeRise?</span>
+                        <i data-lucide="plus" class="w-5 h-5 text-accent faq-icon flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Yes, we actively seek corporate partnerships for CSR initiatives. We offer customized partnership packages including employee volunteering programs, skill-based volunteering, cause-marketing campaigns, and project-specific funding. Our current corporate partners include leading companies in IT, banking, and manufacturing sectors. Contact our partnerships team at partnerships@hoperise.org for a detailed proposal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER & CONTACT ===== -->
+    <section id="contact" class="py-24 md:py-32 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Contact Info -->
+                <div class="animate-left">
+                    <span class="inline-block text-accent font-semibold text-sm uppercase tracking-wider mb-4">Get in Touch</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-primary leading-tight tracking-tight mb-6">
+                        Let's Build a Better World Together
+                    </h2>
+                    <p class="text-gray-warm text-lg leading-relaxed mb-10">
+                        Whether you want to donate, volunteer, partner, or simply learn more — we'd love to hear from you. Our team is here to answer all your questions.
+                    </p>
+
+                    <div class="space-y-6 mb-12">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-sage-light rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-sage"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Head Office</h4>
+                                <p class="text-gray-warm">42, Gandhi Marg, Connaught Place<br>New Delhi - 110001, India</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-accent-light rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-6 h-6 text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Call Us</h4>
+                                <p class="text-gray-warm">+91 11 2345 6789<br>+91 98765 43210 (WhatsApp)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-warm rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mail" class="w-6 h-6 text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Email Us</h4>
+                                <p class="text-gray-warm">info@hoperise.org<br>donations@hoperise.org</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 bg-sage-light rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="clock" class="w-6 h-6 text-sage"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-primary mb-1">Working Hours</h4>
+                                <p class="text-gray-warm">Monday - Saturday: 9:00 AM - 6:00 PM<br>Sunday: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="flex gap-3">
+                        <a href="#" class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center hover:bg-primary hover:text-white text-primary transition-all duration-300">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center hover:bg-primary hover:text-white text-primary transition-all duration-300">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center hover:bg-primary hover:text-white text-primary transition-all duration-300">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center hover:bg-primary hover:text-white text-primary transition-all duration-300">
+                            <i data-lucide="youtube" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 bg-warm rounded-xl flex items-center justify-center hover:bg-primary hover:text-white text-primary transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="animate-right">
+                    <div class="bg-warm rounded-3xl p-8 md:p-10">
+                        <h3 class="text-2xl font-bold text-primary mb-2">Send Us a Message</h3>
+                        <p class="text-gray-warm text-sm mb-8">We typically respond within 24 hours</p>
+
+                        <form id="contact-form" class="space-y-5">
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="text-sm font-medium text-charcoal mb-2 block">First Name *</label>
+                                    <input type="text" required class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-charcoal mb-2 block">Last Name *</label>
+                                    <input type="text" required class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors" placeholder="Doe">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Email Address *</label>
+                                <input type="email" required class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors" placeholder="john@example.com">
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Phone Number</label>
+                                <input type="tel" class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors" placeholder="+91 98765 43210">
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Subject *</label>
+                                <select required class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors text-gray-warm">
+                                    <option value="">Select a topic</option>
+                                    <option>Donation Inquiry</option>
+                                    <option>Volunteer Application</option>
+                                    <option>Corporate Partnership</option>
+                                    <option>Sponsor a Child</option>
+                                    <option>General Inquiry</option>
+                                    <option>Complaint / Feedback</option>
+                                    <option>Media / Press</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-sm font-medium text-charcoal mb-2 block">Message *</label>
+                                <textarea required rows="4" class="w-full px-4 py-3 bg-white border-2 border-transparent rounded-xl focus:border-sage focus:outline-none transition-colors resize-none" placeholder="Tell us how we can help..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-accent transition-all duration-300 flex items-center justify-center gap-2">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="mt-8 bg-primary rounded-3xl p-8 md:p-10 text-center">
+                        <i data-lucide="mail-open" class="w-10 h-10 text-accent mx-auto mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">Subscribe to Our Newsletter</h3>
+                        <p class="text-white/60 text-sm mb-6">Get monthly updates on our programs, events, and impact stories.</p>
+                        <form id="newsletter-form" class="flex gap-3 max-w-md mx-auto">
+                            <input type="email" required placeholder="Your email address" class="flex-1 px-4 py-3 rounded-xl focus:outline-none text-charcoal">
+                            <button type="submit" class="bg-accent text-white px-6 py-3 rounded-xl font-semibold hover:bg-white hover:text-accent transition-all duration-300 whitespace-nowrap">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-primary pt-20 pb-8">
+        <div class="max-w-[1800px] mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-16">
+                <!-- About -->
+                <div class="col-span-2 md:col-span-3 lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-11 h-11 bg-white/10 rounded-xl flex items-center justify-center">
+                            <i data-lucide="heart-handshake" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <span class="text-xl font-bold text-white tracking-tight">HopeRise</span>
+                            <span class="block text-[10px] uppercase tracking-[0.2em] text-white/50 -mt-0.5">Foundation</span>
+                        </div>
+                    </div>
+                    <p class="text-white/50 leading-relaxed mb-6 max-w-sm">
+                        HopeRise Foundation is a registered non-profit organization (Reg. No: DEL-HR/2009/4567) working towards education, healthcare, women's empowerment, and sustainable community development across India.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                            <i data-lucide="facebook" class="w-4 h-4 text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                            <i data-lucide="instagram" class="w-4 h-4 text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                            <i data-lucide="twitter" class="w-4 h-4 text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                            <i data-lucide="youtube" class="w-4 h-4 text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
+                            <i data-lucide="linkedin" class="w-4 h-4 text-white"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-white/50 hover:text-accent transition-colors text-sm">About Us</a></li>
+                        <li><a href="#services" class="text-white/50 hover:text-accent transition-colors text-sm">Our Services</a></li>
+                        <li><a href="#programs" class="text-white/50 hover:text-accent transition-colors text-sm">Programs</a></li>
+                        <li><a href="#impact" class="text-white/50 hover:text-accent transition-colors text-sm">Our Impact</a></li>
+                        <li><a href="#feedback" class="text-white/50 hover:text-accent transition-colors text-sm">Testimonials</a></li>
+                        <li><a href="#donate" class="text-white/50 hover:text-accent transition-colors text-sm">Donate</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get Involved -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Get Involved</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Volunteer</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Internships</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Corporate CSR</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Fundraise</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Gift a Donation</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Leave a Legacy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Annual Reports</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Financial Disclosures</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Privacy Policy</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">Terms of Use</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">FCRA Details</a></li>
+                        <li><a href="#" class="text-white/50 hover:text-accent transition-colors text-sm">12A & 80G Certificate</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="border-t border-white/10 pt-8 mb-8">
+                <div class="flex flex-wrap items-center justify-center gap-8 text-white/30 text-sm">
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> 12A Registered</span>
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> 80G Certified</span>
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> FCRA Registered</span>
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> GuideStar India</span>
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> GiveIndia Verified</span>
+                    <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> ISO 9001:2015</span>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-white/30 text-sm">© 2024 HopeRise Foundation. All rights reserved. Made with ❤️ for a better world.</p>
+                <p class="text-white/30 text-sm">CIN: U85100DL2009NPL456789 | PAN: AABCH1234F</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== BACK TO TOP ===== -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-xl flex items-center justify-center hover:bg-accent transition-all duration-300 opacity-0 translate-y-4 pointer-events-none z-50">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // ========== NAVBAR SCROLL ==========
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+            // Back to top
+            if (window.scrollY > 600) {
+                backToTop.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+                backToTop.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                backToTop.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+                backToTop.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ========== MOBILE MENU ==========
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuToggle.addEventListener('click', () => mobileMenu.classList.add('open'));
+        menuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        });
+
+        // ========== SCROLL ANIMATIONS ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Animate progress bars
+                    entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+                        bar.classList.add('animate');
+                    });
+
+                    // Animate counters
+                    entry.target.querySelectorAll('[data-count]').forEach(counter => {
+                        animateCounter(counter);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll, .animate-left, .animate-right, .animate-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Also observe sections for progress bars directly
+        document.querySelectorAll('.progress-fill').forEach(bar => {
+            const section = bar.closest('section') || bar.closest('div');
+            if (section) observer.observe(section);
+        });
+
+        // ========== COUNTER ANIMATION ==========
+        function animateCounter(el) {
+            if (el.dataset.animated) return;
+            el.dataset.animated = 'true';
+            const target = parseInt(el.dataset.count);
+            const duration = 2000;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(eased * target);
+                el.textContent = current.toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        // Observe all counters
+        document.querySelectorAll('[data-count]').forEach(counter => {
+            const parent = counter.closest('.animate-on-scroll, .animate-left, .animate-right, .animate-scale, section');
+            if (parent) {
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animateCounter(counter);
+                            counterObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 });
+                counterObserver.observe(parent);
+            }
+        });
+
+        // ========== TESTIMONIAL SLIDER ==========
+        const track = document.getElementById('testimonial-track');
+        const slides = track.children;
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const dotsContainer = document.getElementById('slider-dots');
+        let currentSlide = 0;
+
+        function getSlidesPerView() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        }
+
+        function getTotalPages() {
+            return Math.ceil(slides.length / getSlidesPerView());
+        }
+
+        function updateSlider() {
+            const spv = getSlidesPerView();
+            const slideWidth = 100 / spv;
+            track.style.transform = `translateX(-${currentSlide * spv * slideWidth}%)`;
+            updateDots();
+        }
+
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            const total = getTotalPages();
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-accent w-8' : 'bg-gray-300'}`;
+                dot.addEventListener('click', () => { currentSlide = i; updateSlider(); });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            const dots = dotsContainer.children;
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = `h-3 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-accent w-8' : 'bg-gray-300 w-3'}`;
+            }
+        }
+
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + getTotalPages()) % getTotalPages();
+            updateSlider();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % getTotalPages();
+            updateSlider();
+        });
+
+        // Auto slide
+        let autoSlide = setInterval(() => {
+            currentSlide = (currentSlide + 1) % getTotalPages();
+            updateSlider();
+        }, 5000);
+
+        [prevBtn, nextBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(autoSlide);
+                autoSlide = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % getTotalPages();
+                    updateSlider();
+                }, 5000);
+            });
+        });
+
+        createDots();
+        window.addEventListener('resize', () => { createDots(); updateSlider(); });
+
+        // ========== FAQ ACCORDION ==========
+        document.querySelectorAll('.faq-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('.faq-icon');
+                const isOpen = content.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.remove('open'));
+                document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotated'));
+
+                // Open clicked if it was closed
+                if (!isOpen) {
+                    content.classList.add('open');
+                    icon.classList.add('rotated');
+                }
+            });
+        });
+
+        // ========== DONATION OPTIONS ==========
+        document.querySelectorAll('.donation-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.donation-option').forEach(o => {
+                    o.classList.remove('active-donation', 'bg-sage-light', 'border-sage');
+                    o.classList.add('bg-warm', 'border-transparent');
+                });
+                option.classList.add('active-donation', 'bg-sage-light', 'border-sage');
+                option.classList.remove('bg-warm', 'border-transparent');
+                document.getElementById('custom-amount').value = option.dataset.amount;
+            });
+        });
+
+        // ========== TOAST NOTIFICATION ==========
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === 'success' ? 'bg-sage' : 'bg-accent';
+            const icon = type === 'success' ? 'check-circle-2' : 'alert-circle';
+            toast.className = `toast ${bgColor} text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 min-w-[300px]`;
+            toast.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5 flex-shrink-0"></i><span class="text-sm font-medium">${message}</span>`;
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+
+        // ========== DONATE BUTTON ==========
+        document.getElementById('donate-btn').addEventListener('click', () => {
+            const amount = document.getElementById('custom-amount').value;
+            const name = document.getElementById('donor-name').value;
+            const email = document.getElementById('donor-email').value;
+
+            if (!amount || amount <= 0) {
+                showToast('Please select or enter a donation amount.', 'error');
+                return;
+            }
+            if (!name.trim()) {
+                showToast('Please enter your full name.', 'error');
+                return;
+            }
+            if (!email.trim() || !email.includes('@')) {
+                showToast('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            showToast(`Thank you, ${name}! Your donation of ₹${parseInt(amount).toLocaleString()} has been received. A receipt has been sent to ${email}.`, 'success');
+            document.getElementById('custom-amount').value = '';
+            document.getElementById('donor-name').value = '';
+            document.getElementById('donor-email').value = '';
+            document.getElementById('recurring').checked = false;
+        });
+
+        // ========== CONTACT FORM ==========
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Thank you for reaching out! We\'ll get back to you within 24 hours.', 'success');
+            e.target.reset();
+        });
+
+        // ========== NEWSLETTER FORM ==========
+        document.getElementById('newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Welcome aboard! You\'ve been subscribed to our newsletter.', 'success');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Vows — Luxury Wedding Planning & Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF7F2',
+                        'cream-dark': '#F0EBE3',
+                        champagne: '#C9A96E',
+                        'champagne-light': '#E8D5B0',
+                        'champagne-dark': '#A68B4B',
+                        blush: '#F2E0D9',
+                        'blush-dark': '#D4B5A8',
+                        charcoal: '#1A1A1A',
+                        'charcoal-light': '#3D3D3D',
+                        'gray-warm': '#8A8279',
+                        'gray-light': '#B5AFA6',
+                        sage: '#7A8B6F',
+                        'sage-light': '#E8EDE5',
+                    },
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        elegant: ['Cormorant Garamond', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: #FFFFFF; color: #1A1A1A; }
+
+        /* Scroll Animations */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-60px); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(60px); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.92); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+        .stagger-1 { transition-delay: 0.1s !important; }
+        .stagger-2 { transition-delay: 0.2s !important; }
+        .stagger-3 { transition-delay: 0.3s !important; }
+        .stagger-4 { transition-delay: 0.4s !important; }
+        .stagger-5 { transition-delay: 0.5s !important; }
+        .stagger-6 { transition-delay: 0.6s !important; }
+
+        /* Float */
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .float { animation: float 5s ease-in-out infinite; }
+        .float-d1 { animation-delay: 0.7s; }
+        .float-d2 { animation-delay: 1.4s; }
+        .float-d3 { animation-delay: 2.1s; }
+
+        /* Scroll Indicator */
+        @keyframes scrollBounce { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(10px); opacity: 0.3; } }
+        .scroll-indicator { animation: scrollBounce 2s ease-in-out infinite; }
+
+        /* Gradient Text */
+        .text-gradient { background: linear-gradient(135deg, #C9A96E, #A68B4B, #C9A96E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        /* Nav */
+        .nav-scrolled { background: rgba(255,255,255,0.97) !important; backdrop-filter: blur(24px); box-shadow: 0 1px 30px rgba(0,0,0,0.06); }
+
+        /* Service Card */
+        .service-card { transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 30px 70px -15px rgba(201,169,110,0.15); }
+
+        /* Image Zoom */
+        .img-zoom { transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .img-zoom:hover { transform: scale(1.07); }
+
+        /* Gallery hover */
+        .gallery-item .gallery-overlay { opacity: 0; transition: all 0.5s ease; }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        .gallery-item:hover img { transform: scale(1.08); }
+        .gallery-item img { transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* Pricing */
+        .pricing-card { transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .pricing-card:hover { transform: translateY(-8px); }
+        .pricing-featured { border: 2px solid #C9A96E; position: relative; }
+
+        /* Testimonial Slider */
+        .test-track { transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* FAQ */
+        .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .faq-body.open { max-height: 400px; }
+        .faq-chevron { transition: transform 0.35s ease; }
+        .faq-chevron.open { transform: rotate(180deg); }
+
+        /* Mobile Menu */
+        .mob-menu { transform: translateX(100%); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+        .mob-menu.open { transform: translateX(0); }
+
+        /* Toast */
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .toast-anim { animation: toastIn 0.4s ease-out; }
+
+        /* Decorative line */
+        .deco-line { width: 60px; height: 1px; background: linear-gradient(90deg, #C9A96E, transparent); }
+
+        /* Blob */
+        .blob { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; filter: blur(80px); opacity: 0.12; }
+
+        /* Marquee */
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .marquee-track { animation: marquee 30s linear infinite; }
+
+        /* Horizontal Scroll for mobile */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Custom cursor dot effect on hero */
+        .hero-section { cursor: default; }
+
+        /* Counter */
+        .counter-num { font-variant-numeric: tabular-nums; }
+
+        /* Parallax */
+        .parallax-slow { will-change: transform; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Toast Container -->
+    <div id="toast-box" class="fixed top-6 right-6 z-[200] flex flex-col gap-3"></div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="flex items-center justify-between py-5">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="relative">
+                        <div class="w-10 h-10 border-2 border-champagne rounded-full flex items-center justify-center group-hover:bg-champagne transition-all duration-500">
+                            <span class="font-elegant text-lg font-semibold text-champagne group-hover:text-white transition-colors duration-500">E</span>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="text-xl font-serif font-bold text-charcoal tracking-wide">Eternal Vows</span>
+                        <span class="block text-[9px] uppercase tracking-[0.25em] text-gray-warm -mt-0.5">Wedding Planners</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden xl:flex items-center gap-9">
+                    <a href="#home" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#about" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#services" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Services
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#portfolio" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Portfolio
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#packages" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Packages
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#testimonials" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Reviews
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                    <a href="#contact" class="nav-link text-[13px] font-medium text-charcoal-light tracking-wide uppercase hover:text-champagne transition-colors relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-champagne group-hover:w-full transition-all duration-400"></span>
+                    </a>
+                </div>
+
+                <!-- Right Side -->
+                <div class="flex items-center gap-4">
+                    <a href="tel:+919876543210" class="hidden lg:flex items-center gap-2 text-sm text-gray-warm hover:text-champagne transition-colors">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                        <span class="text-xs">+91 98765 43210</span>
+                    </a>
+                    <a href="#contact" class="hidden md:inline-flex items-center gap-2 bg-charcoal text-white px-6 py-2.5 rounded-full text-[13px] font-medium hover:bg-champagne transition-all duration-500">
+                        Book Consultation
+                    </a>
+                    <button id="mob-toggle" class="xl:hidden w-11 h-11 flex items-center justify-center rounded-full border border-gray-200">
+                        <i data-lucide="menu" class="w-5 h-5 text-charcoal"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mob-menu" class="mob-menu fixed inset-0 z-[100] bg-white">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-12">
+                <span class="text-xl font-serif font-bold text-charcoal">Eternal Vows</span>
+                <button id="mob-close" class="w-11 h-11 flex items-center justify-center rounded-full border border-gray-200">
+                    <i data-lucide="x" class="w-5 h-5 text-charcoal"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-1 flex-1">
+                <a href="#home" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Home</a>
+                <a href="#about" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">About</a>
+                <a href="#services" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Services</a>
+                <a href="#portfolio" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Portfolio</a>
+                <a href="#packages" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Packages</a>
+                <a href="#testimonials" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Reviews</a>
+                <a href="#contact" class="mob-link text-3xl font-serif text-charcoal py-3 border-b border-gray-100 hover:text-champagne transition-colors">Contact</a>
+            </div>
+            <div class="space-y-3">
+                <a href="#contact" class="mob-link block text-center bg-charcoal text-white py-4 rounded-full font-medium">Book Consultation</a>
+                <p class="text-center text-xs text-gray-warm">Follow us @eternalvows</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HERO ===== -->
+    <section id="home" class="hero-section relative min-h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://picsum.photos/seed/wedding-hero-luxury/1920/1080.jpg" alt="Luxury wedding" class="w-full h-full object-cover scale-105">
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/40"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/20"></div>
+        </div>
+        <div class="blob absolute top-20 right-40 w-[500px] h-[500px] bg-champagne hidden lg:block"></div>
+
+        <div class="relative max-w-[1800px] mx-auto px-6 lg:px-14 py-36 lg:py-0 w-full">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-3 mb-8" style="animation: float 5s ease-in-out infinite;">
+                        <div class="deco-line"></div>
+                        <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Award-Winning Planners</span>
+                    </div>
+
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-[4.2rem] xl:text-[4.8rem] font-bold text-charcoal leading-[1.08] tracking-tight mb-8" style="animation: float 5s ease-in-out infinite; animation-delay: 0.2s;">
+                        Where Dreams
+                        <span class="block mt-2">Become
+                        <span class="relative inline-block mx-2">
+                            <span class="text-gradient italic">Timeless</span>
+                            <svg class="absolute -bottom-2 left-0 w-full" height="10" viewBox="0 0 200 10" fill="none"><path d="M1 8C40 3 160 3 199 8" stroke="#C9A96E" stroke-width="2.5" stroke-linecap="round"/></svg>
+                        </span>
+                        Celebrations</span>
+                    </h1>
+
+                    <p class="text-lg md:text-xl text-gray-warm leading-relaxed max-w-lg mb-10">
+                        We craft bespoke weddings that reflect your unique love story — from intimate garden ceremonies to grand destination celebrations.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 mb-16">
+                        <a href="#contact" class="inline-flex items-center gap-3 bg-charcoal text-white px-8 py-4 rounded-full text-[15px] font-medium hover:bg-champagne hover:shadow-xl transition-all duration-500 group">
+                            Start Planning
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#portfolio" class="inline-flex items-center gap-3 bg-white/80 backdrop-blur-sm border border-charcoal/15 text-charcoal px-8 py-4 rounded-full text-[15px] font-medium hover:bg-champagne hover:text-white hover:border-champagne transition-all duration-500">
+                            <i data-lucide="play" class="w-4 h-4"></i>
+                            View Our Work
+                        </a>
+                    </div>
+
+                    <!-- Mini Stats -->
+                    <div class="flex gap-10">
+                        <div>
+                            <div class="text-3xl font-serif font-bold text-charcoal counter-num" data-count="750">0</div>
+                            <div class="text-xs text-gray-warm mt-1 uppercase tracking-wider">Weddings Done</div>
+                        </div>
+                        <div class="w-px bg-gray-200"></div>
+                        <div>
+                            <div class="text-3xl font-serif font-bold text-charcoal counter-num" data-count="12">0</div>
+                            <div class="text-xs text-gray-warm mt-1 uppercase tracking-wider">Years of Excellence</div>
+                        </div>
+                        <div class="w-px bg-gray-200"></div>
+                        <div>
+                            <div class="text-3xl font-serif font-bold text-charcoal counter-num" data-count="98">0</div>
+                            <div class="text-xs text-gray-warm mt-1 uppercase tracking-wider">% Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Collage -->
+                <div class="hidden lg:block relative h-[620px]">
+                    <div class="absolute top-0 right-0 w-[340px] h-[440px] rounded-[2rem] overflow-hidden shadow-2xl float">
+                        <img src="https://picsum.photos/seed/wedding-couple-elegant/680/880.jpg" alt="Elegant couple" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="absolute bottom-0 left-0 w-[280px] h-[280px] rounded-[2rem] overflow-hidden shadow-2xl float float-d1">
+                        <img src="https://picsum.photos/seed/wedding-decor-floral/560/560.jpg" alt="Floral decor" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="absolute top-1/2 left-1/3 -translate-y-1/2 bg-white rounded-2xl p-5 shadow-xl float float-d2">
+                        <div class="flex items-center gap-3">
+                            <div class="flex -space-x-2">
+                                <img src="https://picsum.photos/seed/face1/60/60.jpg" class="w-9 h-9 rounded-full border-2 border-white object-cover">
+                                <img src="https://picsum.photos/seed/face2/60/60.jpg" class="w-9 h-9 rounded-full border-2 border-white object-cover">
+                                <img src="https://picsum.photos/seed/face3/60/60.jpg" class="w-9 h-9 rounded-full border-2 border-white object-cover">
+                            </div>
+                            <div>
+                                <div class="flex gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-champagne fill-champagne"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-champagne fill-champagne"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-champagne fill-champagne"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-champagne fill-champagne"></i>
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-champagne fill-champagne"></i>
+                                </div>
+                                <div class="text-[11px] text-gray-warm mt-0.5">500+ 5-star reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator hidden md:block">
+            <div class="w-7 h-11 border-2 border-charcoal/20 rounded-full flex justify-center pt-2">
+                <div class="w-1 h-2.5 bg-champagne rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MARQUEE STRIP ===== -->
+    <div class="py-5 bg-cream border-y border-cream-dark overflow-hidden">
+        <div class="flex whitespace-nowrap">
+            <div class="marquee-track flex items-center gap-10">
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Destination Weddings</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Grand Receptions</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Intimate Ceremonies</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Mehendi & Sangeet</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Haldi Ceremonies</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Cocktail Parties</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Engagement Parties</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Bridal Showers</span>
+                <!-- Duplicate -->
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Destination Weddings</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Grand Receptions</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Intimate Ceremonies</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Mehendi & Sangeet</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Haldi Ceremonies</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Cocktail Parties</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Engagement Parties</span>
+                <span class="text-sm font-medium text-gray-warm uppercase tracking-[0.15em] flex items-center gap-3"><span class="w-1.5 h-1.5 bg-champagne rounded-full"></span>Bridal Showers</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="py-28 md:py-36 relative overflow-hidden">
+        <div class="blob absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-champagne"></div>
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+                <!-- Images -->
+                <div class="relative reveal-left">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-[2rem] overflow-hidden shadow-lg h-[300px] md:h-[400px]">
+                            <img src="https://picsum.photos/seed/wedding-about-bouquet/600/800.jpg" alt="Bridal bouquet" class="w-full h-full object-cover img-zoom">
+                        </div>
+                        <div class="rounded-[2rem] overflow-hidden shadow-lg h-[300px] md:h-[400px] mt-12">
+                            <img src="https://picsum.photos/seed/wedding-about-setup/600/800.jpg" alt="Wedding setup" class="w-full h-full object-cover img-zoom">
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-charcoal text-white rounded-2xl px-8 py-5 shadow-xl text-center">
+                        <div class="text-3xl font-serif font-bold">750+</div>
+                        <div class="text-xs text-white/60 uppercase tracking-wider mt-0.5">Happy Couples</div>
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div>
+                    <div class="reveal">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="deco-line"></div>
+                            <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Our Story</span>
+                        </div>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight mb-6">
+                            Crafting Love Stories Since <span class="text-gradient italic">2012</span>
+                        </h2>
+                    </div>
+                    <div class="reveal stagger-1">
+                        <p class="text-gray-warm text-lg leading-relaxed mb-6">
+                            Eternal Vows was born from a passion for turning ordinary moments into extraordinary memories. Founded by Priya and Arjun Mehra, our studio has grown from a small two-person team into one of India's most sought-after luxury wedding planning companies.
+                        </p>
+                        <p class="text-gray-warm leading-relaxed mb-8">
+                            We believe every couple deserves a wedding that's as unique as their love story. Our approach combines meticulous planning, creative design, and flawless execution to deliver celebrations that exceed expectations. From the first consultation to the last dance, we handle every detail so you can simply enjoy your special day.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-6 mb-10 reveal stagger-2">
+                        <div class="bg-cream rounded-2xl p-5">
+                            <i data-lucide="award" class="w-6 h-6 text-champagne mb-3"></i>
+                            <h4 class="font-bold text-charcoal mb-1">Award Winning</h4>
+                            <p class="text-sm text-gray-warm">Best Wedding Planner 2023 — WeddingSutra</p>
+                        </div>
+                        <div class="bg-cream rounded-2xl p-5">
+                            <i data-lucide="globe" class="w-6 h-6 text-champagne mb-3"></i>
+                            <h4 class="font-bold text-charcoal mb-1">Pan-India & Global</h4>
+                            <p class="text-sm text-gray-warm">Weddings across 15+ countries worldwide</p>
+                        </div>
+                        <div class="bg-cream rounded-2xl p-5">
+                            <i data-lucide="users" class="w-6 h-6 text-champagne mb-3"></i>
+                            <h4 class="font-bold text-charcoal mb-1">45+ Member Team</h4>
+                            <p class="text-sm text-gray-warm">Designers, planners, coordinators & more</p>
+                        </div>
+                        <div class="bg-cream rounded-2xl p-5">
+                            <i data-lucide="sparkles" class="w-6 h-6 text-champagne mb-3"></i>
+                            <h4 class="font-bold text-charcoal mb-1">Bespoke Design</h4>
+                            <p class="text-sm text-gray-warm">Every wedding is uniquely conceptualized</p>
+                        </div>
+                    </div>
+
+                    <a href="#services" class="reveal stagger-3 inline-flex items-center gap-2 text-champagne-dark font-semibold hover:gap-3 transition-all">
+                        Explore Our Services <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section id="services" class="py-28 md:py-36 bg-cream relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">What We Offer</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-[3.4rem] font-bold text-charcoal leading-tight tracking-tight mb-6">
+                    Comprehensive Wedding <span class="text-gradient italic">Services</span>
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    From concept to celebration, we offer end-to-end wedding planning and design services tailored to your vision and budget.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-1">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-full-planning/700/500.jpg" alt="Full planning" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="clipboard-list" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Full Wedding Planning</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">Complete end-to-end planning from engagement to reception. We handle vendor management, timelines, budgets, logistics, and every tiny detail in between.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Budget planning & management</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Vendor sourcing & negotiation</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Timeline & itinerary creation</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Day-of coordination</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-2">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-decor-design/700/500.jpg" alt="Decor design" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="palette" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Decor & Design</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">Transform your venue into a breathtaking wonderland with our bespoke decor concepts — from floral installations to lighting design and custom backdrops.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Custom theme development</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Floral design & installations</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Lighting & ambiance design</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Furniture & stage styling</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-3">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-destination/700/500.jpg" alt="Destination wedding" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="plane" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Destination Weddings</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">Dream of a beach wedding in Goa, a palace wedding in Udaipur, or a vineyard ceremony in Tuscany? We make destination dreams a seamless reality.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Venue scouting worldwide</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Travel & accommodation logistics</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Local vendor coordination</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Guest management & itineraries</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-1">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-entertainment/700/500.jpg" alt="Entertainment" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="music" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Entertainment & Music</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">From Sufi night to EDM, classical orchestras to Bollywood flash mobs — we curate entertainment that keeps your guests dancing all night long.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>DJ & live band curation</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Choreography & performances</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Sound & AV production</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Emcee & host arrangement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-2">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-photography/700/500.jpg" alt="Photography" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="camera" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Photography & Cinema</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">We partner with India's top wedding photographers and cinematographers to capture every emotion, every tear, every laugh in stunning detail.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Pre-wedding shoots</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Cinematic wedding films</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Drone aerial coverage</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Luxury photo albums</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card bg-white rounded-3xl overflow-hidden reveal stagger-3">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://picsum.photos/seed/svc-catering/700/500.jpg" alt="Catering" class="w-full h-full object-cover img-zoom">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 bg-champagne/10 rounded-xl flex items-center justify-center mb-4 -mt-14 relative z-10 border-4 border-white">
+                            <i data-lucide="utensils" class="w-6 h-6 text-champagne-dark"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-charcoal mb-3">Catering & Hospitality</h3>
+                        <p class="text-gray-warm text-sm leading-relaxed mb-5">From traditional Indian feasts to international gourmet menus, we curate culinary experiences that delight every palate and dietary preference.</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Menu curation & tasting</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Live counters & food stations</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Bar & mixology services</li>
+                            <li class="flex items-center gap-2 text-sm text-charcoal-light"><i data-lucide="check" class="w-4 h-4 text-champagne"></i>Guest hospitality management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="py-28 md:py-36 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">The Process</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight mb-6">
+                    Your Journey With <span class="text-gradient italic">Us</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                <div class="hidden lg:block absolute top-20 left-[15%] right-[15%] h-px bg-gradient-to-r from-champagne/0 via-champagne/40 to-champagne/0"></div>
+
+                <div class="text-center reveal stagger-1">
+                    <div class="relative inline-block mb-8">
+                        <div class="w-36 h-36 bg-cream rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="coffee" class="w-14 h-14 text-champagne"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-10 h-10 bg-champagne text-white rounded-full flex items-center justify-center font-serif font-bold text-lg">1</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-charcoal mb-2">Discovery Call</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">A complimentary consultation to understand your vision, preferences, budget, and dream wedding style.</p>
+                </div>
+                <div class="text-center reveal stagger-2">
+                    <div class="relative inline-block mb-8">
+                        <div class="w-36 h-36 bg-blush rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="pen-tool" class="w-14 h-14 text-blush-dark"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-10 h-10 bg-champagne text-white rounded-full flex items-center justify-center font-serif font-bold text-lg">2</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-charcoal mb-2">Design & Concept</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Our creative team develops mood boards, design concepts, and a detailed plan tailored to your story.</p>
+                </div>
+                <div class="text-center reveal stagger-3">
+                    <div class="relative inline-block mb-8">
+                        <div class="w-36 h-36 bg-cream rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="settings" class="w-14 h-14 text-champagne"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-10 h-10 bg-champagne text-white rounded-full flex items-center justify-center font-serif font-bold text-lg">3</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-charcoal mb-2">Plan & Execute</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">We handle all logistics, vendor coordination, and setup — keeping you stress-free and excited.</p>
+                </div>
+                <div class="text-center reveal stagger-4">
+                    <div class="relative inline-block mb-8">
+                        <div class="w-36 h-36 bg-blush rounded-full flex items-center justify-center mx-auto">
+                            <i data-lucide="heart" class="w-14 h-14 text-blush-dark"></i>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-10 h-10 bg-champagne text-white rounded-full flex items-center justify-center font-serif font-bold text-lg">4</div>
+                    </div>
+                    <h4 class="text-lg font-bold text-charcoal mb-2">Celebrate!</h4>
+                    <p class="text-gray-warm text-sm leading-relaxed">Your dream wedding unfolds flawlessly. We manage everything behind the scenes — you just enjoy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PORTFOLIO / GALLERY ===== -->
+    <section id="portfolio" class="py-28 md:py-36 bg-charcoal relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-20 left-20 w-80 h-80 border border-white rounded-full"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 border border-white rounded-full"></div>
+        </div>
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="w-[60px] h-px bg-champagne/50"></div>
+                    <span class="text-champagne font-medium text-sm uppercase tracking-[0.2em]">Our Portfolio</span>
+                    <div class="w-[60px] h-px bg-champagne/50"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-[3.4rem] font-bold text-white leading-tight tracking-tight mb-6">
+                    Weddings We've <span class="text-gradient italic">Brought to Life</span>
+                </h2>
+                <p class="text-white/50 text-lg leading-relaxed">
+                    A glimpse into some of our most cherished celebrations — each one a unique love story told through design.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12 reveal stagger-1">
+                <button class="gallery-filter active-filter px-5 py-2 rounded-full text-sm font-medium bg-champagne text-white transition-all" data-filter="all">All</button>
+                <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium bg-white/10 text-white/60 hover:bg-white/20 transition-all" data-filter="destination">Destination</button>
+                <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium bg-white/10 text-white/60 hover:bg-white/20 transition-all" data-filter="traditional">Traditional</button>
+                <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium bg-white/10 text-white/60 hover:bg-white/20 transition-all" data-filter="modern">Modern</button>
+                <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium bg-white/10 text-white/60 hover:bg-white/20 transition-all" data-filter="intimate">Intimate</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-1" data-category="destination">
+                    <img src="https://picsum.photos/seed/wed-gal-1/600/800.jpg" alt="Udaipur Palace Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Udaipur Palace Wedding</h4>
+                            <p class="text-white/60 text-sm">Destination • 500 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-2" data-category="modern">
+                    <img src="https://picsum.photos/seed/wed-gal-2/600/800.jpg" alt="Minimalist Beach Ceremony" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Minimalist Beach Ceremony</h4>
+                            <p class="text-white/60 text-sm">Modern • 120 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-3" data-category="traditional">
+                    <img src="https://picsum.photos/seed/wed-gal-3/600/800.jpg" alt="Royal Rajasthani Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Royal Rajasthani Wedding</h4>
+                            <p class="text-white/60 text-sm">Traditional • 800 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-4" data-category="intimate">
+                    <img src="https://picsum.photos/seed/wed-gal-4/600/800.jpg" alt="Garden Elopement" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Garden Elopement</h4>
+                            <p class="text-white/60 text-sm">Intimate • 30 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-1" data-category="destination">
+                    <img src="https://picsum.photos/seed/wed-gal-5/600/800.jpg" alt="Goa Sunset Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Goa Sunset Wedding</h4>
+                            <p class="text-white/60 text-sm">Destination • 200 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-2" data-category="modern">
+                    <img src="https://picsum.photos/seed/wed-gal-6/600/800.jpg" alt="Industrial Loft Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Industrial Loft Wedding</h4>
+                            <p class="text-white/60 text-sm">Modern • 150 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-3" data-category="traditional">
+                    <img src="https://picsum.photos/seed/wed-gal-7/600/800.jpg" alt="South Indian Temple Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">South Indian Temple Wedding</h4>
+                            <p class="text-white/60 text-sm">Traditional • 400 Guests</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item rounded-2xl overflow-hidden relative aspect-[3/4] cursor-pointer reveal-scale stagger-4" data-category="intimate">
+                    <img src="https://picsum.photos/seed/wed-gal-8/600/800.jpg" alt="Rooftop Micro Wedding" class="w-full h-full object-cover">
+                    <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5">
+                        <div>
+                            <h4 class="text-white font-bold text-lg">Rooftop Micro Wedding</h4>
+                            <p class="text-white/60 text-sm">Intimate • 50 Guests</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FEATURED WEDDING STORIES ===== -->
+    <section class="py-28 md:py-36 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Real Stories</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight mb-6">
+                    Featured Wedding <span class="text-gradient italic">Stories</span>
+                </h2>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10">
+                <div class="group bg-cream rounded-3xl overflow-hidden reveal-left">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/seed/story-palace/900/600.jpg" alt="Palace wedding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-semibold text-charcoal uppercase tracking-wider">Destination</div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 text-sm text-gray-warm mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4 text-champagne"></i>Udaipur, Rajasthan</span>
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4 text-champagne"></i>450 Guests</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4 text-champagne"></i>Dec 2023</span>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-charcoal mb-3">Ananya & Vikram — A Royal Affair</h3>
+                        <p class="text-gray-warm leading-relaxed mb-5">A magnificent 3-day celebration at the Taj Lake Palace featuring a sangeet on a floating stage, a baraat by boat, and a reception under 10,000 fairy lights reflecting on the lake.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-champagne-dark font-semibold text-sm hover:gap-3 transition-all">
+                            Read Full Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group bg-cream rounded-3xl overflow-hidden reveal-right">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="https://picsum.photos/seed/story-garden/900/600.jpg" alt="Garden wedding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-semibold text-charcoal uppercase tracking-wider">Intimate</div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 text-sm text-gray-warm mb-4">
+                            <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4 text-champagne"></i>Mussoorie, Uttarakhand</span>
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4 text-champagne"></i>80 Guests</span>
+                            <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-4 h-4 text-champagne"></i>Mar 2024</span>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-charcoal mb-3">Meera & Arjun — Mountains of Love</h3>
+                        <p class="text-gray-warm leading-relaxed mb-5">A dreamy woodland wedding in the Himalayas with pampas grass arches, a live acoustic sangeet, candlelit pathways, and the misty mountains as the perfect backdrop.</p>
+                        <a href="#" class="inline-flex items-center gap-2 text-champagne-dark font-semibold text-sm hover:gap-3 transition-all">
+                            Read Full Story <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PACKAGES / PRICING ===== -->
+    <section id="packages" class="py-28 md:py-36 bg-cream relative overflow-hidden">
+        <div class="blob absolute top-0 right-0 w-[500px] h-[500px] bg-champagne"></div>
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Pricing</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl lg:text-[3.4rem] font-bold text-charcoal leading-tight tracking-tight mb-6">
+                    Wedding <span class="text-gradient italic">Packages</span>
+                </h2>
+                <p class="text-gray-warm text-lg leading-relaxed">
+                    Thoughtfully curated packages for every scale of celebration. All packages are customizable to match your exact needs.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Essential -->
+                <div class="pricing-card bg-white rounded-3xl p-8 md:p-10 reveal stagger-1">
+                    <div class="text-champagne font-medium text-sm uppercase tracking-wider mb-3">Essential</div>
+                    <h3 class="text-3xl font-serif font-bold text-charcoal mb-2">Intimate Celebrations</h3>
+                    <p class="text-gray-warm text-sm mb-6">Perfect for small weddings & elopements</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-serif font-bold text-charcoal">₹3.5L</span>
+                        <span class="text-gray-warm text-sm"> onwards</span>
+                    </div>
+                    <div class="h-px bg-gray-100 mb-6"></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Up to 100 guests management</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Basic decor & floral setup</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Vendor coordination (5 vendors)</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Day-of coordination</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>1 pre-wedding meeting</li>
+                        <li class="flex items-start gap-3 text-sm text-gray-light"><i data-lucide="x-circle" class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5"></i>Photography & cinema</li>
+                        <li class="flex items-start gap-3 text-sm text-gray-light"><i data-lucide="x-circle" class="w-5 h-5 text-gray-300 flex-shrink-0 mt-0.5"></i>Entertainment curation</li>
+                    </ul>
+                    <a href="#contact" class="block text-center border-2 border-charcoal text-charcoal py-3.5 rounded-full font-medium hover:bg-charcoal hover:text-white transition-all duration-300">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Premium (Featured) -->
+                <div class="pricing-card pricing-featured bg-white rounded-3xl p-8 md:p-10 md:-mt-4 md:mb-[-1rem] reveal stagger-2 shadow-xl">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-champagne text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">Most Popular</div>
+                    <div class="text-champagne font-medium text-sm uppercase tracking-wider mb-3 mt-2">Premium</div>
+                    <h3 class="text-3xl font-serif font-bold text-charcoal mb-2">Grand Celebrations</h3>
+                    <p class="text-gray-warm text-sm mb-6">Our most loved package for full weddings</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-serif font-bold text-charcoal">₹8L</span>
+                        <span class="text-gray-warm text-sm"> onwards</span>
+                    </div>
+                    <div class="h-px bg-gray-100 mb-6"></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Up to 500 guests management</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Premium decor & custom design</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Full vendor management (15+ vendors)</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>3-day event coordination</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Unlimited planning meetings</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Photography & cinema included</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Entertainment & music curation</li>
+                    </ul>
+                    <a href="#contact" class="block text-center bg-champagne text-white py-3.5 rounded-full font-medium hover:bg-charcoal transition-all duration-300">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Luxury -->
+                <div class="pricing-card bg-white rounded-3xl p-8 md:p-10 reveal stagger-3">
+                    <div class="text-champagne font-medium text-sm uppercase tracking-wider mb-3">Bespoke Luxury</div>
+                    <h3 class="text-3xl font-serif font-bold text-charcoal mb-2">Ultra-Luxury Experiences</h3>
+                    <p class="text-gray-warm text-sm mb-6">For couples who want nothing but the best</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-serif font-bold text-charcoal">Custom</span>
+                    </div>
+                    <div class="h-px bg-gray-100 mb-6"></div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Unlimited guests — no cap</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>International destination options</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Dedicated team of 10+ members</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Week-long celebration planning</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>24/7 dedicated planner access</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Top-tier photography team</li>
+                        <li class="flex items-start gap-3 text-sm text-charcoal-light"><i data-lucide="check-circle-2" class="w-5 h-5 text-champagne flex-shrink-0 mt-0.5"></i>Celebrity/International artist booking</li>
+                    </ul>
+                    <a href="#contact" class="block text-center border-2 border-charcoal text-charcoal py-3.5 rounded-full font-medium hover:bg-charcoal hover:text-white transition-all duration-300">
+                        Discuss Your Vision
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section id="testimonials" class="py-28 md:py-36 relative overflow-hidden">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal-left">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="deco-line"></div>
+                        <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Testimonials</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight mb-6">
+                        Words From Our <span class="text-gradient italic">Happy Couples</span>
+                    </h2>
+                    <p class="text-gray-warm text-lg leading-relaxed mb-10">
+                        Don't just take our word for it — hear from the couples who trusted us with their most important day.
+                    </p>
+                    <div class="rounded-2xl overflow-hidden h-72 shadow-lg">
+                        <img src="https://picsum.photos/seed/wed-happy-couple/800/500.jpg" alt="Happy couple" class="w-full h-full object-cover img-zoom">
+                    </div>
+                </div>
+
+                <div class="reveal-right">
+                    <div class="relative overflow-hidden">
+                        <div id="test-track" class="test-track flex">
+                            <div class="w-full flex-shrink-0 px-2">
+                                <div class="bg-cream rounded-3xl p-8 md:p-10">
+                                    <div class="flex gap-1 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                    </div>
+                                    <p class="text-charcoal-light text-lg leading-relaxed mb-8 italic font-elegant">"Eternal Vows turned our dream wedding into a reality that exceeded anything we could have imagined. Every detail was perfect — from the floral mandap to the synchronized fireworks. Our guests are still talking about it 6 months later!"</p>
+                                    <div class="flex items-center gap-4">
+                                        <img src="https://picsum.photos/seed/couple-priya/80/80.jpg" alt="Priya" class="w-14 h-14 rounded-full object-cover">
+                                        <div>
+                                            <div class="font-bold text-charcoal">Priya & Rohan Kapoor</div>
+                                            <div class="text-sm text-gray-warm">Udaipur Wedding • December 2023</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full flex-shrink-0 px-2">
+                                <div class="bg-cream rounded-3xl p-8 md:p-10">
+                                    <div class="flex gap-1 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                    </div>
+                                    <p class="text-charcoal-light text-lg leading-relaxed mb-8 italic font-elegant">"We hired Eternal Vows for just day-of coordination, and they were absolutely phenomenal. The team was calm under pressure, solved a last-minute venue issue in minutes, and made sure everything ran like clockwork. Worth every penny."</p>
+                                    <div class="flex items-center gap-4">
+                                        <img src="https://picsum.photos/seed/couple-sneha/80/80.jpg" alt="Sneha" class="w-14 h-14 rounded-full object-cover">
+                                        <div>
+                                            <div class="font-bold text-charcoal">Sneha & Karan Malhotra</div>
+                                            <div class="text-sm text-gray-warm">Delhi Wedding • February 2024</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full flex-shrink-0 px-2">
+                                <div class="bg-cream rounded-3xl p-8 md:p-10">
+                                    <div class="flex gap-1 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                    </div>
+                                    <p class="text-charcoal-light text-lg leading-relaxed mb-8 italic font-elegant">"As someone who works in events myself, I have extremely high standards. Eternal Vows not only met them but surpassed them. Their design aesthetic is world-class and their execution is flawless. They planned our Goa destination wedding perfectly."</p>
+                                    <div class="flex items-center gap-4">
+                                        <img src="https://picsum.photos/seed/couple-nisha/80/80.jpg" alt="Nisha" class="w-14 h-14 rounded-full object-cover">
+                                        <div>
+                                            <div class="font-bold text-charcoal">Nisha & Aditya Sharma</div>
+                                            <div class="text-sm text-gray-warm">Goa Destination Wedding • January 2024</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full flex-shrink-0 px-2">
+                                <div class="bg-cream rounded-3xl p-8 md:p-10">
+                                    <div class="flex gap-1 mb-5">
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                        <i data-lucide="star" class="w-5 h-5 text-champagne fill-champagne"></i>
+                                    </div>
+                                    <p class="text-charcoal-light text-lg leading-relaxed mb-8 italic font-elegant">"We had an interfaith wedding with two completely different ceremonies on the same day. The Eternal Vows team handled the complexity beautifully, respecting both traditions while creating a seamless flow. They truly understand the emotional weight of weddings."</p>
+                                    <div class="flex items-center gap-4">
+                                        <img src="https://picsum.photos/seed/couple-sarah/80/80.jpg" alt="Sarah" class="w-14 h-14 rounded-full object-cover">
+                                        <div>
+                                            <div class="font-bold text-charcoal">Sarah & Amit D'Souza</div>
+                                            <div class="text-sm text-gray-warm">Mumbai Wedding • March 2024</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center gap-4 mt-8">
+                            <button id="test-prev" class="w-11 h-11 rounded-full border border-charcoal/15 flex items-center justify-center hover:bg-champagne hover:border-champagne hover:text-white transition-all">
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            </button>
+                            <div id="test-dots" class="flex gap-2"></div>
+                            <button id="test-next" class="w-11 h-11 rounded-full border border-charcoal/15 flex items-center justify-center hover:bg-champagne hover:border-champagne hover:text-white transition-all">
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM ===== -->
+    <section class="py-28 md:py-36 bg-cream">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">The Team</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight mb-6">
+                    Meet the <span class="text-gradient italic">Dream Makers</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="text-center group reveal stagger-1">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-priya-m/500/667.jpg" alt="Priya Mehra" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-5">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-charcoal">Priya Mehra</h4>
+                    <p class="text-sm text-gray-warm">Founder & Lead Planner</p>
+                </div>
+                <div class="text-center group reveal stagger-2">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-arjun-m/500/667.jpg" alt="Arjun Mehra" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-5">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-charcoal">Arjun Mehra</h4>
+                    <p class="text-sm text-gray-warm">Co-Founder & Design Head</p>
+                </div>
+                <div class="text-center group reveal stagger-3">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-kavya-s/500/667.jpg" alt="Kavya Singh" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-5">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-charcoal">Kavya Singh</h4>
+                    <p class="text-sm text-gray-warm">Senior Wedding Planner</p>
+                </div>
+                <div class="text-center group reveal stagger-4">
+                    <div class="relative rounded-3xl overflow-hidden mb-5 aspect-[3/4]">
+                        <img src="https://picsum.photos/seed/team-rahul-k/500/667.jpg" alt="Rahul Khanna" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end justify-center pb-5">
+                            <div class="flex gap-2">
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                                <a href="#" class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-charcoal">Rahul Khanna</h4>
+                    <p class="text-sm text-gray-warm">Creative Director</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG / TIPS ===== -->
+    <section class="py-28 md:py-36">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div class="reveal">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="deco-line"></div>
+                        <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">Journal</span>
+                    </div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight">
+                        Wedding Tips & <span class="text-gradient italic">Inspiration</span>
+                    </h2>
+                </div>
+                <a href="#" class="reveal stagger-1 inline-flex items-center gap-2 text-champagne-dark font-semibold hover:gap-3 transition-all">
+                    View All Posts <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <article class="group reveal stagger-1">
+                    <div class="rounded-2xl overflow-hidden mb-5 aspect-[4/3]">
+                        <img src="https://picsum.photos/seed/blog-trends/700/525.jpg" alt="Wedding trends" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-gray-warm mb-3">
+                        <span class="bg-cream px-3 py-1 rounded-full">Trends</span>
+                        <span>Jan 15, 2024</span>
+                        <span>5 min read</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-charcoal mb-2 group-hover:text-champagne-dark transition-colors">Top 15 Wedding Trends That Will Dominate 2025</h3>
+                    <p class="text-gray-warm text-sm leading-relaxed line-clamp-3">From micro-weddings to AI-powered guest management, discover the trends reshaping how modern couples celebrate their love...</p>
+                </article>
+                <article class="group reveal stagger-2">
+                    <div class="rounded-2xl overflow-hidden mb-5 aspect-[4/3]">
+                        <img src="https://picsum.photos/seed/blog-budget/700/525.jpg" alt="Budget planning" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-gray-warm mb-3">
+                        <span class="bg-cream px-3 py-1 rounded-full">Planning</span>
+                        <span>Dec 28, 2023</span>
+                        <span>8 min read</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-charcoal mb-2 group-hover:text-champagne-dark transition-colors">The Ultimate Indian Wedding Budget Guide</h3>
+                    <p class="text-gray-warm text-sm leading-relaxed line-clamp-3">A comprehensive breakdown of wedding costs across different budgets — from ₹5 lakhs to ₹5 crores — with smart saving tips...</p>
+                </article>
+                <article class="group reveal stagger-3">
+                    <div class="rounded-2xl overflow-hidden mb-5 aspect-[4/3]">
+                        <img src="https://picsum.photos/seed/blog-destination/700/525.jpg" alt="Destination guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-gray-warm mb-3">
+                        <span class="bg-cream px-3 py-1 rounded-full">Destinations</span>
+                        <span>Nov 10, 2023</span>
+                        <span>6 min read</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-charcoal mb-2 group-hover:text-champagne-dark transition-colors">10 Best Destination Wedding Locations in India</h3>
+                    <p class="text-gray-warm text-sm leading-relaxed line-clamp-3">From the backwaters of Kerala to the palaces of Rajasthan — a curated guide to India's most magical wedding venues...</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="py-28 md:py-36 bg-cream">
+        <div class="max-w-4xl mx-auto px-6 lg:px-14">
+            <div class="text-center mb-16 reveal">
+                <div class="flex items-center justify-center gap-3 mb-5">
+                    <div class="deco-line"></div>
+                    <span class="text-champagne-dark font-medium text-sm uppercase tracking-[0.2em]">FAQs</span>
+                    <div class="deco-line" style="transform:rotate(180deg)"></div>
+                </div>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal leading-tight tracking-tight">
+                    Common <span class="text-gradient italic">Questions</span>
+                </h2>
+            </div>
+
+            <div class="space-y-4 reveal stagger-1">
+                <div class="bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-btn w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-charcoal pr-4">How far in advance should we book you?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-champagne faq-chevron flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">We recommend booking 8-12 months in advance for a full wedding, and 4-6 months for partial planning or day-of coordination. However, we've also pulled off beautiful weddings in 2-3 months when schedules aligned. The earlier you book, the more time we have to secure the best vendors and venues, especially for peak wedding season (October-March).</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-btn w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-charcoal pr-4">Do you work with a specific budget range?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-champagne faq-chevron flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">We work across all budget ranges — from intimate ₹3 lakh celebrations to ultra-luxury multi-crore destination weddings. We believe great design isn't about how much you spend, but how creatively you use your budget. During our initial consultation, we'll understand your budget and recommend the best approach to maximize value without compromising on the experience.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-btn w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-charcoal pr-4">Can we customize the packages?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-champagne faq-chevron flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Absolutely! Our packages are starting points, not rigid structures. Every wedding is unique, and we encourage customization. You can add or remove services, upgrade specific elements, or combine elements from different packages. We'll create a bespoke proposal that fits your exact needs during the consultation phase.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-btn w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-charcoal pr-4">Do you handle destination weddings outside India?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-champagne faq-chevron flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Yes! We've planned weddings in Bali, Thailand, Dubai, Italy, France, and the Maldives, among other destinations. Our team has established relationships with international venue partners and local vendors. We handle everything — from travel logistics and hotel bookings for guests to local legal requirements and cultural coordination.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl overflow-hidden">
+                    <button class="faq-btn w-full flex items-center justify-between p-6 text-left">
+                        <span class="font-semibold text-charcoal pr-4">What happens if we need to reschedule our wedding?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-champagne faq-chevron flex-shrink-0"></i>
+                    </button>
+                    <div class="faq-body px-6 pb-6">
+                        <p class="text-gray-warm leading-relaxed">Life is unpredictable, and we completely understand. We have a flexible rescheduling policy — one complimentary date change is included in all our packages. For subsequent changes, a nominal coordination fee may apply depending on vendor availability. We work closely with all vendors to minimize any additional costs during rescheduling.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT / CTA ===== -->
+    <section id="contact" class="py-28 md:py-36 relative overflow-hidden">
+        <div class="blob absolute bottom-0 left-0 w-[600px] h-[600px] bg-champagne"></div>
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14 relative">
+            <div class="bg-charcoal rounded-[2.5rem] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-80 h-80 bg-champagne/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-20 w-60 h-60 bg-champagne/5 rounded-full translate-y-1/2"></div>
+
+                <div class="relative grid lg:grid-cols-2 gap-16 items-start">
+                    <div class="reveal-left">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-[60px] h-px bg-champagne/50"></div>
+                            <span class="text-champagne font-medium text-sm uppercase tracking-[0.2em]">Let's Connect</span>
+                        </div>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">
+                            Ready to Plan Your <span class="text-gradient italic">Dream Wedding?</span>
+                        </h2>
+                        <p class="text-white/50 text-lg leading-relaxed mb-10">
+                            Book a complimentary consultation with our team. Tell us your vision, and we'll show you how we can bring it to life — beautifully, seamlessly, and stress-free.
+                        </p>
+
+                        <div class="space-y-6 mb-10">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-champagne"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white font-medium">Studio</div>
+                                    <div class="text-white/40 text-sm">12, Hauz Khas Village, New Delhi - 110016</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="phone" class="w-5 h-5 text-champagne"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white font-medium">Call / WhatsApp</div>
+                                    <div class="text-white/40 text-sm">+91 98765 43210 • +91 11 4567 8900</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="mail" class="w-5 h-5 text-champagne"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white font-medium">Email</div>
+                                    <div class="text-white/40 text-sm">hello@eternalvows.in</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="clock" class="w-5 h-5 text-champagne"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white font-medium">Office Hours</div>
+                                    <div class="text-white/40 text-sm">Mon - Sat: 10 AM - 7 PM</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <a href="#" class="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-5 h-5 text-white"></i></a>
+                            <a href="#" class="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="facebook" class="w-5 h-5 text-white"></i></a>
+                            <a href="#" class="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="youtube" class="w-5 h-5 text-white"></i></a>
+                            <a href="#" class="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="twitter" class="w-5 h-5 text-white"></i></a>
+                            <a href="#" class="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-5 h-5 text-white"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="reveal-right">
+                        <div class="bg-white rounded-3xl p-8 md:p-10">
+                            <h3 class="text-2xl font-serif font-bold text-charcoal mb-1">Book a Free Consultation</h3>
+                            <p class="text-gray-warm text-sm mb-8">We'll get back to you within 4 hours</p>
+
+                            <form id="contact-form" class="space-y-5">
+                                <div class="grid sm:grid-cols-2 gap-5">
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Your Name *</label>
+                                        <input type="text" required class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors" placeholder="Your name">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Partner's Name</label>
+                                        <input type="text" class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors" placeholder="Partner's name">
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-5">
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Email *</label>
+                                        <input type="email" required class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors" placeholder="your@email.com">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Phone *</label>
+                                        <input type="tel" required class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors" placeholder="+91 98765 43210">
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-5">
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Wedding Date</label>
+                                        <input type="date" class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm font-medium text-charcoal mb-2 block">Estimated Guests</label>
+                                        <select class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors text-gray-warm">
+                                            <option>Select range</option>
+                                            <option>Under 50</option>
+                                            <option>50 - 150</option>
+                                            <option>150 - 300</option>
+                                            <option>300 - 500</option>
+                                            <option>500 - 1000</option>
+                                            <option>1000+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-charcoal mb-2 block">Wedding City / Destination</label>
+                                    <input type="text" class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors" placeholder="e.g., Udaipur, Goa, Bali">
+                                </div>
+                                <div>
+                                    <label class="text-sm font-medium text-charcoal mb-2 block">Tell Us About Your Dream Wedding</label>
+                                    <textarea rows="3" class="w-full px-4 py-3 bg-cream border-2 border-transparent rounded-xl focus:border-champagne focus:outline-none transition-colors resize-none" placeholder="Share your vision, theme ideas, special requirements..."></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-champagne text-white py-4 rounded-xl font-bold text-lg hover:bg-charcoal transition-all duration-500 flex items-center justify-center gap-2">
+                                    <i data-lucide="send" class="w-5 h-5"></i>
+                                    Send Inquiry
+                                </button>
+                                <p class="text-center text-xs text-gray-warm">✨ Free consultation • No obligation • Response within 4 hours</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="bg-charcoal pt-20 pb-8">
+        <div class="max-w-[1800px] mx-auto px-6 lg:px-14">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-16">
+                <div class="col-span-2 md:col-span-3 lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 border-2 border-champagne rounded-full flex items-center justify-center">
+                            <span class="font-elegant text-lg font-semibold text-champagne">E</span>
+                        </div>
+                        <div>
+                            <span class="text-xl font-serif font-bold text-white">Eternal Vows</span>
+                            <span class="block text-[9px] uppercase tracking-[0.25em] text-white/40 -mt-0.5">Wedding Planners & Designers</span>
+                        </div>
+                    </div>
+                    <p class="text-white/40 leading-relaxed mb-6 max-w-sm text-sm">
+                        Award-winning luxury wedding planning studio based in New Delhi, creating unforgettable celebrations across India and the world since 2012.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="instagram" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="facebook" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="youtube" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="twitter" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="linkedin" class="w-4 h-4 text-white"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center hover:bg-champagne transition-colors"><i data-lucide="pin" class="w-4 h-4 text-white"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Full Planning</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Partial Planning</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Day-of Coordination</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Decor & Design</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Destination Weddings</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Corporate Events</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-white/40 hover:text-champagne transition-colors text-sm">About Us</a></li>
+                        <li><a href="#portfolio" class="text-white/40 hover:text-champagne transition-colors text-sm">Portfolio</a></li>
+                        <li><a href="#packages" class="text-white/40 hover:text-champagne transition-colors text-sm">Packages</a></li>
+                        <li><a href="#testimonials" class="text-white/40 hover:text-champagne transition-colors text-sm">Reviews</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Blog</a></li>
+                        <li><a href="#contact" class="text-white/40 hover:text-champagne transition-colors text-sm">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-sm uppercase tracking-wider">Top Destinations</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Udaipur</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Jaipur</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Goa</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Kerala</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Bali</a></li>
+                        <li><a href="#" class="text-white/40 hover:text-champagne transition-colors text-sm">Dubai</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-white/25 text-sm">© 2024 Eternal Vows Wedding Planners. All rights reserved.</p>
+                <div class="flex gap-6 text-white/25 text-sm">
+                    <a href="#" class="hover:text-champagne transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-champagne transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-champagne transition-colors">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="btt" class="fixed bottom-8 right-8 w-13 h-13 bg-charcoal text-white rounded-full shadow-xl flex items-center justify-center hover:bg-champagne transition-all duration-500 opacity-0 translate-y-4 pointer-events-none z-50 p-3.5">
+        <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <script>
+    lucide.createIcons();
+
+    // ===== NAVBAR SCROLL =====
+    const nav = document.getElementById('navbar');
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('nav-scrolled', window.scrollY > 80);
+        if (window.scrollY > 600) {
+            btt.classList.remove('opacity-0','translate-y-4','pointer-events-none');
+            btt.classList.add('opacity-100','translate-y-0');
+        } else {
+            btt.classList.add('opacity-0','translate-y-4','pointer-events-none');
+            btt.classList.remove('opacity-100','translate-y-0');
+        }
+    });
+    btt.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+    // ===== MOBILE MENU =====
+    const mobMenu = document.getElementById('mob-menu');
+    document.getElementById('mob-toggle').addEventListener('click', () => mobMenu.classList.add('open'));
+    document.getElementById('mob-close').addEventListener('click', () => mobMenu.classList.remove('open'));
+    document.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', () => mobMenu.classList.remove('open')));
+
+    // ===== SCROLL REVEAL =====
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el => revealObs.observe(el));
+
+    // ===== COUNTER ANIMATION =====
+    function animateCount(el) {
+        if(el.dataset.done) return;
+        el.dataset.done = '1';
+        const target = parseInt(el.dataset.count);
+        const start = performance.now();
+        const dur = 2200;
+        (function tick(now) {
+            const p = Math.min((now - start) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 4);
+            el.textContent = Math.floor(ease * target).toLocaleString() + (target === 98 ? '%' : '+');
+            if(p < 1) requestAnimationFrame(tick);
+            else el.textContent = target.toLocaleString() + (target === 98 ? '%' : '+');
+        })(start);
+    }
+    document.querySelectorAll('[data-count]').forEach(c => {
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) { animateCount(c); obs.unobserve(e.target); } });
+        }, {threshold: 0.5});
+        obs.observe(c.closest('section, div') || c);
+    });
+
+    // ===== GALLERY FILTER =====
+    const filterBtns = document.querySelectorAll('.gallery-filter');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => { b.classList.remove('active-filter','bg-champagne','text-white'); b.classList.add('bg-white/10','text-white/60'); });
+            btn.classList.add('active-filter','bg-champagne','text-white');
+            btn.classList.remove('bg-white/10','text-white/60');
+            const f = btn.dataset.filter;
+            galleryItems.forEach(item => {
+                if(f === 'all' || item.dataset.category === f) {
+                    item.style.display = '';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95)';
+                    setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'scale(1)'; item.style.transition = 'all 0.5s ease'; }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.95)';
+                    setTimeout(() => { item.style.display = 'none'; }, 400);
+                }
+            });
+        });
+    });
+
+    // ===== TESTIMONIAL SLIDER =====
+    const tTrack = document.getElementById('test-track');
+    const tSlides = tTrack.children;
+    const tDots = document.getElementById('test-dots');
+    let tCur = 0;
+    function tTotal() { return tSlides.length; }
+    function tUpdate() {
+        tTrack.style.transform = `translateX(-${tCur * 100}%)`;
+        tDots.innerHTML = '';
+        for(let i = 0; i < tTotal(); i++) {
+            const d = document.createElement('button');
+            d.className = `h-2.5 rounded-full transition-all duration-300 ${i === tCur ? 'bg-champagne w-8' : 'bg-gray-300 w-2.5'}`;
+            d.addEventListener('click', () => { tCur = i; tUpdate(); });
+            tDots.appendChild(d);
+        }
+    }
+    document.getElementById('test-prev').addEventListener('click', () => { tCur = (tCur - 1 + tTotal()) % tTotal(); tUpdate(); });
+    document.getElementById('test-next').addEventListener('click', () => { tCur = (tCur + 1) % tTotal(); tUpdate(); });
+    let tAuto = setInterval(() => { tCur = (tCur + 1) % tTotal(); tUpdate(); }, 5000);
+    [document.getElementById('test-prev'), document.getElementById('test-next')].forEach(b => b.addEventListener('click', () => { clearInterval(tAuto); tAuto = setInterval(() => { tCur = (tCur + 1) % tTotal(); tUpdate(); }, 5000); }));
+    tUpdate();
+
+    // ===== FAQ =====
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const body = btn.nextElementSibling;
+            const chev = btn.querySelector('.faq-chevron');
+            const isOpen = body.classList.contains('open');
+            document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+            document.querySelectorAll('.faq-chevron').forEach(c => c.classList.remove('open'));
+            if(!isOpen) { body.classList.add('open'); chev.classList.add('open'); }
+        });
+    });
+
+    // ===== TOAST =====
+    function showToast(msg, type = 'success') {
+        const box = document.getElementById('toast-box');
+        const t = document.createElement('div');
+        t.className = `toast-anim ${type === 'success' ? 'bg-charcoal' : 'bg-red-600'} text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 min-w-[320px]`;
+        t.innerHTML = `<i data-lucide="${type === 'success' ? 'check-circle-2' : 'alert-circle'}" class="w-5 h-5 flex-shrink-0 text-champagne"></i><span class="text-sm">${msg}</span>`;
+        box.appendChild(t);
+        lucide.createIcons();
+        setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateX(100px)'; t.style.transition = 'all 0.4s'; setTimeout(() => t.remove(), 400); }, 5000);
+    }
+
+    // ===== CONTACT FORM =====
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        showToast('Thank you! Your consultation request has been received. We\'ll contact you within 4 hours. 💍');
+        e.target.reset();
+    });
+    </script>
+</body>
+</html>

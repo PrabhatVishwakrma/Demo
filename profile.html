@@ -17,1470 +17,821 @@
                         sans: ['Inter', 'sans-serif'],
                         serif: ['Playfair Display', 'serif'],
                     },
-                    colors: {
-                        brand: {
-                            50: '#f0f4ff',
-                            100: '#dbe4ff',
-                            200: '#bac8ff',
-                            300: '#91a7ff',
-                            400: '#748ffc',
-                            500: '#5c7cfa',
-                            600: '#4c6ef5',
-                            700: '#4263eb',
-                            800: '#3b5bdb',
-                            900: '#364fc7',
-                        }
-                    }
                 }
             }
         }
     </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1a1a2e; overflow-x: hidden; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:#fff;color:#1a1a2e;overflow-x:hidden}
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:#f8f9fa}
+        ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#4f46e5,#7c3aed);border-radius:10px}
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #4c6ef5; border-radius: 10px; }
+        .hero-bg{background:linear-gradient(160deg,#fff 0%,#f5f3ff 30%,#ede9fe 60%,#f5f3ff 80%,#fff 100%);position:relative;overflow:hidden}
+        .hero-bg::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(79,70,229,0.1) 0%,transparent 70%);border-radius:50%;animation:blobFloat 10s ease-in-out infinite}
+        .hero-bg::after{content:'';position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(124,58,237,0.08) 0%,transparent 70%);border-radius:50%;animation:blobFloat 12s ease-in-out infinite reverse}
+        @keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.05)}66%{transform:translate(-30px,30px) scale(.95)}}
 
-        /* Hero Gradient Background */
-        .hero-bg {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 25%, #dbe4ff 50%, #f0f4ff 75%, #ffffff 100%);
-            position: relative;
-        }
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(76,110,245,0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: floatBlob 8s ease-in-out infinite;
-        }
-        .hero-bg::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(76,110,245,0.06) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: floatBlob 10s ease-in-out infinite reverse;
-        }
+        .typing-cursor::after{content:'|';animation:blink .7s infinite;color:#4f46e5;font-weight:300}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
-        @keyframes floatBlob {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.05); }
-            66% { transform: translate(-20px, 20px) scale(0.95); }
-        }
+        .reveal{opacity:0;transform:translateY(50px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal.active{opacity:1;transform:translateY(0)}
+        .reveal-left{opacity:0;transform:translateX(-60px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal-left.active{opacity:1;transform:translateX(0)}
+        .reveal-right{opacity:0;transform:translateX(60px);transition:all .9s cubic-bezier(.16,1,.3,1)}
+        .reveal-right.active{opacity:1;transform:translateX(0)}
+        .reveal-scale{opacity:0;transform:scale(.85);transition:all .8s cubic-bezier(.16,1,.3,1)}
+        .reveal-scale.active{opacity:1;transform:scale(1)}
 
-        /* Typing Animation */
-        .typing-cursor::after {
-            content: '|';
-            animation: blink 0.8s infinite;
-            color: #4c6ef5;
-            font-weight: 300;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
+        .particle{position:absolute;border-radius:50%;background:rgba(79,70,229,.1);animation:pFloat linear infinite}
+        @keyframes pFloat{0%{transform:translateY(0) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
 
-        /* Reveal Animations */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-left {
-            opacity: 0;
-            transform: translateX(-60px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-left.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .reveal-right {
-            opacity: 0;
-            transform: translateX(60px);
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-right.active {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .reveal-scale {
-            opacity: 0;
-            transform: scale(0.85);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal-scale.active {
-            opacity: 1;
-            transform: scale(1);
-        }
+        .service-card{transition:all .5s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+        .service-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#4f46e5,#7c3aed,#a855f7);transform:scaleX(0);transform-origin:left;transition:transform .5s ease}
+        .service-card:hover::after{transform:scaleX(1)}
+        .service-card:hover{transform:translateY(-10px);box-shadow:0 30px 60px -20px rgba(79,70,229,.15),0 10px 30px -10px rgba(0,0,0,.06)}
+        .service-card .icon-wrap{transition:all .4s ease}
+        .service-card:hover .icon-wrap{transform:scale(1.1) rotate(-5deg)}
 
-        /* Stagger children */
-        .stagger-children > * { transition-delay: calc(var(--i, 0) * 0.1s); }
+        .project-card{transition:all .5s cubic-bezier(.16,1,.3,1);overflow:hidden}
+        .project-card:hover{transform:translateY(-12px);box-shadow:0 40px 80px -25px rgba(0,0,0,.12)}
+        .project-card .p-img{transition:transform .8s cubic-bezier(.16,1,.3,1)}
+        .project-card:hover .p-img{transform:scale(1.1)}
+        .project-card .p-overlay{opacity:0;transition:all .5s ease}
+        .project-card:hover .p-overlay{opacity:1}
 
-        /* Floating Particles */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(76,110,245,0.12);
-            animation: particleFloat linear infinite;
-        }
-        @keyframes particleFloat {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
+        .review-card{transition:all .4s cubic-bezier(.16,1,.3,1)}
+        .review-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 25px 50px -15px rgba(0,0,0,.08)}
 
-        /* Card Hover */
-        .service-card {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(76,110,245,0.04) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        .service-card:hover::before { opacity: 1; }
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 60px -15px rgba(76,110,245,0.15), 0 10px 30px -10px rgba(0,0,0,0.08);
-        }
+        .pricing-popular{position:relative}
+        .pricing-popular::before{content:'';position:absolute;inset:-3px;background:linear-gradient(135deg,#4f46e5,#7c3aed,#a855f7,#4f46e5);background-size:300% 300%;border-radius:1.5rem;z-index:-1;animation:glowShift 4s ease-in-out infinite}
+        @keyframes glowShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-        /* Project Card */
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
-        }
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 70px -20px rgba(0,0,0,0.12);
-        }
-        .project-card .project-img {
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .project-card:hover .project-img {
-            transform: scale(1.08);
-        }
-        .project-card .project-overlay {
-            opacity: 0;
-            transition: all 0.4s ease;
-        }
-        .project-card:hover .project-overlay {
-            opacity: 1;
-        }
+        .nav-scrolled{background:rgba(255,255,255,.95)!important;backdrop-filter:blur(20px)!important;box-shadow:0 4px 30px rgba(0,0,0,.06)!important}
 
-        /* Review Card */
-        .review-card {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .review-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.1);
-        }
+        .marquee-track{display:flex;animation:marquee 35s linear infinite;width:max-content}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-        /* Pricing Card Glow */
-        .pricing-popular {
-            position: relative;
-        }
-        .pricing-popular::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, #4c6ef5, #748ffc, #4c6ef5);
-            border-radius: 1.5rem;
-            z-index: -1;
-            animation: glowPulse 3s ease-in-out infinite;
-        }
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
+        .pulse-dot{width:10px;height:10px;background:#22c55e;border-radius:50%;position:relative}
+        .pulse-dot::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:rgba(34,197,94,.3);animation:pDot 2s ease-in-out infinite}
+        @keyframes pDot{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(2);opacity:0}}
 
-        /* Nav Scroll */
-        .nav-scrolled {
-            background: rgba(255,255,255,0.92) !important;
-            backdrop-filter: blur(20px) !important;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.06) !important;
-        }
+        .gradient-text{background:linear-gradient(135deg,#1a1a2e 0%,#4f46e5 40%,#7c3aed 70%,#1a1a2e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradShift 5s ease-in-out infinite}
+        @keyframes gradShift{0%,100%{background-position:0% center}50%{background-position:100% center}}
 
-        /* Marquee */
-        .marquee-track {
-            display: flex;
-            animation: marquee 30s linear infinite;
-            width: max-content;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .btn-primary{background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);transition:all .3s ease;position:relative;overflow:hidden}
+        .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 100%);opacity:0;transition:opacity .3s ease}
+        .btn-primary:hover::before{opacity:1}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 40px -10px rgba(79,70,229,.4)}
+        .btn-primary span{position:relative;z-index:1}
 
-        /* Counter Animation */
-        .counter { display: inline-block; }
+        .btn-outline{border:2px solid #e2e8f0;transition:all .3s ease}
+        .btn-outline:hover{border-color:#4f46e5;color:#4f46e5;transform:translateY(-3px);box-shadow:0 15px 35px -10px rgba(79,70,229,.12)}
 
-        /* Pulse Dot */
-        .pulse-dot {
-            width: 10px; height: 10px;
-            background: #22c55e;
-            border-radius: 50%;
-            position: relative;
-        }
-        .pulse-dot::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: rgba(34,197,94,0.3);
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-        @keyframes pulseDot {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.8); opacity: 0; }
-        }
+        .mobile-menu{transform:translateX(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+        .mobile-menu.open{transform:translateX(0)}
 
-        /* Gradient Text */
-        .gradient-text {
-            background: linear-gradient(135deg, #1a1a2e 0%, #4c6ef5 50%, #1a1a2e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .tag-pill{background:linear-gradient(135deg,#f5f3ff,#ede9fe);color:#4f46e5;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+        .star{color:#f59e0b}
 
-        /* Smooth Button */
-        .btn-primary {
-            background: linear-gradient(135deg, #4c6ef5 0%, #3b5bdb 100%);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #5c7cfa 0%, #4c6ef5 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .btn-primary:hover::before { opacity: 1; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 40px -10px rgba(76,110,245,0.4); }
-        .btn-primary span { position: relative; z-index: 1; }
+        .social-icon{transition:all .3s cubic-bezier(.16,1,.3,1)}
+        .social-icon:hover{transform:translateY(-5px) scale(1.1)}
 
-        .btn-outline {
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        .btn-outline:hover {
-            border-color: #4c6ef5;
-            color: #4c6ef5;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(76,110,245,0.15);
-        }
+        .grid-pattern{background-image:radial-gradient(rgba(79,70,229,.06) 1px,transparent 1px);background-size:30px 30px}
 
-        /* Mobile Menu */
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .mobile-menu.open { transform: translateX(0); }
+        .float-card{animation:floatCard 4s ease-in-out infinite}
+        .float-card:nth-child(2){animation-delay:1s;animation-duration:5s}
+        .float-card:nth-child(3){animation-delay:2s;animation-duration:4.5s}
+        @keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
 
-        /* Section Divider */
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
-        }
+        .img-shine{position:relative;overflow:hidden}
+        .img-shine::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .6s ease}
+        .img-shine:hover::after{left:100%}
 
-        /* Magnetic effect for social icons */
-        .social-icon {
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .social-icon:hover {
-            transform: translateY(-4px) scale(1.1);
-            box-shadow: 0 10px 30px -5px rgba(76,110,245,0.2);
-        }
+        .text-shimmer{background:linear-gradient(90deg,#1a1a2e 0%,#4f46e5 25%,#7c3aed 50%,#4f46e5 75%,#1a1a2e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
+        @keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
 
-        /* Tag pill */
-        .tag-pill {
-            background: linear-gradient(135deg, #f0f4ff, #dbe4ff);
-            color: #4263eb;
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        /* Star rating */
-        .star { color: #f59e0b; }
-
-        /* Grid pattern background */
-        .grid-pattern {
-            background-image: radial-gradient(rgba(76,110,245,0.08) 1px, transparent 1px);
-            background-size: 30px 30px;
+        @media(max-width:768px){
+            .hero-bg::before,.hero-bg::after{width:300px;height:300px}
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Particles Container -->
-    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+<div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: transparent;">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <a href="#" class="flex items-center gap-2 group">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 flex items-center justify-center text-white font-bold text-lg transition-transform duration-300 group-hover:scale-110">P</div>
-                    <span class="font-bold text-lg text-gray-900 tracking-tight">Prabhat<span class="text-brand-600">.</span>dev</span>
+<!-- NAVIGATION -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background:transparent">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-base sm:text-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">P</div>
+                <span class="font-bold text-base sm:text-lg text-gray-900 tracking-tight">Prabhat<span class="text-indigo-600">.</span>dev</span>
+            </a>
+            <div class="hidden md:flex items-center gap-6 lg:gap-8">
+                <a href="#home" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors">Home</a>
+                <a href="#services" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors">Services</a>
+                <a href="#portfolio" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors">Portfolio</a>
+                <a href="#pricing" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors">Pricing</a>
+                <a href="#reviews" class="text-sm font-medium text-gray-500 hover:text-indigo-600 transition-colors">Reviews</a>
+                <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary px-5 lg:px-6 py-2.5 rounded-full text-white text-sm font-medium">
+                    <span class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i><span class="hidden lg:inline">Let's Talk</span><span class="lg:hidden">Chat</span></span>
                 </a>
+            </div>
+            <button id="menuBtn" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" onclick="toggleMenu()">
+                <span class="menu-line w-6 h-0.5 bg-gray-800 rounded-full transition-all duration-300"></span>
+                <span class="menu-line w-6 h-0.5 bg-gray-800 rounded-full transition-all duration-300"></span>
+                <span class="menu-line w-4 h-0.5 bg-gray-800 rounded-full transition-all duration-300 ml-auto"></span>
+            </button>
+        </div>
+    </div>
+</nav>
 
-                <!-- Desktop Nav -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#home" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors duration-300">Home</a>
-                    <a href="#services" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors duration-300">Services</a>
-                    <a href="#portfolio" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors duration-300">Portfolio</a>
-                    <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors duration-300">Pricing</a>
-                    <a href="#reviews" class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors duration-300">Reviews</a>
-                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary px-6 py-2.5 rounded-full text-white text-sm font-medium">
-                        <span class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i> Let's Talk</span>
-                    </a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="menuBtn" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5" onclick="toggleMenu()">
-                    <span class="menu-line w-6 h-0.5 bg-gray-800 rounded-full transition-all duration-300"></span>
-                    <span class="menu-line w-6 h-0.5 bg-gray-800 rounded-full transition-all duration-300"></span>
-                    <span class="menu-line w-4 h-0.5 bg-gray-800 rounded-full transition-all duration-300 ml-auto"></span>
-                </button>
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-[60] bg-white">
+    <div class="flex flex-col h-full p-6 sm:p-8">
+        <div class="flex justify-between items-center mb-12">
+            <span class="font-bold text-xl text-gray-900">Prabhat<span class="text-indigo-600">.</span>dev</span>
+            <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100"><i data-lucide="x" class="w-5 h-5 text-gray-700"></i></button>
+        </div>
+        <div class="flex flex-col gap-5">
+            <a href="#home" onclick="toggleMenu()" class="text-2xl sm:text-3xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">Home</a>
+            <a href="#services" onclick="toggleMenu()" class="text-2xl sm:text-3xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">Services</a>
+            <a href="#portfolio" onclick="toggleMenu()" class="text-2xl sm:text-3xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">Portfolio</a>
+            <a href="#pricing" onclick="toggleMenu()" class="text-2xl sm:text-3xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">Pricing</a>
+            <a href="#reviews" onclick="toggleMenu()" class="text-2xl sm:text-3xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">Reviews</a>
+        </div>
+        <div class="mt-auto">
+            <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary w-full py-4 rounded-2xl text-white text-center font-semibold text-lg block">
+                <span class="flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> Let's Talk</span>
+            </a>
+            <div class="flex items-center justify-center gap-5 mt-5">
+                <a href="https://instagram.com/prabhat_v_" target="_blank" class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="https://wa.me/919721459936" target="_blank" class="w-11 h-11 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:text-green-600 hover:bg-green-50 transition-all"><i data-lucide="phone" class="w-5 h-5"></i></a>
             </div>
         </div>
-    </nav>
+    </div>
+</div>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-[60] bg-white">
-        <div class="flex flex-col h-full p-8">
-            <div class="flex justify-between items-center mb-12">
-                <span class="font-bold text-xl text-gray-900">Prabhat<span class="text-brand-600">.</span>dev</span>
-                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100">
-                    <i data-lucide="x" class="w-5 h-5 text-gray-700"></i>
-                </button>
+<!-- ===== HERO ===== -->
+<section id="home" class="hero-bg min-h-screen flex items-center relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-28 sm:py-32 lg:py-0 relative z-10 w-full">
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            <div>
+                <div class="reveal flex items-center gap-3 mb-5 sm:mb-6">
+                    <div class="pulse-dot"></div>
+                    <span class="text-xs sm:text-sm font-semibold text-green-600 tracking-wide uppercase">Available for Projects</span>
+                </div>
+                <h1 class="reveal font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight text-gray-900 mb-5 sm:mb-6" style="transition-delay:.1s">
+                    I Build<br><span class="gradient-text">Digital</span><br>Experiences<span class="typing-cursor"></span>
+                </h1>
+                <p class="reveal text-base sm:text-lg md:text-xl text-gray-500 leading-relaxed max-w-lg mb-7 sm:mb-8" style="transition-delay:.2s">
+                    Freelance Developer & Designer crafting stunning websites, powerful apps, and complete software solutions — from concept to launch.
+                </p>
+                <div class="reveal flex flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-12" style="transition-delay:.3s">
+                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-white font-semibold text-sm tracking-wide">
+                        <span class="flex items-center gap-2"><i data-lucide="send" class="w-4 h-4"></i> Start Your Project</span>
+                    </a>
+                    <a href="#portfolio" class="btn-outline px-6 sm:px-8 py-3.5 sm:py-4 rounded-full text-gray-700 font-semibold text-sm tracking-wide">View My Work</a>
+                </div>
+                <div class="reveal flex gap-8 sm:gap-10" style="transition-delay:.4s">
+                    <div><div class="text-2xl sm:text-3xl font-bold text-gray-900"><span class="counter" data-target="50">0</span>+</div><div class="text-xs sm:text-sm text-gray-400 mt-1">Projects Done</div></div>
+                    <div><div class="text-2xl sm:text-3xl font-bold text-gray-900"><span class="counter" data-target="40">0</span>+</div><div class="text-xs sm:text-sm text-gray-400 mt-1">Happy Clients</div></div>
+                    <div><div class="text-2xl sm:text-3xl font-bold text-gray-900"><span class="counter" data-target="3">0</span>+</div><div class="text-xs sm:text-sm text-gray-400 mt-1">Years Exp.</div></div>
+                </div>
             </div>
-            <div class="flex flex-col gap-6">
-                <a href="#home" onclick="toggleMenu()" class="text-3xl font-bold text-gray-900 hover:text-brand-600 transition-colors">Home</a>
-                <a href="#services" onclick="toggleMenu()" class="text-3xl font-bold text-gray-900 hover:text-brand-600 transition-colors">Services</a>
-                <a href="#portfolio" onclick="toggleMenu()" class="text-3xl font-bold text-gray-900 hover:text-brand-600 transition-colors">Portfolio</a>
-                <a href="#pricing" onclick="toggleMenu()" class="text-3xl font-bold text-gray-900 hover:text-brand-600 transition-colors">Pricing</a>
-                <a href="#reviews" onclick="toggleMenu()" class="text-3xl font-bold text-gray-900 hover:text-brand-600 transition-colors">Reviews</a>
-            </div>
-            <div class="mt-auto">
-                <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary w-full py-4 rounded-2xl text-white text-center font-semibold text-lg block">
-                    <span class="flex items-center justify-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i> Let's Talk</span>
-                </a>
-                <div class="flex items-center justify-center gap-4 mt-6">
-                    <a href="https://instagram.com/prabhat_v_" target="_blank" class="text-gray-400 hover:text-brand-600 transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="https://wa.me/919721459936" target="_blank" class="text-gray-400 hover:text-brand-600 transition-colors"><i data-lucide="phone" class="w-5 h-5"></i></a>
+            <div class="reveal-right relative hidden lg:block" style="transition-delay:.3s">
+                <div class="relative">
+                    <div class="rounded-3xl overflow-hidden shadow-2xl shadow-indigo-200/40 border border-gray-100 img-shine">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=700&fit=crop" alt="Developer Workspace" class="w-full h-[520px] object-cover">
+                    </div>
+                    <div class="float-card absolute -left-8 top-16 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/60 border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i></div>
+                            <div><div class="text-sm font-bold text-gray-900">Project Delivered</div><div class="text-xs text-gray-400">Just now</div></div>
+                        </div>
+                    </div>
+                    <div class="float-card absolute -right-6 bottom-28 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/60 border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center"><i data-lucide="star" class="w-5 h-5 text-indigo-600"></i></div>
+                            <div><div class="text-sm font-bold text-gray-900">5.0 Rating</div><div class="text-xs text-gray-400">From all clients</div></div>
+                        </div>
+                    </div>
+                    <div class="float-card absolute -left-4 bottom-8 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/60 border border-gray-100">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center"><i data-lucide="code-2" class="w-5 h-5 text-purple-600"></i></div>
+                            <div><div class="text-sm font-bold text-gray-900">Clean Code</div><div class="text-xs text-gray-400">100% quality</div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style="animation-duration:2s">
+        <span class="text-[10px] sm:text-xs text-gray-400 tracking-widest uppercase">Scroll</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+    </div>
+</section>
 
-    <!-- ===== HERO SECTION ===== -->
-    <section id="home" class="hero-bg min-h-screen flex items-center relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-32 relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <!-- Left Content -->
-                <div>
-                    <div class="reveal flex items-center gap-3 mb-6">
-                        <div class="pulse-dot"></div>
-                        <span class="text-sm font-semibold text-green-600 tracking-wide uppercase">Available for Projects</span>
-                    </div>
-                    <h1 class="reveal font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight text-gray-900 mb-6" style="transition-delay: 0.1s;">
-                        I Build<br>
-                        <span class="gradient-text">Digital</span><br>
-                        Experiences<span class="typing-cursor"></span>
-                    </h1>
-                    <p class="reveal text-lg md:text-xl text-gray-500 leading-relaxed max-w-lg mb-8" style="transition-delay: 0.2s;">
-                        Freelance Developer & Designer crafting stunning websites, powerful apps, and complete software solutions — from concept to launch.
-                    </p>
-                    <div class="reveal flex flex-wrap gap-4 mb-12" style="transition-delay: 0.3s;">
-                        <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20discuss%20a%20project" target="_blank" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-sm tracking-wide">
-                            <span class="flex items-center gap-2"><i data-lucide="send" class="w-4 h-4"></i> Start Your Project</span>
-                        </a>
-                        <a href="#portfolio" class="btn-outline px-8 py-4 rounded-full text-gray-700 font-semibold text-sm tracking-wide">
-                            View My Work
-                        </a>
-                    </div>
-                    <!-- Quick Stats -->
-                    <div class="reveal flex gap-10" style="transition-delay: 0.4s;">
-                        <div>
-                            <div class="text-3xl font-bold text-gray-900"><span class="counter" data-target="50">0</span>+</div>
-                            <div class="text-sm text-gray-400 mt-1">Projects Done</div>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-bold text-gray-900"><span class="counter" data-target="40">0</span>+</div>
-                            <div class="text-sm text-gray-400 mt-1">Happy Clients</div>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-bold text-gray-900"><span class="counter" data-target="3">0</span>+</div>
-                            <div class="text-sm text-gray-400 mt-1">Years Exp.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Visual -->
-                <div class="reveal-right relative hidden lg:block" style="transition-delay: 0.3s;">
-                    <div class="relative">
-                        <!-- Main Image -->
-                        <div class="rounded-3xl overflow-hidden shadow-2xl shadow-brand-200/30 border border-gray-100">
-                            <img src="https://picsum.photos/seed/devworkspace2024/600/700.jpg" alt="Developer Workspace" class="w-full h-[500px] object-cover">
-                        </div>
-                        <!-- Floating Cards -->
-                        <div class="absolute -left-10 top-20 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/50 border border-gray-100 animate-bounce" style="animation-duration: 3s;">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
-                                    <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm font-bold text-gray-900">Project Delivered</div>
-                                    <div class="text-xs text-gray-400">Just now</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute -right-8 bottom-32 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/50 border border-gray-100 animate-bounce" style="animation-duration: 4s; animation-delay: 1s;">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center">
-                                    <i data-lucide="star" class="w-5 h-5 text-brand-600"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm font-bold text-gray-900">5.0 Rating</div>
-                                    <div class="text-xs text-gray-400">From all clients</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute -left-5 bottom-10 bg-white rounded-2xl p-4 shadow-xl shadow-gray-200/50 border border-gray-100 animate-bounce" style="animation-duration: 3.5s; animation-delay: 0.5s;">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
-                                    <i data-lucide="code-2" class="w-5 h-5 text-purple-600"></i>
-                                </div>
-                                <div>
-                                    <div class="text-sm font-bold text-gray-900">Clean Code</div>
-                                    <div class="text-xs text-gray-400">100% quality</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- MARQUEE -->
+<div class="py-4 sm:py-5 bg-gray-50 border-y border-gray-100 overflow-hidden">
+    <div class="marquee-track">
+        <div class="flex items-center gap-8 sm:gap-12 px-4">
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Website Development</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">App Development</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Software Solutions</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">SEO Optimization</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Content Management</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Photo Editing</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Video Editing</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">UI/UX Design</span><span class="text-indigo-300">✦</span>
         </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" style="animation-duration: 2s;">
-            <span class="text-xs text-gray-400 tracking-widest uppercase">Scroll</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400"></i>
+        <div class="flex items-center gap-8 sm:gap-12 px-4">
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Website Development</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">App Development</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Software Solutions</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">SEO Optimization</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Content Management</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Photo Editing</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Video Editing</span><span class="text-indigo-300">✦</span>
+            <span class="text-xs sm:text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">UI/UX Design</span><span class="text-indigo-300">✦</span>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- ===== MARQUEE SECTION ===== -->
-    <div class="py-6 bg-gray-50 border-y border-gray-100 overflow-hidden">
-        <div class="marquee-track">
-            <div class="flex items-center gap-12 px-6">
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Website Development</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">App Development</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Software Solutions</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">SEO Optimization</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Content Management</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Photo Editing</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Video Editing</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">UI/UX Design</span>
-                <span class="text-brand-300">✦</span>
+<!-- ===== SERVICES ===== -->
+<section id="services" class="py-16 sm:py-24 lg:py-32 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="layers" class="w-3.5 h-3.5"></i> What We Do</div>
+            <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-5 sm:mb-6" style="transition-delay:.1s">Services That Drive<br><span class="gradient-text">Real Results</span></h2>
+            <p class="reveal text-gray-500 text-base sm:text-lg leading-relaxed" style="transition-delay:.2s">From a simple landing page to a complex warehouse management system — we deliver end-to-end digital solutions tailored to your business.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:0">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="globe" class="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Website Development</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Custom responsive websites with WordPress, React, Next.js — whatever your business needs.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WordPress</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">React</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Next.js</span></div>
             </div>
-            <div class="flex items-center gap-12 px-6">
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Website Development</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">App Development</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Software Solutions</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">SEO Optimization</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Content Management</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Photo Editing</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">Video Editing</span>
-                <span class="text-brand-300">✦</span>
-                <span class="text-sm font-semibold text-gray-300 uppercase tracking-widest whitespace-nowrap">UI/UX Design</span>
-                <span class="text-brand-300">✦</span>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:1">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="smartphone" class="w-6 h-6 sm:w-7 sm:h-7 text-purple-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">App Development</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Native & cross-platform mobile apps for Android and iOS. Smooth, fast, user-friendly.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">React Native</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Flutter</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:2">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-green-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="monitor" class="w-6 h-6 sm:w-7 sm:h-7 text-green-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Software Development</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">CRM, ERP, inventory management, custom business tools — built from scratch.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Full Stack</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Custom</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:3">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="search" class="w-6 h-6 sm:w-7 sm:h-7 text-orange-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">SEO Optimization</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Rank higher on Google. On-page, off-page, technical SEO — we cover it all.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">On-Page</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Technical</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:4">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-pink-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="file-text" class="w-6 h-6 sm:w-7 sm:h-7 text-pink-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Content Management</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Easy-to-manage CMS so you can update content effortlessly without any technical knowledge.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WordPress</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Custom CMS</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:5">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-cyan-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="image" class="w-6 h-6 sm:w-7 sm:h-7 text-cyan-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Photo & Video Editing</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Professional photo retouching, product editing, and cinematic video editing for brands.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Photoshop</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Premiere</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:6">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-yellow-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="palette" class="w-6 h-6 sm:w-7 sm:h-7 text-yellow-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">UI/UX Design</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Beautiful, intuitive designs that convert visitors into customers. Pixel-perfect UI.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Figma</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Prototyping</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:7">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-red-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="shopping-cart" class="w-6 h-6 sm:w-7 sm:h-7 text-red-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">E-Commerce Solutions</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Online stores with payment integration, inventory tracking, and order management.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WooCommerce</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Shopify</span></div>
+            </div>
+            <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-6 sm:p-8" style="--i:8">
+                <div class="icon-wrap w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-5 sm:mb-6"><i data-lucide="megaphone" class="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600"></i></div>
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Social Media & More</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-4">Social media management, graphic design, brand identity, logo design, digital marketing.</p>
+                <div class="flex flex-wrap gap-2"><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Branding</span><span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">SMM</span></div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- ===== SERVICES SECTION ===== -->
-    <section id="services" class="py-24 lg:py-32 bg-white relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <!-- Section Header -->
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="layers" class="w-3.5 h-3.5"></i> What We Do
-                </div>
-                <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6" style="transition-delay: 0.1s;">
-                    Services That Drive<br><span class="gradient-text">Real Results</span>
-                </h2>
-                <p class="reveal text-gray-500 text-lg leading-relaxed" style="transition-delay: 0.2s;">
-                    From a simple landing page to a complex warehouse management system — we deliver end-to-end digital solutions tailored to your business needs.
-                </p>
-            </div>
+<div class="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent max-w-7xl mx-auto"></div>
 
-            <!-- Services Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
-                <!-- Service 1 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:0">
-                    <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mb-6">
-                        <i data-lucide="globe" class="w-7 h-7 text-brand-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Website Development</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Custom responsive websites built with modern technologies. WordPress, React, Next.js — whatever your business needs.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WordPress</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">React</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Next.js</span>
-                    </div>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:1">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-50 flex items-center justify-center mb-6">
-                        <i data-lucide="smartphone" class="w-7 h-7 text-purple-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">App Development</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Native & cross-platform mobile applications for Android and iOS. Smooth, fast, and user-friendly experiences.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">React Native</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Flutter</span>
-                    </div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:2">
-                    <div class="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center mb-6">
-                        <i data-lucide="monitor" class="w-7 h-7 text-green-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Software Development</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Complete software solutions — CRM, ERP, inventory management, and custom business tools built from scratch.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Full Stack</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Custom</span>
-                    </div>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:3">
-                    <div class="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mb-6">
-                        <i data-lucide="search" class="w-7 h-7 text-orange-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">SEO Optimization</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Rank higher on Google with our proven SEO strategies. On-page, off-page, technical SEO — we cover it all.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">On-Page</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Technical</span>
-                    </div>
-                </div>
-
-                <!-- Service 5 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:4">
-                    <div class="w-14 h-14 rounded-2xl bg-pink-50 flex items-center justify-center mb-6">
-                        <i data-lucide="file-text" class="w-7 h-7 text-pink-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Content Management</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Easy-to-manage CMS solutions so you can update your website content effortlessly without any technical knowledge.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WordPress</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Custom CMS</span>
-                    </div>
-                </div>
-
-                <!-- Service 6 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:5">
-                    <div class="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center mb-6">
-                        <i data-lucide="image" class="w-7 h-7 text-cyan-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Photo & Video Editing</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Professional photo retouching, product photography editing, and cinematic video editing for social media & brands.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Photoshop</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Premiere</span>
-                    </div>
-                </div>
-
-                <!-- Service 7 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:6">
-                    <div class="w-14 h-14 rounded-2xl bg-yellow-50 flex items-center justify-center mb-6">
-                        <i data-lucide="palette" class="w-7 h-7 text-yellow-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">UI/UX Design</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Beautiful, intuitive designs that convert visitors into customers. User research, wireframes, and pixel-perfect UI.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Figma</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Prototyping</span>
-                    </div>
-                </div>
-
-                <!-- Service 8 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:7">
-                    <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mb-6">
-                        <i data-lucide="shopping-cart" class="w-7 h-7 text-red-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">E-Commerce Solutions</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Online stores with payment integration, inventory tracking, and order management. Start selling online today.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">WooCommerce</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Shopify</span>
-                    </div>
-                </div>
-
-                <!-- Service 9 -->
-                <div class="reveal service-card bg-white border border-gray-100 rounded-2xl p-8" style="--i:8">
-                    <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-6">
-                        <i data-lucide="megaphone" class="w-7 h-7 text-indigo-600"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">Social Media & More</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed mb-4">Social media management, graphic design, brand identity, logo design, and complete digital marketing solutions.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">Branding</span>
-                        <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full">SMM</span>
-                    </div>
-                </div>
-            </div>
+<!-- ===== PORTFOLIO ===== -->
+<section id="portfolio" class="py-16 sm:py-24 lg:py-32 bg-gray-50/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Our Portfolio</div>
+            <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-5 sm:mb-6" style="transition-delay:.1s">Projects That<br><span class="gradient-text">Speak for Themselves</span></h2>
+            <p class="reveal text-gray-500 text-base sm:text-lg leading-relaxed" style="transition-delay:.2s">Real projects, real results. Click on any project to visit the live website.</p>
         </div>
-    </section>
 
-    <div class="section-divider max-w-7xl mx-auto"></div>
+        <div class="grid sm:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
 
-    <!-- ===== PORTFOLIO SECTION ===== -->
-    <section id="portfolio" class="py-24 lg:py-32 bg-gray-50/50 relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <!-- Section Header -->
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="briefcase" class="w-3.5 h-3.5"></i> Our Portfolio
+            <!-- Warehouse -->
+            <a href="https://warehouse.compassbizman.com/" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=500&fit=crop" alt="Warehouse Management System" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
+                    </div>
+                    <div class="absolute top-3 sm:top-4 left-3 sm:left-4"><span class="bg-indigo-600 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full">Featured</span></div>
                 </div>
-                <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6" style="transition-delay: 0.1s;">
-                    Projects That<br><span class="gradient-text">Speak for Themselves</span>
-                </h2>
-                <p class="reveal text-gray-500 text-lg leading-relaxed" style="transition-delay: 0.2s;">
-                    Real projects, real results. Click on any project to visit the live website.
-                </p>
-            </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-blue-50 text-blue-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Full Stack</span>
+                        <span class="text-[10px] sm:text-xs bg-green-50 text-green-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Live</span>
+                    </div>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Warehouse Management System</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Complete login-based warehouse management — product add/remove, real-time inventory tracking, sales & purchase management, stock alerts, supplier management, detailed reports & analytics dashboard, and user role-based access control.</p>
+                </div>
+            </a>
 
-            <!-- Projects Grid -->
-            <div class="grid md:grid-cols-2 gap-8">
+            <!-- KRH Home Solutions -->
+            <a href="https://www.krhhomesolutions.shop/" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.1s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&h=500&fit=crop" alt="KRH Home Solutions" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
+                    </div>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-purple-50 text-purple-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">E-Commerce</span>
+                        <span class="text-[10px] sm:text-xs bg-green-50 text-green-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Live</span>
+                    </div>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">KRH Home Solutions</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Complete home solutions e-commerce platform — modular kitchen fittings, bathroom accessories, interior décor, renovation essentials. Browse, compare, purchase with seamless checkout, order tracking, and customer support.</p>
+                </div>
+            </a>
 
-                <!-- Project 1: Warehouse Management -->
-                <a href="https://warehouse.compassbizman.com/" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/warehouse-inventory/800/500.jpg" alt="Warehouse Management System" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-brand-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">Featured</span>
-                        </div>
+            <!-- Royal Construction -->
+            <a href="https://www.royalconstruction.homes/" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.2s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=500&fit=crop" alt="Royal Construction" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-medium">Full Stack</span>
-                            <span class="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">Live</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Warehouse Management System</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A comprehensive login-based warehouse management platform featuring complete product management — add, remove, and track inventory in real-time. Includes sales & purchase management, stock tracking, order processing, supplier management, detailed reports & analytics dashboard, user role-based access control, and automated low-stock alerts. Built for enterprise-level efficiency.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-orange-50 text-orange-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Business</span>
+                        <span class="text-[10px] sm:text-xs bg-green-50 text-green-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Live</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Royal Construction</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Professional construction company website — residential & commercial project galleries, before/after views, service details for construction & renovation, client testimonials, enquiry forms, strong brand presence.</p>
+                </div>
+            </a>
 
-                <!-- Project 2: KRH Home Solutions -->
-                <a href="https://www.krhhomesolutions.shop/" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.1s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/home-interior-modern/800/500.jpg" alt="KRH Home Solutions" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- SAHS App -->
+            <a href="https://sahs.app/dashboard" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.3s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" alt="SAHS App" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-purple-50 text-purple-600 px-3 py-1 rounded-full font-medium">E-Commerce</span>
-                            <span class="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">Live</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">KRH Home Solutions</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A complete home solutions e-commerce platform offering a wide range of home improvement products and services. From modular kitchen fittings to bathroom accessories, interior décor, and renovation essentials — customers can browse, compare, and purchase products with seamless checkout, order tracking, and customer support integration.</p>
+                    <div class="absolute top-3 sm:top-4 left-3 sm:left-4"><span class="bg-gray-800 text-white text-[10px] sm:text-xs font-bold px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full">NDA Protected</span></div>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-red-50 text-red-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">App</span>
+                        <span class="text-[10px] sm:text-xs bg-green-50 text-green-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Live</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">SAHS — Web Application</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Full-featured web application with comprehensive dashboard. Due to client NDA, description cannot be revealed. For details, case study & tech stack, please connect via call or WhatsApp.</p>
+                </div>
+            </a>
 
-                <!-- Project 3: Royal Construction -->
-                <a href="https://www.royalconstruction.homes/" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.2s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/construction-building/800/500.jpg" alt="Royal Construction" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- Aanchal Pest Control -->
+            <a href="https://www.aanchalpcs.in/" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.1s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=500&fit=crop" alt="Aanchal Pest Control" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-medium">Business</span>
-                            <span class="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">Live</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Royal Construction</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A professional construction company website showcasing their residential & commercial projects, services portfolio, and company expertise. Features project galleries with before/after views, service details for construction, renovation, and interior work, client testimonials, enquiry forms, and a strong brand presence designed to build trust with potential clients.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-teal-50 text-teal-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Service</span>
+                        <span class="text-[10px] sm:text-xs bg-green-50 text-green-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Live</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Aanchal Pest Control Services</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Professional pest control website — termite, cockroach, bed bug, rodent & mosquito treatments. Booking system, service area coverage, customer reviews, before/after results, SEO-optimized for local ranking.</p>
+                </div>
+            </a>
 
-                <!-- Project 4: SAHS App -->
-                <a href="https://sahs.app/dashboard" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.3s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/app-dashboard-dark/800/500.jpg" alt="SAHS App" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-gray-800 text-white text-xs font-bold px-3 py-1.5 rounded-full">NDA Protected</span>
-                        </div>
+            <!-- Dental -->
+            <a href="https://prabhatvishwakrma.github.io/Demo/dental.html" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.2s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&h=500&fit=crop" alt="Dental Clinic" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full font-medium">App</span>
-                            <span class="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">Live</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">SAHS — Web Application</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A full-featured web application with a comprehensive dashboard system. Due to client privacy and NDA agreement, detailed project description cannot be revealed publicly. For project details, case study, and tech stack information, please connect via call or WhatsApp for a confidential discussion.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-sky-50 text-sky-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Healthcare</span>
+                        <span class="text-[10px] sm:text-xs bg-gray-100 text-gray-500 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Demo</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Dental Clinic — Appointment Booking</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Professional dental website with online appointment booking — dentist profiles, treatment catalog with pricing, patient testimonials, before/after smile gallery, clinic map, smart date/time/treatment selection form.</p>
+                </div>
+            </a>
 
-                <!-- Project 5: Aanchal Pest Control -->
-                <a href="https://www.aanchalpcs.in/" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.1s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/pest-control-service/800/500.jpg" alt="Aanchal Pest Control" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- Interior Design -->
+            <a href="https://prabhatvishwakrma.github.io/Demo/designer.html" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.3s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=500&fit=crop" alt="Interior Design" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-teal-50 text-teal-600 px-3 py-1 rounded-full font-medium">Service</span>
-                            <span class="text-xs bg-green-50 text-green-600 px-3 py-1 rounded-full font-medium">Live</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Aanchal Pest Control Services</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A professional pest control service website designed to generate leads and build customer trust. Features detailed service listings for termite control, cockroach treatment, bed bug removal, rodent control, and mosquito management. Includes booking/enquiry system, service area coverage, customer reviews, before/after results, and SEO-optimized content for local search ranking.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-amber-50 text-amber-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Design</span>
+                        <span class="text-[10px] sm:text-xs bg-gray-100 text-gray-500 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Demo</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Interior Designing Studio</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Elegant interior design website — luxury project galleries, room-by-room breakdowns, material selections, 3D visualization previews, client journeys, consultation booking, design tips blog.</p>
+                </div>
+            </a>
 
-                <!-- Project 6: Dental -->
-                <a href="https://prabhatvishwakrma.github.io/Demo/dental.html" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.2s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/dental-clinic-smile/800/500.jpg" alt="Dental Clinic" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- Wedding -->
+            <a href="https://prabhatvishwakrma.github.io/Demo/wedding.html" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.1s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=500&fit=crop" alt="Wedding Management" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-sky-50 text-sky-600 px-3 py-1 rounded-full font-medium">Healthcare</span>
-                            <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full font-medium">Demo</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Dental Clinic — Appointment Booking</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A clean, professional dental clinic website with online appointment booking system. Features dentist profiles with specializations, treatment catalog with pricing, patient testimonials, before/after smile gallery, clinic location map, and a smart booking form that lets patients select date, time, and treatment type for a seamless experience.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-pink-50 text-pink-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Event</span>
+                        <span class="text-[10px] sm:text-xs bg-gray-100 text-gray-500 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Demo</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Wedding Management Platform</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Dreamy wedding planning — vendor listings, package customization, real wedding stories, budget planner, countdown timers, RSVP management, captures the emotion of celebrations.</p>
+                </div>
+            </a>
 
-                <!-- Project 7: Interior Design -->
-                <a href="https://prabhatvishwakrma.github.io/Demo/designer.html" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.3s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/interior-design-luxury/800/500.jpg" alt="Interior Design" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- Gym -->
+            <a href="https://prabhatvishwakrma.github.io/Demo/gym2.html" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay:.2s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=500&fit=crop" alt="Gym Website" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-amber-50 text-amber-600 px-3 py-1 rounded-full font-medium">Design</span>
-                            <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full font-medium">Demo</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Interior Designing Studio</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">An elegant interior designing website showcasing luxury residential and commercial projects. Features a stunning portfolio gallery with room-by-room breakdowns, design process explanation, material selections, 3D visualization previews, client project journeys, consultation booking, and a blog section with interior design tips and trends.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-red-50 text-red-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Fitness</span>
+                        <span class="text-[10px] sm:text-xs bg-gray-100 text-gray-500 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Demo</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Gym & Fitness Center</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">High-energy gym website — membership plans & pricing, trainer profiles, class schedules (yoga, CrossFit, Zumba), transformation gallery, BMI calculator, signup form, motivational content.</p>
+                </div>
+            </a>
 
-                <!-- Project 8: Wedding -->
-                <a href="https://prabhatvishwakrma.github.io/Demo/wedding.html" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.1s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/wedding-floral-elegant/800/500.jpg" alt="Wedding Management" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
+            <!-- Trekking -->
+            <a href="https://prabhatvishwakrma.github.io/Demo/trekking.html" target="_blank" class="reveal project-card bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 group block sm:col-span-2 lg:col-span-1" style="transition-delay:.3s">
+                <div class="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop" alt="Trekking Website" class="p-img w-full h-full object-cover">
+                    <div class="p-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-5 sm:p-6">
+                        <div class="flex items-center gap-2 text-white text-sm font-medium"><i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site</div>
                     </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-medium">Event</span>
-                            <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full font-medium">Demo</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Wedding Management Platform</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A dreamy wedding planning and management website featuring vendor listings (photographers, decorators, caterers, venues), package customization, real wedding stories gallery, budget planner tool, countdown timers, RSVP management, and a beautiful aesthetic that captures the emotion and grandeur of wedding celebrations.</p>
+                </div>
+                <div class="p-5 sm:p-6 lg:p-8">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 sm:mb-3">
+                        <span class="text-[10px] sm:text-xs bg-emerald-50 text-emerald-600 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Adventure</span>
+                        <span class="text-[10px] sm:text-xs bg-gray-100 text-gray-500 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-medium">Demo</span>
                     </div>
-                </a>
+                    <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Trekking & Adventure Tours</h3>
+                    <p class="text-gray-500 text-xs sm:text-sm leading-relaxed">Immersive trekking website — detailed itineraries with difficulty levels, altitude charts, day-by-day plans, photo galleries, gear checklist, trek leader profiles, booking system, seasonal calendars.</p>
+                </div>
+            </a>
 
-                <!-- Project 9: Gym -->
-                <a href="https://prabhatvishwakrma.github.io/Demo/gym2.html" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.2s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/gym-fitness-workout/800/500.jpg" alt="Gym Website" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-red-50 text-red-600 px-3 py-1 rounded-full font-medium">Fitness</span>
-                            <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full font-medium">Demo</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Gym & Fitness Center</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">A high-energy gym website with bold typography and dynamic visuals. Features membership plans with pricing, trainer profiles with specializations, class schedules (yoga, CrossFit, Zumba, etc.), transformation gallery, BMI calculator, membership signup form, and motivational content sections designed to convert visitors into members.</p>
-                    </div>
-                </a>
-
-                <!-- Project 10: Trekking -->
-                <a href="https://prabhatvishwakrma.github.io/Demo/trekking.html" target="_blank" class="reveal project-card bg-white rounded-3xl overflow-hidden border border-gray-100 group block" style="transition-delay: 0.3s;">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://picsum.photos/seed/mountain-trekking-adventure/800/500.jpg" alt="Trekking Website" class="project-img w-full h-full object-cover">
-                        <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-6">
-                            <div class="flex items-center gap-2 text-white text-sm font-medium">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Visit Live Site
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 lg:p-8">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs bg-emerald-50 text-emerald-600 px-3 py-1 rounded-full font-medium">Adventure</span>
-                            <span class="text-xs bg-gray-100 text-gray-500 px-3 py-1 rounded-full font-medium">Demo</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">Trekking & Adventure Tours</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">An immersive trekking and adventure tourism website featuring detailed trek itineraries with difficulty levels, altitude charts, and day-by-day plans. Includes photo galleries from real expeditions, gear checklist, trek leader profiles, booking & enquiry system, seasonal trek calendars, and safety guidelines — everything an adventure seeker needs.</p>
-                    </div>
-                </a>
-
-            </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ===== PRICING SECTION ===== -->
-    <section id="pricing" class="py-24 lg:py-32 bg-white relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="tag" class="w-3.5 h-3.5"></i> Pricing
-                </div>
-                <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6" style="transition-delay: 0.1s;">
-                    Affordable Pricing,<br><span class="gradient-text">Premium Quality</span>
-                </h2>
-                <p class="reveal text-gray-500 text-lg leading-relaxed" style="transition-delay: 0.2s;">
-                    Transparent pricing with no hidden costs. Every project includes <strong class="text-gray-700">6 months free maintenance</strong>.
-                </p>
+<!-- ===== PRICING ===== -->
+<section id="pricing" class="py-16 sm:py-24 lg:py-32 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="tag" class="w-3.5 h-3.5"></i> Pricing</div>
+            <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-5 sm:mb-6" style="transition-delay:.1s">Affordable Pricing,<br><span class="gradient-text">Premium Quality</span></h2>
+            <p class="reveal text-gray-500 text-base sm:text-lg leading-relaxed" style="transition-delay:.2s">Transparent pricing. Every project includes <strong class="text-gray-700">6 months free maintenance</strong>.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
+            <!-- Starter -->
+            <div class="reveal service-card bg-white border border-gray-200 rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col">
+                <div class="mb-6 sm:mb-8"><h3 class="text-base sm:text-lg font-bold text-gray-900 mb-1 sm:mb-2">Starter Website</h3><p class="text-xs sm:text-sm text-gray-400">Perfect for small businesses</p></div>
+                <div class="mb-6 sm:mb-8"><span class="text-3xl sm:text-5xl font-bold text-gray-900">₹3,000</span><span class="text-gray-400 text-xs sm:text-sm ml-1">onwards</span></div>
+                <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>WordPress Website</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Responsive Design</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Up to 5 Pages</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Basic SEO Setup</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Contact Form</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>6 Months Free Maintenance</li>
+                </ul>
+                <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20interested%20in%20Starter%20Website%20%E2%82%B93000" target="_blank" class="btn-outline w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-center font-semibold text-sm">Get Started</a>
             </div>
-
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Basic -->
-                <div class="reveal service-card bg-white border border-gray-200 rounded-3xl p-8 flex flex-col">
-                    <div class="mb-8">
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">Starter Website</h3>
-                        <p class="text-sm text-gray-400">Perfect for small businesses</p>
-                    </div>
-                    <div class="mb-8">
-                        <span class="text-5xl font-bold text-gray-900">₹3,000</span>
-                        <span class="text-gray-400 text-sm ml-1">onwards</span>
-                    </div>
-                    <ul class="space-y-4 mb-10 flex-1">
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> WordPress Website</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Responsive Design</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Up to 5 Pages</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Basic SEO Setup</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Contact Form</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> 6 Months Free Maintenance</li>
+            <!-- Popular -->
+            <div class="reveal pricing-popular rounded-2xl sm:rounded-3xl sm:col-span-2 lg:col-span-1" style="transition-delay:.1s">
+                <div class="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col h-full relative">
+                    <div class="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2"><span class="bg-indigo-600 text-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg shadow-indigo-200">Most Popular</span></div>
+                    <div class="mb-6 sm:mb-8 mt-2 sm:mt-3"><h3 class="text-base sm:text-lg font-bold text-gray-900 mb-1 sm:mb-2">Premium Website</h3><p class="text-xs sm:text-sm text-gray-400">With advanced animations</p></div>
+                    <div class="mb-6 sm:mb-8"><span class="text-3xl sm:text-5xl font-bold text-gray-900">₹5,000</span><span class="text-gray-400 text-xs sm:text-sm ml-1">onwards</span></div>
+                    <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Everything in Starter</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Advanced Animations</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Custom Design Elements</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Up to 10 Pages</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Advanced SEO</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>Social Media Integration</li>
+                        <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500 flex-shrink-0 mt-0.5"></i>6 Months Free Maintenance</li>
                     </ul>
-                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%27m%20interested%20in%20the%20Starter%20Website%20plan%20at%20%E2%82%B93000" target="_blank" class="btn-outline w-full py-4 rounded-2xl text-center font-semibold text-sm">
-                        Get Started
-                    </a>
-                </div>
-
-                <!-- Popular -->
-                <div class="reveal pricing-popular rounded-3xl" style="transition-delay: 0.1s;">
-                    <div class="bg-white rounded-3xl p-8 flex flex-col h-full relative">
-                        <div class="absolute -top-4 left-1/2 -translate-x-1/2">
-                            <span class="bg-brand-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg shadow-brand-200">Most Popular</span>
-                        </div>
-                        <div class="mb-8 mt-2">
-                            <h3 class="text-lg font-bold text-gray-900 mb-2">Premium Website</h3>
-                            <p class="text-sm text-gray-400">With advanced animations</p>
-                        </div>
-                        <div class="mb-8">
-                            <span class="text-5xl font-bold text-gray-900">₹5,000</span>
-                            <span class="text-gray-400 text-sm ml-1">onwards</span>
-                        </div>
-                        <ul class="space-y-4 mb-10 flex-1">
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Everything in Starter</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Advanced Animations</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Custom Design Elements</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Up to 10 Pages</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Advanced SEO</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> Social Media Integration</li>
-                            <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-brand-500 flex-shrink-0 mt-0.5"></i> 6 Months Free Maintenance</li>
-                        </ul>
-                        <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%27m%20interested%20in%20the%20Premium%20Website%20plan%20at%20%E2%82%B95000" target="_blank" class="btn-primary w-full py-4 rounded-2xl text-center font-semibold text-sm text-white">
-                            <span>Get Started</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Custom -->
-                <div class="reveal service-card bg-white border border-gray-200 rounded-3xl p-8 flex flex-col" style="transition-delay: 0.2s;">
-                    <div class="mb-8">
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">Software & App</h3>
-                        <p class="text-sm text-gray-400">Custom enterprise solutions</p>
-                    </div>
-                    <div class="mb-8">
-                        <span class="text-5xl font-bold text-gray-900">Custom</span>
-                    </div>
-                    <ul class="space-y-4 mb-10 flex-1">
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Custom Web Applications</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Mobile App (Android/iOS)</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Admin Dashboard</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Database & API Design</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> User Authentication</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> Payment Integration</li>
-                        <li class="flex items-start gap-3 text-sm text-gray-600"><i data-lucide="check" class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"></i> 6 Months Free Maintenance</li>
-                    </ul>
-                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20need%20a%20custom%20software%2Fapp%20solution.%20Can%20we%20discuss%3F" target="_blank" class="btn-outline w-full py-4 rounded-2xl text-center font-semibold text-sm">
-                        Discuss Requirement
-                    </a>
+                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20interested%20in%20Premium%20Website%20%E2%82%B95000" target="_blank" class="btn-primary w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-center font-semibold text-sm text-white"><span>Get Started</span></a>
                 </div>
             </div>
+            <!-- Custom -->
+            <div class="reveal service-card bg-white border border-gray-200 rounded-2xl sm:rounded-3xl p-6 sm:p-8 flex flex-col sm:col-span-2 lg:col-span-1" style="transition-delay:.2s">
+                <div class="mb-6 sm:mb-8"><h3 class="text-base sm:text-lg font-bold text-gray-900 mb-1 sm:mb-2">Software & App</h3><p class="text-xs sm:text-sm text-gray-400">Custom enterprise solutions</p></div>
+                <div class="mb-6 sm:mb-8"><span class="text-3xl sm:text-5xl font-bold text-gray-900">Custom</span></div>
+                <ul class="space-y-3 sm:space-y-4 mb-8 sm:mb-10 flex-1">
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Custom Web Applications</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Mobile App (Android/iOS)</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Admin Dashboard</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Database & API Design</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>User Authentication</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>Payment Integration</li>
+                    <li class="flex items-start gap-2.5 sm:gap-3 text-xs sm:text-sm text-gray-600"><i data-lucide="check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0 mt-0.5"></i>6 Months Free Maintenance</li>
+                </ul>
+                <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20need%20custom%20software%2Fapp" target="_blank" class="btn-outline w-full py-3.5 sm:py-4 rounded-xl sm:rounded-2xl text-center font-semibold text-sm">Discuss Requirement</a>
+            </div>
+        </div>
+        <div class="reveal mt-10 sm:mt-16 text-center">
+            <div class="inline-flex items-center gap-3 bg-green-50 border border-green-200 rounded-xl sm:rounded-2xl px-5 sm:px-8 py-3 sm:py-4">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0"><i data-lucide="shield-check" class="w-4 h-4 sm:w-5 sm:h-5 text-green-600"></i></div>
+                <div class="text-left"><div class="text-xs sm:text-sm font-bold text-green-800">6 Months Free Maintenance</div><div class="text-[10px] sm:text-xs text-green-600">Bug fixes, security updates & minor changes included</div></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <!-- Maintenance Badge -->
-            <div class="reveal mt-16 text-center">
-                <div class="inline-flex items-center gap-3 bg-green-50 border border-green-200 rounded-2xl px-8 py-4">
-                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-green-600"></i>
+<div class="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent max-w-7xl mx-auto"></div>
+
+<!-- ===== REVIEWS ===== -->
+<section id="reviews" class="py-16 sm:py-24 lg:py-32 bg-gray-50/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Client Reviews</div>
+            <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-5 sm:mb-6" style="transition-delay:.1s">What Our Clients<br><span class="gradient-text">Say About Us</span></h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"Prabhat delivered our warehouse management system beyond expectations. The attention to detail in every module was outstanding. Highly recommended!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-sm sm:text-lg">S</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Siddhesh Kumbhar</div><div class="text-[10px] sm:text-xs text-gray-400">Business Owner</div></div></div>
+            </div>
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100" style="transition-delay:.1s">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"Our construction website looks absolutely professional. Prabhat understood our vision perfectly. Great work at an affordable price!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-sm sm:text-lg">R</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Rajesh Srivastav</div><div class="text-[10px] sm:text-xs text-gray-400">Royal Construction</div></div></div>
+            </div>
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100" style="transition-delay:.2s">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"My pest control website is incredible. Online enquiries increased 300% in the first month. The SEO work really helped us rank on Google!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-sm sm:text-lg">P</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Prakash Pawar</div><div class="text-[10px] sm:text-xs text-gray-400">Aanchal Pest Control</div></div></div>
+            </div>
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100" style="transition-delay:.3s">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"The home solutions e-commerce site is fantastic. Smooth UX, easy product management, payment integration works flawlessly. Sales grew significantly!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-sm sm:text-lg">K</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Kiran RH</div><div class="text-[10px] sm:text-xs text-gray-400">KRH Home Solutions</div></div></div>
+            </div>
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100" style="transition-delay:.4s">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"Very professional developer. Delivered my web app on time with top-notch quality. The 6 months free maintenance is a huge bonus!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-bold text-sm sm:text-lg">A</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Amit Sharma</div><div class="text-[10px] sm:text-xs text-gray-400">Startup Founder</div></div></div>
+            </div>
+            <div class="reveal review-card bg-white rounded-2xl p-5 sm:p-8 border border-gray-100" style="transition-delay:.5s">
+                <div class="flex gap-0.5 mb-3 sm:mb-4"><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 sm:w-4 sm:h-4 star fill-current"></i></div>
+                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">"Prabhat built our gym website with incredible energy. Animations are smooth, site loads fast, membership signups doubled. Best investment!"</p>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-red-100 flex items-center justify-center text-red-700 font-bold text-sm sm:text-lg">V</div><div><div class="font-bold text-gray-900 text-xs sm:text-sm">Vikram Patil</div><div class="text-[10px] sm:text-xs text-gray-400">Gym Owner</div></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== WHY CHOOSE US ===== -->
+<section class="py-16 sm:py-24 lg:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="grid lg:grid-cols-2 gap-10 sm:gap-16 items-center">
+            <div>
+                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="award" class="w-3.5 h-3.5"></i> Why Choose Us</div>
+                <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6 sm:mb-8" style="transition-delay:.1s">We Don't Just Build<br><span class="gradient-text">We Partner</span></h2>
+                <div class="space-y-5 sm:space-y-6">
+                    <div class="reveal flex gap-3 sm:gap-4" style="transition-delay:.2s">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 flex items-center justify-center flex-shrink-0"><i data-lucide="clock" class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600"></i></div>
+                        <div><h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1">On-Time Delivery</h4><p class="text-xs sm:text-sm text-gray-500 leading-relaxed">We respect deadlines. Every project delivered on time with proper communication throughout.</p></div>
                     </div>
-                    <div class="text-left">
-                        <div class="text-sm font-bold text-green-800">6 Months Free Maintenance</div>
-                        <div class="text-xs text-green-600">Bug fixes, security updates & minor changes included with every plan</div>
+                    <div class="reveal flex gap-3 sm:gap-4" style="transition-delay:.3s">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-green-50 flex items-center justify-center flex-shrink-0"><i data-lucide="headphones" class="w-5 h-5 sm:w-6 sm:h-6 text-green-600"></i></div>
+                        <div><h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1">24/7 Support</h4><p class="text-xs sm:text-sm text-gray-500 leading-relaxed">Got an issue at midnight? Just a WhatsApp message away. Quick response guaranteed.</p></div>
+                    </div>
+                    <div class="reveal flex gap-3 sm:gap-4" style="transition-delay:.4s">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-50 flex items-center justify-center flex-shrink-0"><i data-lucide="refresh-cw" class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600"></i></div>
+                        <div><h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1">6 Months Free Maintenance</h4><p class="text-xs sm:text-sm text-gray-500 leading-relaxed">Bug fixes, security patches, minor design tweaks — all free for 6 months after delivery.</p></div>
+                    </div>
+                    <div class="reveal flex gap-3 sm:gap-4" style="transition-delay:.5s">
+                        <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-orange-50 flex items-center justify-center flex-shrink-0"><i data-lucide="indian-rupee" class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600"></i></div>
+                        <div><h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1">Budget Friendly</h4><p class="text-xs sm:text-sm text-gray-500 leading-relaxed">Premium quality doesn't cost a fortune. Pricing designed for startups and small businesses.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="reveal-right relative" style="transition-delay:.3s">
+                <div class="rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-gray-200/50 border border-gray-100 img-shine">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=600&fit=crop" alt="Team Collaboration" class="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover">
+                </div>
+                <div class="absolute -bottom-4 sm:-bottom-6 -left-3 sm:-left-6 bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl border border-gray-100">
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                        <div class="text-center"><div class="text-xl sm:text-2xl font-bold text-indigo-600">98%</div><div class="text-[10px] sm:text-xs text-gray-400 mt-0.5">Satisfaction</div></div>
+                        <div class="text-center"><div class="text-xl sm:text-2xl font-bold text-green-600">100%</div><div class="text-[10px] sm:text-xs text-gray-400 mt-0.5">On-Time</div></div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <div class="section-divider max-w-7xl mx-auto"></div>
-
-    <!-- ===== REVIEWS SECTION ===== -->
-    <section id="reviews" class="py-24 lg:py-32 bg-gray-50/50 relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i> Client Reviews
+<!-- ===== PROCESS ===== -->
+<section class="py-16 sm:py-24 lg:py-32 bg-gray-50/50 grid-pattern">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+            <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-5 sm:mb-6"><i data-lucide="route" class="w-3.5 h-3.5"></i> Our Process</div>
+            <h2 class="reveal font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-5 sm:mb-6" style="transition-delay:.1s">How We Bring Your<br><span class="gradient-text">Vision to Life</span></h2>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8">
+            <div class="reveal text-center" style="--i:0">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-indigo-100 flex items-center justify-center mx-auto mb-4 sm:mb-5 relative">
+                    <i data-lucide="message-circle" class="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600"></i>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 bg-indigo-600 rounded-full flex items-center justify-center text-white text-[10px] sm:text-xs font-bold">1</div>
                 </div>
-                <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6" style="transition-delay: 0.1s;">
-                    What Our Clients<br><span class="gradient-text">Say About Us</span>
-                </h2>
+                <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1 sm:mb-2">Discuss</h4>
+                <p class="text-[11px] sm:text-sm text-gray-500 leading-relaxed">Understand your requirements, goals, and vision.</p>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Review 1 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:0">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"Prabhat delivered our warehouse management system beyond expectations. The attention to detail in every module — from inventory tracking to sales reports — was outstanding. Highly recommended for any complex project."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-lg">S</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Siddhesh Kumbhar</div>
-                            <div class="text-xs text-gray-400">Business Owner</div>
-                        </div>
-                    </div>
+            <div class="reveal text-center" style="--i:1">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-purple-100 flex items-center justify-center mx-auto mb-4 sm:mb-5 relative">
+                    <i data-lucide="pencil-ruler" class="w-6 h-6 sm:w-7 sm:h-7 text-purple-600"></i>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 bg-purple-600 rounded-full flex items-center justify-center text-white text-[10px] sm:text-xs font-bold">2</div>
                 </div>
-
-                <!-- Review 2 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:1">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"Our construction website looks absolutely professional. Prabhat understood our vision perfectly and created a site that really showcases our projects. The response from our clients has been amazing. Great work at an affordable price!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-lg">R</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Rajesh Srivastav</div>
-                            <div class="text-xs text-gray-400">Royal Construction</div>
-                        </div>
-                    </div>
+                <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1 sm:mb-2">Design</h4>
+                <p class="text-[11px] sm:text-sm text-gray-500 leading-relaxed">Stunning designs and wireframes for your approval.</p>
+            </div>
+            <div class="reveal text-center" style="--i:2">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-4 sm:mb-5 relative">
+                    <i data-lucide="code-2" class="w-6 h-6 sm:w-7 sm:h-7 text-green-600"></i>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 bg-green-600 rounded-full flex items-center justify-center text-white text-[10px] sm:text-xs font-bold">3</div>
                 </div>
-
-                <!-- Review 3 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:2">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"I got my pest control website done by Prabhat and the results are incredible. My online enquiries increased by 300% within the first month. The SEO work he did really helped us rank on Google. Thank you so much!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-700 font-bold text-lg">P</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Prakash Pawar</div>
-                            <div class="text-xs text-gray-400">Aanchal Pest Control</div>
-                        </div>
-                    </div>
+                <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1 sm:mb-2">Develop</h4>
+                <p class="text-[11px] sm:text-sm text-gray-500 leading-relaxed">Clean code brings your project to life.</p>
+            </div>
+            <div class="reveal text-center" style="--i:3">
+                <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-orange-100 flex items-center justify-center mx-auto mb-4 sm:mb-5 relative">
+                    <i data-lucide="rocket" class="w-6 h-6 sm:w-7 sm:h-7 text-orange-600"></i>
+                    <div class="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 bg-orange-600 rounded-full flex items-center justify-center text-white text-[10px] sm:text-xs font-bold">4</div>
                 </div>
-
-                <!-- Review 4 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:3">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"The home solutions e-commerce site Prabhat built for us is fantastic. Smooth user experience, easy product management, and the payment integration works flawlessly. Our online sales have grown significantly since launch."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold text-lg">K</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Kiran RH</div>
-                            <div class="text-xs text-gray-400">KRH Home Solutions</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 5 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:4">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"Very professional and dedicated developer. Prabhat delivered my web application on time and the quality was top-notch. The 6 months free maintenance is a huge bonus. Will definitely work with him again for future projects."</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-bold text-lg">A</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Amit Sharma</div>
-                            <div class="text-xs text-gray-400">Startup Founder</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 6 -->
-                <div class="reveal review-card bg-white rounded-2xl p-8 border border-gray-100" style="--i:5">
-                    <div class="flex gap-1 mb-4">
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">"Prabhat is a gem of a developer. He built our gym website with incredible energy and design. The animations are smooth, the site loads fast, and our membership signups have doubled. Best investment we made for our business!"</p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-700 font-bold text-lg">V</div>
-                        <div>
-                            <div class="font-bold text-gray-900 text-sm">Vikram Patil</div>
-                            <div class="text-xs text-gray-400">Gym Owner</div>
-                        </div>
-                    </div>
-                </div>
+                <h4 class="font-bold text-gray-900 text-sm sm:text-base mb-1 sm:mb-2">Launch</h4>
+                <p class="text-[11px] sm:text-sm text-gray-500 leading-relaxed">Deploy, handover, and 6 months free support.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ===== WHY CHOOSE US ===== -->
-    <section class="py-24 lg:py-32 bg-white">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                        <i data-lucide="award" class="w-3.5 h-3.5"></i> Why Choose Us
-                    </div>
-                    <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-8" style="transition-delay: 0.1s;">
-                        We Don't Just Build<br><span class="gradient-text">We Partner</span>
-                    </h2>
-                    <div class="space-y-6">
-                        <div class="reveal flex gap-4" style="transition-delay: 0.2s;">
-                            <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="clock" class="w-6 h-6 text-brand-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 mb-1">On-Time Delivery</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">We respect deadlines. Every project is delivered on time with proper communication throughout the development process.</p>
-                            </div>
-                        </div>
-                        <div class="reveal flex gap-4" style="transition-delay: 0.3s;">
-                            <div class="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="headphones" class="w-6 h-6 text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 mb-1">24/7 Support</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Got an issue at midnight? We're just a WhatsApp message away. Quick response and faster resolution guaranteed.</p>
-                            </div>
-                        </div>
-                        <div class="reveal flex gap-4" style="transition-delay: 0.4s;">
-                            <div class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="refresh-cw" class="w-6 h-6 text-purple-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 mb-1">6 Months Free Maintenance</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Bug fixes, security patches, minor design tweaks — all included free for 6 months after project delivery.</p>
-                            </div>
-                        </div>
-                        <div class="reveal flex gap-4" style="transition-delay: 0.5s;">
-                            <div class="w-12 h-12 rounded-2xl bg-orange-50 flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="indian-rupee" class="w-6 h-6 text-orange-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-gray-900 mb-1">Budget Friendly</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Premium quality doesn't have to cost a fortune. Our pricing is designed to be affordable for startups and small businesses.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal-right relative" style="transition-delay: 0.3s;">
-                    <div class="rounded-3xl overflow-hidden shadow-2xl shadow-gray-200/50 border border-gray-100">
-                        <img src="https://picsum.photos/seed/collaboration-team-work/600/600.jpg" alt="Why Choose Us" class="w-full h-[500px] object-cover">
-                    </div>
-                    <!-- Stats Card -->
-                    <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-brand-600">98%</div>
-                                <div class="text-xs text-gray-400 mt-1">Client Satisfaction</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-green-600">100%</div>
-                                <div class="text-xs text-gray-400 mt-1">On-Time Delivery</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- ===== CTA ===== -->
+<section class="py-16 sm:py-24 lg:py-32 bg-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800"></div>
+    <div class="absolute inset-0 opacity-10" style="background-image:radial-gradient(rgba(255,255,255,.3) 1px,transparent 1px);background-size:20px 20px"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-12 text-center relative z-10">
+        <div class="reveal-scale">
+            <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full mb-6 sm:mb-8">
+                <div class="pulse-dot" style="width:8px;height:8px"></div>
+                <span class="text-white/90 text-xs sm:text-sm font-medium">Available Now — Let's Build Together</span>
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-5 sm:mb-6">Ready to Turn Your<br>Idea Into Reality?</h2>
+            <p class="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-10">Whether it's a ₹3,000 website or a custom software solution — every project gets the same dedication and quality. Let's talk.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20start%20a%20project." target="_blank" class="bg-white text-indigo-700 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-sm tracking-wide hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chat on WhatsApp
+                </a>
+                <a href="https://instagram.com/prabhat_v_" target="_blank" class="border-2 border-white/30 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-sm tracking-wide hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center gap-2 w-full sm:w-auto justify-center">
+                    <i data-lucide="instagram" class="w-5 h-5"></i> Follow on Instagram
+                </a>
+            </div>
+            <div class="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-white/50 text-xs sm:text-sm">
+                <span class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i> 9721459936</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="at-sign" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i> prabhat_v_</span>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ===== PROCESS SECTION ===== -->
-    <section class="py-24 lg:py-32 bg-gray-50/50 grid-pattern">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <div class="reveal inline-flex items-center gap-2 tag-pill px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="route" class="w-3.5 h-3.5"></i> Our Process
+<!-- ===== FOOTER ===== -->
+<footer class="bg-gray-900 text-white pt-14 sm:pt-20 pb-6 sm:pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-10 sm:mb-16">
+            <div class="sm:col-span-2">
+                <div class="flex items-center gap-2 mb-5 sm:mb-6">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-base sm:text-lg">P</div>
+                    <span class="font-bold text-base sm:text-lg tracking-tight">Prabhat<span class="text-indigo-400">.</span>dev</span>
                 </div>
-                <h2 class="reveal font-serif text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-6" style="transition-delay: 0.1s;">
-                    How We Bring Your<br><span class="gradient-text">Vision to Life</span>
-                </h2>
+                <p class="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm mb-5 sm:mb-6">Freelance Developer & Designer creating digital experiences that help businesses grow. From websites to complete software solutions.</p>
+                <div class="flex gap-3">
+                    <a href="https://instagram.com/prabhat_v_" target="_blank" class="social-icon w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-indigo-600 hover:border-indigo-600"><i data-lucide="instagram" class="w-4 h-4 sm:w-5 sm:h-5"></i></a>
+                    <a href="https://wa.me/919721459936" target="_blank" class="social-icon w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-green-600 hover:border-green-600"><svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                </div>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="reveal text-center" style="--i:0">
-                    <div class="w-16 h-16 rounded-2xl bg-brand-100 flex items-center justify-center mx-auto mb-5 relative">
-                        <i data-lucide="message-circle" class="w-7 h-7 text-brand-600"></i>
-                        <div class="absolute -top-2 -right-2 w-7 h-7 bg-brand-600 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
-                    </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Discuss</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">We understand your requirements, goals, and vision through a detailed consultation.</p>
-                </div>
-                <div class="reveal text-center" style="--i:1">
-                    <div class="w-16 h-16 rounded-2xl bg-purple-100 flex items-center justify-center mx-auto mb-5 relative">
-                        <i data-lucide="pencil-ruler" class="w-7 h-7 text-purple-600"></i>
-                        <div class="absolute -top-2 -right-2 w-7 h-7 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
-                    </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Design</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">We create stunning designs and wireframes for your approval before development begins.</p>
-                </div>
-                <div class="reveal text-center" style="--i:2">
-                    <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-5 relative">
-                        <i data-lucide="code-2" class="w-7 h-7 text-green-600"></i>
-                        <div class="absolute -top-2 -right-2 w-7 h-7 bg-green-600 rounded-full flex items-center justify-center text-white text-xs font-bold">3</div>
-                    </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Develop</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Clean, efficient code brings your project to life with regular progress updates.</p>
-                </div>
-                <div class="reveal text-center" style="--i:3">
-                    <div class="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center mx-auto mb-5 relative">
-                        <i data-lucide="rocket" class="w-7 h-7 text-orange-600"></i>
-                        <div class="absolute -top-2 -right-2 w-7 h-7 bg-orange-600 rounded-full flex items-center justify-center text-white text-xs font-bold">4</div>
-                    </div>
-                    <h4 class="font-bold text-gray-900 mb-2">Launch</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed">Thorough testing, deployment, and handover with 6 months of free maintenance support.</p>
-                </div>
+            <div>
+                <h4 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-gray-300 mb-4 sm:mb-6">Quick Links</h4>
+                <ul class="space-y-2.5 sm:space-y-3">
+                    <li><a href="#home" class="text-gray-400 text-xs sm:text-sm hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#services" class="text-gray-400 text-xs sm:text-sm hover:text-white transition-colors">Services</a></li>
+                    <li><a href="#portfolio" class="text-gray-400 text-xs sm:text-sm hover:text-white transition-colors">Portfolio</a></li>
+                    <li><a href="#pricing" class="text-gray-400 text-xs sm:text-sm hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="#reviews" class="text-gray-400 text-xs sm:text-sm hover:text-white transition-colors">Reviews</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs sm:text-sm uppercase tracking-wider text-gray-300 mb-4 sm:mb-6">Get in Touch</h4>
+                <ul class="space-y-2.5 sm:space-y-3">
+                    <li class="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-xs sm:text-sm"><i data-lucide="phone" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400 flex-shrink-0"></i><a href="tel:9721459936" class="hover:text-white transition-colors">+91 9721459936</a></li>
+                    <li class="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-xs sm:text-sm"><i data-lucide="instagram" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400 flex-shrink-0"></i><a href="https://instagram.com/prabhat_v_" target="_blank" class="hover:text-white transition-colors">@prabhat_v_</a></li>
+                    <li class="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-xs sm:text-sm"><i data-lucide="message-circle" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-green-400 flex-shrink-0"></i><a href="https://wa.me/919721459936" target="_blank" class="hover:text-white transition-colors">WhatsApp Chat</a></li>
+                    <li class="flex items-center gap-2.5 sm:gap-3 text-gray-400 text-xs sm:text-sm"><i data-lucide="clock" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-orange-400 flex-shrink-0"></i>Available 24/7</li>
+                </ul>
             </div>
         </div>
-    </section>
-
-    <!-- ===== CTA SECTION ===== -->
-    <section class="py-24 lg:py-32 bg-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-brand-600 to-brand-900"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 20px 20px;"></div>
-        <div class="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10">
-            <div class="reveal-scale">
-                <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
-                    <div class="pulse-dot" style="width:8px;height:8px;"></div>
-                    <span class="text-white/90 text-sm font-medium">Available Now — Let's Build Together</span>
-                </div>
-                <h2 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-6">
-                    Ready to Turn Your<br>Idea Into Reality?
-                </h2>
-                <p class="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
-                    Whether it's a ₹3,000 website or a custom software solution — every project gets the same dedication, quality, and attention to detail. Let's talk.
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20want%20to%20start%20a%20project.%20Let%27s%20discuss!" target="_blank" class="bg-white text-brand-700 px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-xl flex items-center gap-2">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        Chat on WhatsApp
-                    </a>
-                    <a href="https://instagram.com/prabhat_v_" target="_blank" class="border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-sm tracking-wide hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center gap-2">
-                        <i data-lucide="instagram" class="w-5 h-5"></i> Follow on Instagram
-                    </a>
-                </div>
-                <div class="mt-8 flex items-center justify-center gap-6 text-white/50 text-sm">
-                    <span class="flex items-center gap-1.5"><i data-lucide="phone" class="w-4 h-4"></i> 9721459936</span>
-                    <span class="flex items-center gap-1.5"><i data-lucide="at-sign" class="w-4 h-4"></i> prabhat_v_</span>
-                </div>
-            </div>
+        <div class="border-t border-white/10 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+            <p class="text-gray-500 text-xs sm:text-sm">© 2025 Prabhat Vishwakarma. All rights reserved.</p>
+            <p class="text-gray-600 text-[10px] sm:text-xs">Crafted with passion & clean code</p>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- ===== FOOTER ===== -->
-    <footer class="bg-gray-900 text-white pt-20 pb-8">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-                <!-- Brand -->
-                <div class="lg:col-span-2">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white font-bold text-lg">P</div>
-                        <span class="font-bold text-lg tracking-tight">Prabhat<span class="text-brand-400">.</span>dev</span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">Freelance Developer & Designer creating digital experiences that help businesses grow. From websites to complete software solutions — we deliver excellence.</p>
-                    <div class="flex gap-3">
-                        <a href="https://instagram.com/prabhat_v_" target="_blank" class="social-icon w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-brand-600 hover:border-brand-600">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="https://wa.me/919721459936" target="_blank" class="social-icon w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-green-600 hover:border-green-600">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        </a>
-                    </div>
-                </div>
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20visited%20your%20profile%20and%20want%20to%20discuss%20a%20project." target="_blank" class="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 hover:shadow-xl hover:shadow-green-500/40 transition-all duration-300 group">
+    <svg class="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="absolute -top-10 sm:-top-12 right-0 bg-gray-900 text-white text-[10px] sm:text-xs font-medium px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">Chat with us!</span>
+</a>
 
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider text-gray-300 mb-6">Quick Links</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#home" class="text-gray-400 text-sm hover:text-white transition-colors">Home</a></li>
-                        <li><a href="#services" class="text-gray-400 text-sm hover:text-white transition-colors">Services</a></li>
-                        <li><a href="#portfolio" class="text-gray-400 text-sm hover:text-white transition-colors">Portfolio</a></li>
-                        <li><a href="#pricing" class="text-gray-400 text-sm hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#reviews" class="text-gray-400 text-sm hover:text-white transition-colors">Reviews</a></li>
-                    </ul>
-                </div>
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 opacity-0 pointer-events-none">
+    <i data-lucide="arrow-up" class="w-4 h-4 sm:w-5 sm:h-5 text-gray-700"></i>
+</button>
 
-                <!-- Contact -->
-                <div>
-                    <h4 class="font-bold text-sm uppercase tracking-wider text-gray-300 mb-6">Get in Touch</h4>
-                    <ul class="space-y-3">
-                        <li class="flex items-center gap-3 text-gray-400 text-sm">
-                            <i data-lucide="phone" class="w-4 h-4 text-brand-400"></i>
-                            <a href="tel:9721459936" class="hover:text-white transition-colors">+91 9721459936</a>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-400 text-sm">
-                            <i data-lucide="instagram" class="w-4 h-4 text-brand-400"></i>
-                            <a href="https://instagram.com/prabhat_v_" target="_blank" class="hover:text-white transition-colors">@prabhat_v_</a>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-400 text-sm">
-                            <i data-lucide="message-circle" class="w-4 h-4 text-green-400"></i>
-                            <a href="https://wa.me/919721459936" target="_blank" class="hover:text-white transition-colors">WhatsApp Chat</a>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-400 text-sm">
-                            <i data-lucide="clock" class="w-4 h-4 text-orange-400"></i>
-                            Available 24/7
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<script>
+lucide.createIcons();
 
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-gray-500 text-sm">© 2025 Prabhat Vishwakarma. All rights reserved.</p>
-                <p class="text-gray-600 text-xs">Crafted with passion & clean code</p>
-            </div>
-        </div>
-    </footer>
+function toggleMenu(){
+    const m=document.getElementById('mobileMenu');
+    m.classList.toggle('open');
+    document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
 
-    <!-- ===== FLOATING WHATSAPP BUTTON ===== -->
-    <a href="https://wa.me/919721459936?text=Hi%20Prabhat%2C%20I%20visited%20your%20profile%20and%20want%20to%20discuss%20a%20project." target="_blank" class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 hover:shadow-xl hover:shadow-green-500/40 transition-all duration-300 group">
-        <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span class="absolute -top-12 right-0 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">Chat with us!</span>
-    </a>
+const navbar=document.getElementById('navbar'),btt=document.getElementById('backToTop');
+window.addEventListener('scroll',()=>{
+    navbar.classList.toggle('nav-scrolled',window.scrollY>60);
+    if(window.scrollY>500){btt.style.opacity='1';btt.style.pointerEvents='auto'}
+    else{btt.style.opacity='0';btt.style.pointerEvents='none'}
+});
 
-    <!-- ===== BACK TO TOP ===== -->
-    <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 opacity-0 pointer-events-none">
-        <i data-lucide="arrow-up" class="w-5 h-5 text-gray-700"></i>
-    </button>
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const rObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting)en.target.classList.add('active')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+revealEls.forEach(el=>rObs.observe(el));
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+const counters=document.querySelectorAll('.counter');
+const cObs=new IntersectionObserver(e=>{e.forEach(en=>{if(en.isIntersecting){const c=en.target,t=+c.dataset.target,d=2000,s=t/(d/16);let cur=0;const up=()=>{cur+=s;if(cur<t){c.textContent=Math.floor(cur);requestAnimationFrame(up)}else c.textContent=t};up();cObs.unobserve(c)}})},{threshold:.5});
+counters.forEach(c=>cObs.observe(c));
 
-        // ===== MOBILE MENU =====
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('open');
-            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
-        }
+(function(){const pc=document.getElementById('particles');for(let i=0;i<12;i++){const p=document.createElement('div');p.classList.add('particle');const sz=Math.random()*5+3;p.style.width=sz+'px';p.style.height=sz+'px';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';p.style.animationDuration=(Math.random()*18+12)+'s';p.style.animationDelay=(Math.random()*12)+'s';pc.appendChild(p)}})();
 
-        // ===== NAVBAR SCROLL EFFECT =====
-        const navbar = document.getElementById('navbar');
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 80) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
-            // Back to top
-            if (window.scrollY > 600) {
-                backToTop.style.opacity = '1';
-                backToTop.style.pointerEvents = 'auto';
-            } else {
-                backToTop.style.opacity = '0';
-                backToTop.style.pointerEvents = 'none';
-            }
-        });
-
-        // ===== REVEAL ON SCROLL =====
-        const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // ===== COUNTER ANIMATION =====
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const counter = entry.target;
-                    const target = parseInt(counter.getAttribute('data-target'));
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
-
-                    const updateCounter = () => {
-                        current += step;
-                        if (current < target) {
-                            counter.textContent = Math.floor(current);
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = target;
-                        }
-                    };
-                    updateCounter();
-                    counterObserver.unobserve(counter);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        counters.forEach(c => counterObserver.observe(c));
-
-        // ===== FLOATING PARTICLES =====
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 6 + 3;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                particle.style.animationDelay = (Math.random() * 10) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // ===== SMOOTH ANCHOR SCROLLING =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // ===== TYPING EFFECT (simple approach) =====
-        // The cursor blinks via CSS, giving a typing-like feel
-    </script>
-
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){const t=document.querySelector(this.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+</script>
 </body>
 </html>

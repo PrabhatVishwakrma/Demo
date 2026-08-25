@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelElite — Premium Tours & Travel Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        manrope: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: { 50:'#f0f4ff', 100:'#e0e9ff', 200:'#c7d7fe', 300:'#a4bcfd', 400:'#818cf8', 500:'#6366f1', 600:'#4f46e5', 700:'#4338ca', 800:'#3730a3', 900:'#1e1b4b', 950:'#0f0e2a' },
+                        accent: { 50:'#fffbeb', 100:'#fef3c7', 200:'#fde68a', 300:'#fcd34d', 400:'#fbbf24', 500:'#f59e0b', 600:'#d97706', 700:'#b45309' },
+                        slate: { 50:'#f8fafc', 75:'#f1f5f9', 100:'#f0f2f5', 150:'#e8ecf1', 200:'#e2e8f0', 300:'#cbd5e1', 400:'#94a3b8', 500:'#64748b', 600:'#475569', 700:'#334155', 800:'#1e293b', 900:'#0f172a' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0f172a; overflow-x: hidden; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-60px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(60px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        @keyframes countUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        .animate-on-scroll.visible.delay-1 { transition-delay: 0.1s; }
+        .animate-on-scroll.visible.delay-2 { transition-delay: 0.2s; }
+        .animate-on-scroll.visible.delay-3 { transition-delay: 0.3s; }
+        .animate-on-scroll.visible.delay-4 { transition-delay: 0.4s; }
+        .animate-on-scroll.visible.delay-5 { transition-delay: 0.5s; }
+
+        .hero-animate { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        .hero-animate-d1 { animation-delay: 0.1s; }
+        .hero-animate-d2 { animation-delay: 0.25s; }
+        .hero-animate-d3 { animation-delay: 0.4s; }
+        .hero-animate-d4 { animation-delay: 0.55s; }
+
+        /* Card hover */
+        .card-hover { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.12); }
+
+        /* Image zoom */
+        .img-zoom { overflow: hidden; }
+        .img-zoom img { transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .img-zoom:hover img { transform: scale(1.08); }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white; padding: 12px 28px; border-radius: 12px; font-weight: 600;
+            transition: all 0.3s ease; position: relative; overflow: hidden; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-accent {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+            color: white; padding: 12px 28px; border-radius: 12px; font-weight: 600;
+            transition: all 0.3s ease; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        .btn-accent:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
+
+        .btn-outline {
+            border: 2px solid #e2e8f0; color: #334155; padding: 11px 26px; border-radius: 12px;
+            font-weight: 600; transition: all 0.3s ease; background: white; cursor: pointer;
+        }
+        .btn-outline:hover { border-color: #3b82f6; color: #3b82f6; background: #eff6ff; }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #6366f1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .gradient-text-gold {
+            background: linear-gradient(135deg, #d97706, #f59e0b, #fbbf24);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+
+        /* Section divider */
+        .section-divider {
+            width: 60px; height: 4px; border-radius: 2px;
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+        }
+
+        /* Glass effect */
+        .glass {
+            background: rgba(255,255,255,0.8); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.3);
+        }
+        .glass-dark {
+            background: rgba(15,23,42,0.85); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Booking form */
+        .booking-form { background: white; border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.1); }
+        .form-input {
+            width: 100%; padding: 14px 16px; border: 2px solid #e2e8f0; border-radius: 12px;
+            font-size: 14px; transition: all 0.3s ease; background: #f8fafc; font-family: 'Inter', sans-serif;
+        }
+        .form-input:focus { outline: none; border-color: #3b82f6; background: white; box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
+        .form-label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; display: block; }
+
+        /* Fare table */
+        .fare-row { transition: background 0.2s ease; }
+        .fare-row:hover { background: #f0f9ff; }
+
+        /* Driver card */
+        .driver-card { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .driver-card:hover { transform: translateY(-8px); }
+        .driver-card:hover .driver-img { transform: scale(1.05); }
+        .driver-img { transition: transform 0.5s ease; }
+
+        /* Testimonial */
+        .testimonial-card {
+            background: white; border: 1px solid #f0f2f5; border-radius: 20px;
+            padding: 32px; transition: all 0.4s ease; position: relative;
+        }
+        .testimonial-card:hover { border-color: #bfdbfe; box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .testimonial-card::before {
+            content: '"'; position: absolute; top: 16px; left: 24px;
+            font-size: 72px; color: #e0e9ff; font-family: 'Georgia', serif; line-height: 1;
+        }
+
+        /* Marquee */
+        .marquee-track { display: flex; animation: marquee 30s linear infinite; }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+            background: #0f172a; color: white; padding: 16px 24px; border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); transform: translateY(120px); opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 12px;
+            max-width: 400px;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: white; border-radius: 24px; max-width: 600px; width: 100%;
+            max-height: 90vh; overflow-y: auto; transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 40px;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed; inset: 0; background: white; z-index: 999;
+            transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 80px 32px 32px;
+        }
+        .mobile-menu.active { transform: translateX(0); }
+
+        /* Stat counter */
+        .stat-number { font-variant-numeric: tabular-nums; }
+
+        /* Tabs */
+        .tab-btn { transition: all 0.3s ease; }
+        .tab-btn.active { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; box-shadow: 0 4px 15px rgba(59,130,246,0.3); }
+
+        /* Service area map dots */
+        .map-dot {
+            width: 12px; height: 12px; background: #3b82f6; border-radius: 50%;
+            position: absolute; cursor: pointer; transition: all 0.3s ease;
+        }
+        .map-dot::after {
+            content: ''; position: absolute; inset: -4px; border: 2px solid #3b82f6;
+            border-radius: 50%; animation: pulse-ring 2s infinite;
+        }
+        .map-dot:hover { transform: scale(1.5); background: #f59e0b; }
+
+        /* Rating stars */
+        .star-filled { color: #f59e0b; }
+        .star-empty { color: #e2e8f0; }
+
+        /* Nav scroll */
+        .nav-scrolled { background: rgba(255,255,255,0.95) !important; backdrop-filter: blur(20px) !important; box-shadow: 0 1px 20px rgba(0,0,0,0.06) !important; }
+
+        /* Progress bar for fare */
+        .progress-bar { transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        @media (max-width: 768px) {
+            .hero-animate { animation-duration: 0.6s; }
+            .booking-form { border-radius: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast">
+    <span class="iconify" data-icon="lucide:check-circle" data-width="22" style="color: #34d399; flex-shrink:0;"></span>
+    <span id="toastMsg" style="font-size: 14px; font-weight: 500;"></span>
+</div>
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal-content">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-bold font-manrope text-slate-900">Complete Your Booking</h3>
+            <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center hover:bg-slate-200 transition-colors">
+                <span class="iconify" data-icon="lucide:x" data-width="20"></span>
+            </button>
+        </div>
+        <form id="bookingForm" onsubmit="submitBooking(event)">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" class="form-input" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label class="form-label">Phone Number *</label>
+                    <input type="tel" class="form-input" placeholder="+91 98765 43210" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" class="form-input" placeholder="john@email.com" required>
+                </div>
+                <div>
+                    <label class="form-label">Pickup Date *</label>
+                    <input type="date" class="form-input" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="form-label">Pickup Time *</label>
+                    <input type="time" class="form-input" required>
+                </div>
+                <div>
+                    <label class="form-label">No. of Passengers</label>
+                    <select class="form-input">
+                        <option>1</option><option>2</option><option selected>3</option><option>4</option>
+                        <option>5</option><option>6</option><option>7-10</option><option>11-15</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Special Requests</label>
+                <textarea class="form-input" rows="3" placeholder="Child seat, extra luggage, special stops, etc."></textarea>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-4 mb-6">
+                <div class="flex justify-between text-sm mb-2"><span class="text-slate-500">Trip Type</span><span class="font-semibold" id="modalTripType">—</span></div>
+                <div class="flex justify-between text-sm mb-2"><span class="text-slate-500">Vehicle</span><span class="font-semibold" id="modalVehicle">—</span></div>
+                <div class="flex justify-between text-sm mb-2"><span class="text-slate-500">Route</span><span class="font-semibold" id="modalRoute">—</span></div>
+                <div class="border-t border-slate-200 pt-2 mt-2 flex justify-between"><span class="font-semibold">Estimated Fare</span><span class="font-bold text-lg gradient-text" id="modalFare">—</span></div>
+            </div>
+            <button type="submit" class="btn-primary w-full text-center text-base py-4">
+                <span class="flex items-center justify-center gap-2">
+                    <span class="iconify" data-icon="lucide:shield-check" data-width="18"></span>
+                    Confirm Booking — Secure Payment
+                </span>
+            </button>
+            <p class="text-center text-xs text-slate-400 mt-3">Free cancellation up to 24 hours before pickup</p>
+        </form>
+    </div>
+</div>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu">
+    <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
+        <span class="iconify" data-icon="lucide:x" data-width="22"></span>
+    </button>
+    <nav class="flex flex-col gap-1">
+        <a href="#services" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Services</a>
+        <a href="#fleet" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Our Fleet</a>
+        <a href="#fare" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Fare Estimate</a>
+        <a href="#drivers" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Our Drivers</a>
+        <a href="#packages" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Tour Packages</a>
+        <a href="#areas" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Service Areas</a>
+        <a href="#reviews" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Reviews</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-lg font-medium py-3 px-4 rounded-xl hover:bg-slate-50 transition-colors">Contact</a>
+        <div class="mt-6">
+            <a href="tel:+919876543210" class="btn-primary w-full text-center block">Call Now</a>
+        </div>
+    </nav>
+</div>
+
+<!-- Navigation -->
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style="background: transparent;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
+                    <span class="iconify text-white" data-icon="lucide:map-pin" data-width="20"></span>
+                </div>
+                <div>
+                    <span class="text-xl font-bold font-manrope text-slate-900">Travel<span class="gradient-text">Elite</span></span>
+                </div>
+            </a>
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center gap-1">
+                <a href="#services" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Services</a>
+                <a href="#fleet" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Fleet</a>
+                <a href="#fare" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Fare Estimate</a>
+                <a href="#drivers" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Drivers</a>
+                <a href="#packages" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Packages</a>
+                <a href="#areas" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Areas</a>
+                <a href="#reviews" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all">Reviews</a>
+            </nav>
+            <!-- CTA -->
+            <div class="hidden lg:flex items-center gap-3">
+                <a href="tel:+919876543210" class="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-blue-600 transition-colors">
+                    <span class="iconify" data-icon="lucide:phone" data-width="16"></span>
+                    +91 98765 43210
+                </a>
+                <button onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})" class="btn-primary text-sm py-2.5 px-5">
+                    Book Now
+                </button>
+            </div>
+            <!-- Mobile Toggle -->
+            <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center">
+                <span class="iconify" data-icon="lucide:menu" data-width="22"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center overflow-hidden" style="background: linear-gradient(160deg, #f0f7ff 0%, #ffffff 40%, #faf5ff 100%);">
+    <!-- Background decorative elements -->
+    <div class="absolute top-20 right-10 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 left-10 w-80 h-80 bg-indigo-200/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-100/20 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 relative z-10 w-full">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <!-- Left Content -->
+            <div>
+                <div class="hero-animate hero-animate-d1 inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-2 mb-6">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-xs font-semibold text-blue-700 uppercase tracking-wider">Trusted by 50,000+ Customers</span>
+                </div>
+                <h1 class="hero-animate hero-animate-d2 text-4xl sm:text-5xl lg:text-6xl font-extrabold font-manrope text-slate-900 leading-[1.1] mb-6">
+                    Your Journey,<br>
+                    <span class="gradient-text">Our Passion.</span><br>
+                    <span class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-500">Premium Travel Solutions</span>
+                </h1>
+                <p class="hero-animate hero-animate-d3 text-lg text-slate-500 leading-relaxed mb-8 max-w-lg">
+                    From airport transfers to multi-day tours, experience luxury, safety, and punctuality with every ride. Professional drivers, well-maintained fleet, and transparent pricing guaranteed.
+                </p>
+                <div class="hero-animate hero-animate-d4 flex flex-wrap gap-4 mb-10">
+                    <button onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})" class="btn-primary text-base py-4 px-8 flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:calendar-check" data-width="20"></span>
+                        Book Your Ride
+                    </button>
+                    <a href="#fare" class="btn-outline text-base py-4 px-8 flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:calculator" data-width="20"></span>
+                        Check Fare
+                    </a>
+                </div>
+                <!-- Trust badges -->
+                <div class="hero-animate hero-animate-d4 flex flex-wrap items-center gap-6 text-sm text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <span class="iconify text-green-500" data-icon="lucide:shield-check" data-width="18"></span>
+                        <span>Fully Insured</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="iconify text-blue-500" data-icon="lucide:clock" data-width="18"></span>
+                        <span>24/7 Service</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="iconify text-amber-500" data-icon="lucide:star" data-width="18"></span>
+                        <span>4.9/5 Rating</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Right: Hero Image -->
+            <div class="hero-animate hero-animate-d3 relative">
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/10">
+                    <img src="https://images.unsplash.com/photo-1449965408869-ebd13bc9e5a8?w=800&q=80" alt="Premium car on open road" class="w-full h-[400px] lg:h-[500px] object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+                </div>
+                <!-- Floating card 1 -->
+                <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-4 shadow-xl shadow-black/5 border border-slate-100" style="animation: float 4s ease-in-out infinite;">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center">
+                            <span class="iconify text-green-600" data-icon="lucide:route" data-width="24"></span>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400 font-medium">Trips Completed</p>
+                            <p class="text-xl font-bold text-slate-900">2,50,000+</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Floating card 2 -->
+                <div class="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-xl shadow-black/5 border border-slate-100" style="animation: float 4s ease-in-out infinite 1s;">
+                    <div class="flex items-center gap-2">
+                        <div class="flex -space-x-2">
+                            <img src="https://picsum.photos/seed/face1/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-white" alt="Customer">
+                            <img src="https://picsum.photos/seed/face2/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-white" alt="Customer">
+                            <img src="https://picsum.photos/seed/face3/40/40.jpg" class="w-8 h-8 rounded-full border-2 border-white" alt="Customer">
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-400">Happy Customers</p>
+                            <div class="flex items-center gap-1">
+                                <span class="iconify text-amber-400" data-icon="lucide:star" data-width="12"></span>
+                                <span class="text-sm font-bold">4.9</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Bar -->
+<section class="relative z-10 -mt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white rounded-2xl shadow-xl shadow-black/5 border border-slate-100 p-6 sm:p-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="text-center animate-on-scroll">
+                    <p class="text-3xl sm:text-4xl font-extrabold gradient-text stat-number" data-target="250000">0</p>
+                    <p class="text-sm text-slate-500 mt-1">Trips Completed</p>
+                </div>
+                <div class="text-center animate-on-scroll delay-1">
+                    <p class="text-3xl sm:text-4xl font-extrabold gradient-text stat-number" data-target="50000">0</p>
+                    <p class="text-sm text-slate-500 mt-1">Happy Customers</p>
+                </div>
+                <div class="text-center animate-on-scroll delay-2">
+                    <p class="text-3xl sm:text-4xl font-extrabold gradient-text stat-number" data-target="350">0</p>
+                    <p class="text-sm text-slate-500 mt-1">Expert Drivers</p>
+                </div>
+                <div class="text-center animate-on-scroll delay-3">
+                    <p class="text-3xl sm:text-4xl font-extrabold gradient-text stat-number" data-target="200">0</p>
+                    <p class="text-sm text-slate-500 mt-1">Vehicle Fleet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Our Premium <span class="gradient-text">Services</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Comprehensive travel solutions tailored to your needs — from quick city rides to extended luxury tours across India.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Service 1 -->
+            <div class="card-hover animate-on-scroll delay-1 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-5 group-hover:bg-blue-100 transition-colors">
+                    <span class="iconify text-blue-600" data-icon="lucide:plane-landing" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Airport Transfers</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">Hassle-free pickup and drop to all major airports. Flight tracking, meet & greet, and 30-min free waiting included.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Meet & Greet</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Flight Tracking</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Free Wait</span>
+                </div>
+            </div>
+            <!-- Service 2 -->
+            <div class="card-hover animate-on-scroll delay-2 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center mb-5 group-hover:bg-indigo-100 transition-colors">
+                    <span class="iconify text-indigo-600" data-icon="lucide:building-2" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Corporate Travel</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">Dedicated corporate accounts with monthly billing, priority bookings, executive sedans, and detailed reporting.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Monthly Billing</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Priority</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Reports</span>
+                </div>
+            </div>
+            <!-- Service 3 -->
+            <div class="card-hover animate-on-scroll delay-3 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-100 transition-colors">
+                    <span class="iconify text-emerald-600" data-icon="lucide:map" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Outstation Trips</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">One-way and round-trip outstation rides with flexible stops, transparent per-km pricing, and no hidden charges.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">One Way</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Round Trip</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Flexible</span>
+                </div>
+            </div>
+            <!-- Service 4 -->
+            <div class="card-hover animate-on-scroll delay-1 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-5 group-hover:bg-amber-100 transition-colors">
+                    <span class="iconify text-amber-600" data-icon="lucide:sun" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Tour Packages</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">Curated multi-day tour packages with itinerary planning, hotel coordination, and knowledgeable driver-guides.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Custom Itinerary</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Guided</span>
+                </div>
+            </div>
+            <!-- Service 5 -->
+            <div class="card-hover animate-on-scroll delay-2 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-rose-50 flex items-center justify-center mb-5 group-hover:bg-rose-100 transition-colors">
+                    <span class="iconify text-rose-600" data-icon="lucide:heart-handshake" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Wedding & Events</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">Elegant fleet for weddings, receptions, and events. Decorated vehicles, convoy management, and on-time coordination.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Decoration</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">Convoy</span>
+                </div>
+            </div>
+            <!-- Service 6 -->
+            <div class="card-hover animate-on-scroll delay-3 bg-white border border-slate-100 rounded-2xl p-8 group">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center mb-5 group-hover:bg-cyan-100 transition-colors">
+                    <span class="iconify text-cyan-600" data-icon="lucide:bus" data-width="28"></span>
+                </div>
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-3">Group Travel</h3>
+                <p class="text-slate-500 leading-relaxed mb-4">Tempo travellers, minibuses, and luxury coaches for group outings, pilgrimages, corporate offsites, and school trips.</p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">12-50 Seats</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-medium">AC</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Section -->
+<section id="bookingSection" class="py-24 sm:py-32 bg-gradient-to-b from-slate-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-5 gap-10 items-start">
+            <!-- Left Info -->
+            <div class="lg:col-span-2 animate-on-scroll">
+                <div class="section-divider mb-4"></div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Book Your <span class="gradient-text">Ride Instantly</span></h2>
+                <p class="text-slate-500 leading-relaxed mb-8">Get instant fare estimates and book your ride in under 2 minutes. No hidden charges, no surge pricing — just honest, transparent rates.</p>
+                <div class="space-y-5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-blue-600 font-bold text-sm">01</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Enter Your Trip Details</h4>
+                            <p class="text-sm text-slate-500">Pickup, drop, date, and vehicle preference</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-blue-600 font-bold text-sm">02</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Get Instant Fare</h4>
+                            <p class="text-sm text-slate-500">Transparent pricing with no hidden costs</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-blue-600 font-bold text-sm">03</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Confirm & Ride</h4>
+                            <p class="text-sm text-slate-500">Receive booking confirmation with driver details</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Booking Form -->
+            <div class="lg:col-span-3 animate-on-scroll delay-2">
+                <div class="booking-form p-6 sm:p-8">
+                    <div class="flex items-center gap-2 mb-6">
+                        <span class="iconify text-blue-600" data-icon="lucide:calendar-check" data-width="22"></span>
+                        <h3 class="text-lg font-bold font-manrope">Quick Booking</h3>
+                    </div>
+                    <!-- Trip Type Toggle -->
+                    <div class="flex gap-2 mb-6 bg-slate-100 rounded-xl p-1">
+                        <button onclick="setTripType('oneway',this)" class="tab-btn active flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all">One Way</button>
+                        <button onclick="setTripType('roundtrip',this)" class="tab-btn flex-1 py-2.5 rounded-lg text-sm font-semibold text-slate-600 transition-all">Round Trip</button>
+                        <button onclick="setTripType('local',this)" class="tab-btn flex-1 py-2.5 rounded-lg text-sm font-semibold text-slate-600 transition-all">Local / Hourly</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">From (Pickup)</label>
+                                <div class="relative">
+                                    <span class="iconify absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="lucide:map-pin" data-width="16"></span>
+                                    <input type="text" id="pickupInput" class="form-input pl-10" placeholder="Enter pickup city" oninput="calculateFare()">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label">To (Drop)</label>
+                                <div class="relative">
+                                    <span class="iconify absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="lucide:map-pin-check" data-width="16"></span>
+                                    <input type="text" id="dropInput" class="form-input pl-10" placeholder="Enter drop city" oninput="calculateFare()">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="form-label">Date</label>
+                                <input type="date" id="bookDate" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">Time</label>
+                                <input type="time" id="bookTime" class="form-input" value="09:00">
+                            </div>
+                            <div>
+                                <label class="form-label">Vehicle Type</label>
+                                <select id="vehicleSelect" class="form-input" onchange="calculateFare()">
+                                    <option value="sedan">Sedan (Swift Dzire)</option>
+                                    <option value="suv">SUV (Innova Crysta)</option>
+                                    <option value="luxury">Luxury (Mercedes)</option>
+                                    <option value="tempo">Tempo Traveller</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Fare Display -->
+                        <div id="fareDisplay" class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100 hidden">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-600">Estimated Distance</span>
+                                <span class="text-sm font-bold text-slate-900" id="estDistance">— km</span>
+                            </div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-600">Base Fare</span>
+                                <span class="text-sm font-bold text-slate-900" id="baseFare">₹0</span>
+                            </div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-600">Per Km Charge</span>
+                                <span class="text-sm font-bold text-slate-900" id="perKmCharge">₹0</span>
+                            </div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-sm font-semibold text-slate-600">Driver Allowance</span>
+                                <span class="text-sm font-bold text-slate-900" id="driverAllowance">₹0</span>
+                            </div>
+                            <div class="border-t border-blue-200 pt-3 flex items-center justify-between">
+                                <span class="font-bold text-slate-800">Total Estimated Fare</span>
+                                <span class="text-2xl font-extrabold gradient-text" id="totalFare">₹0</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-2">*Toll charges, parking & state taxes extra if applicable</p>
+                        </div>
+                        <button onclick="openBookingModal()" class="btn-primary w-full py-4 text-base flex items-center justify-center gap-2">
+                            <span class="iconify" data-icon="lucide:arrow-right-circle" data-width="20"></span>
+                            Proceed to Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fleet Section -->
+<section id="fleet" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Our Premium <span class="gradient-text">Fleet</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Well-maintained, sanitized, and equipped with modern amenities. Choose the perfect vehicle for your journey.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Sedan -->
+            <div class="card-hover animate-on-scroll delay-1 bg-white border border-slate-100 rounded-2xl overflow-hidden group">
+                <div class="img-zoom h-52">
+                    <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80" alt="Sedan Car - Swift Dzire" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold font-manrope">Sedan</h3>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-semibold">Popular</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-3">Swift Dzire / Honda Amaze</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:users" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">4+1</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:briefcase" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">2 Bags</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:snowflake" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">AC</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-extrabold text-slate-900">₹12</span>
+                            <span class="text-sm text-slate-400">/km</span>
+                        </div>
+                        <button onclick="selectVehicle('Sedan (Swift Dzire)')" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
+                            Select <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- SUV -->
+            <div class="card-hover animate-on-scroll delay-2 bg-white border border-slate-100 rounded-2xl overflow-hidden group relative">
+                <div class="absolute top-4 left-4 z-10 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">BEST SELLER</div>
+                <div class="img-zoom h-52">
+                    <img src="https://images.unsplash.com/photo-1583267746897-2cf415887172?w=600&q=80" alt="SUV - Innova Crysta" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold font-manrope">SUV</h3>
+                        <span class="text-xs bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full font-semibold">Recommended</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-3">Toyota Innova Crysta</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:users" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">7+1</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:briefcase" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">4 Bags</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:snowflake" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">AC</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-extrabold text-slate-900">₹16</span>
+                            <span class="text-sm text-slate-400">/km</span>
+                        </div>
+                        <button onclick="selectVehicle('SUV (Innova Crysta)')" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
+                            Select <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Luxury -->
+            <div class="card-hover animate-on-scroll delay-3 bg-white border border-slate-100 rounded-2xl overflow-hidden group">
+                <div class="img-zoom h-52">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=80" alt="Luxury Car - Mercedes" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold font-manrope">Luxury</h3>
+                        <span class="text-xs bg-purple-50 text-purple-600 px-2.5 py-1 rounded-full font-semibold">Premium</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-3">Mercedes E-Class / BMW 5</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:users" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">4+1</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:briefcase" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">3 Bags</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:gem" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">Leather</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-extrabold text-slate-900">₹25</span>
+                            <span class="text-sm text-slate-400">/km</span>
+                        </div>
+                        <button onclick="selectVehicle('Luxury (Mercedes E-Class)')" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
+                            Select <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Tempo Traveller -->
+            <div class="card-hover animate-on-scroll delay-4 bg-white border border-slate-100 rounded-2xl overflow-hidden group">
+                <div class="img-zoom h-52">
+                    <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80" alt="Tempo Traveller" class="w-full h-full object-cover">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-lg font-bold font-manrope">Tempo Traveller</h3>
+                        <span class="text-xs bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-full font-semibold">Group</span>
+                    </div>
+                    <p class="text-sm text-slate-500 mb-3">12 / 16 / 20 Seater</p>
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:users" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">12-20</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:briefcase" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">8 Bags</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <span class="iconify text-slate-400 mx-auto" data-icon="lucide:tv" data-width="16"></span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">LED TV</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-extrabold text-slate-900">₹22</span>
+                            <span class="text-sm text-slate-400">/km</span>
+                        </div>
+                        <button onclick="selectVehicle('Tempo Traveller (16 Seater)')" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
+                            Select <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fleet Features -->
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-on-scroll">
+            <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm">
+                    <span class="iconify text-blue-600" data-icon="lucide:shield-check" data-width="20"></span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">Fully Insured</p>
+                    <p class="text-xs text-slate-500">Comprehensive coverage</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm">
+                    <span class="iconify text-emerald-600" data-icon="lucide:spray-can" data-width="20"></span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">Sanitized</p>
+                    <p class="text-xs text-slate-500">After every trip</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm">
+                    <span class="iconify text-amber-600" data-icon="lucide:wrench" data-width="20"></span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">Well Maintained</p>
+                    <p class="text-xs text-slate-500">Regular service checks</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4">
+                <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shadow-sm">
+                    <span class="iconify text-indigo-600" data-icon="lucide:wifi" data-width="20"></span>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-900">WiFi Enabled</p>
+                    <p class="text-xs text-slate-500">Stay connected</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Fare Estimate Section -->
+<section id="fare" class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Transparent <span class="gradient-text">Fare Chart</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">No surge pricing, no hidden charges. What you see is what you pay. Here's our detailed fare structure for popular routes.</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-10">
+            <!-- Fare Table -->
+            <div class="animate-on-scroll delay-1 bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4">
+                    <h3 class="text-white font-bold font-manrope flex items-center gap-2">
+                        <span class="iconify" data-icon="lucide:indian-rupee" data-width="20"></span>
+                        Popular Route Fares (One Way)
+                    </h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-slate-50">
+                                <th class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-6 py-3">Route</th>
+                                <th class="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Distance</th>
+                                <th class="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Sedan</th>
+                                <th class="text-center text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">SUV</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Delhi → Agra</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">240 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹3,180</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹4,140</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Delhi → Jaipur</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">280 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹3,660</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹4,680</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Delhi → Shimla</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">350 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹4,500</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹5,800</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Mumbai → Pune</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">150 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,100</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,700</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Mumbai → Goa</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">560 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹6,920</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹9,160</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Bangalore → Mysore</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">150 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,100</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,700</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Bangalore → Coorg</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">260 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹3,420</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹4,360</td></tr>
+                            <tr class="fare-row"><td class="px-6 py-3.5 text-sm font-medium text-slate-800">Chennai → Pondicherry</td><td class="px-4 py-3.5 text-sm text-center text-slate-500">160 km</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,220</td><td class="px-4 py-3.5 text-sm text-center font-bold text-slate-900">₹2,860</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Fare Calculator -->
+            <div class="animate-on-scroll delay-2">
+                <div class="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+                    <h3 class="text-lg font-bold font-manrope mb-6 flex items-center gap-2">
+                        <span class="iconify text-blue-600" data-icon="lucide:calculator" data-width="22"></span>
+                        Fare Calculator
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <label class="form-label">Distance (km)</label>
+                            <input type="range" id="calcDistance" min="10" max="1000" value="250" class="w-full accent-blue-600" oninput="updateCalc()">
+                            <div class="flex justify-between text-xs text-slate-400 mt-1">
+                                <span>10 km</span>
+                                <span class="text-blue-600 font-bold text-base" id="calcDistLabel">250 km</span>
+                                <span>1000 km</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Vehicle Type</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="setCalcVehicle('sedan',this)" class="calc-veh-btn active-calc border-2 border-blue-500 bg-blue-50 rounded-xl py-3 text-sm font-semibold text-blue-700 transition-all">Sedan</button>
+                                <button onclick="setCalcVehicle('suv',this)" class="calc-veh-btn border-2 border-slate-200 rounded-xl py-3 text-sm font-semibold text-slate-600 hover:border-blue-300 transition-all">SUV</button>
+                                <button onclick="setCalcVehicle('luxury',this)" class="calc-veh-btn border-2 border-slate-200 rounded-xl py-3 text-sm font-semibold text-slate-600 hover:border-blue-300 transition-all">Luxury</button>
+                                <button onclick="setCalcVehicle('tempo',this)" class="calc-veh-btn border-2 border-slate-200 rounded-xl py-3 text-sm font-semibold text-slate-600 hover:border-blue-300 transition-all">Tempo</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Trip Type</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="setCalcTrip('oneway',this)" class="calc-trip-btn border-2 border-blue-500 bg-blue-50 rounded-xl py-3 text-sm font-semibold text-blue-700 transition-all">One Way</button>
+                                <button onclick="setCalcTrip('roundtrip',this)" class="calc-trip-btn border-2 border-slate-200 rounded-xl py-3 text-sm font-semibold text-slate-600 hover:border-blue-300 transition-all">Round Trip</button>
+                            </div>
+                        </div>
+                        <!-- Result -->
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 text-white">
+                            <p class="text-sm text-slate-400 mb-1">Your Estimated Fare</p>
+                            <p class="text-4xl font-extrabold mb-4" id="calcResult">₹3,300</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between"><span class="text-slate-400">Base Fare</span><span id="calcBase">₹300</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Distance Charge</span><span id="calcDist">₹3,000</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Driver Allowance</span><span id="calcDriver">₹0</span></div>
+                                <div class="border-t border-slate-700 pt-2 flex justify-between font-semibold">
+                                    <span>Total</span><span id="calcTotal">₹3,300</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="bookFromCalc()" class="btn-primary w-full py-4 text-center flex items-center justify-center gap-2">
+                            <span class="iconify" data-icon="lucide:calendar-check" data-width="18"></span>
+                            Book This Ride
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Drivers Section -->
+<section id="drivers" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Meet Our <span class="gradient-text">Expert Drivers</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Verified, trained, and courteous professionals who prioritize your safety and comfort above everything else.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Driver 1 -->
+            <div class="driver-card animate-on-scroll delay-1 bg-white border border-slate-100 rounded-2xl overflow-hidden text-center">
+                <div class="h-56 img-zoom overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Driver Rajesh Kumar" class="w-full h-full object-cover driver-img">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-xs font-bold text-slate-700 ml-1">4.9</span>
+                    </div>
+                    <h3 class="text-lg font-bold font-manrope">Rajesh Kumar</h3>
+                    <p class="text-sm text-slate-500 mb-3">12 Years Experience</p>
+                    <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">Hindi</span>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">English</span>
+                        <span class="text-xs bg-green-50 text-green-600 px-2.5 py-1 rounded-full font-medium">Verified</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">18,500</p><p class="text-[10px] text-slate-400">Trips</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">0</p><p class="text-[10px] text-slate-400">Accidents</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">99%</p><p class="text-[10px] text-slate-400">On-time</p></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Driver 2 -->
+            <div class="driver-card animate-on-scroll delay-2 bg-white border border-slate-100 rounded-2xl overflow-hidden text-center">
+                <div class="h-56 img-zoom overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Driver Amit Singh" class="w-full h-full object-cover driver-img">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-xs font-bold text-slate-700 ml-1">5.0</span>
+                    </div>
+                    <h3 class="text-lg font-bold font-manrope">Amit Singh</h3>
+                    <p class="text-sm text-slate-500 mb-3">8 Years Experience</p>
+                    <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">Hindi</span>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">English</span>
+                        <span class="text-xs bg-green-50 text-green-600 px-2.5 py-1 rounded-full font-medium">Verified</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">12,300</p><p class="text-[10px] text-slate-400">Trips</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">0</p><p class="text-[10px] text-slate-400">Accidents</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">98%</p><p class="text-[10px] text-slate-400">On-time</p></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Driver 3 -->
+            <div class="driver-card animate-on-scroll delay-3 bg-white border border-slate-100 rounded-2xl overflow-hidden text-center">
+                <div class="h-56 img-zoom overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" alt="Driver Suresh Yadav" class="w-full h-full object-cover driver-img">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-empty" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-xs font-bold text-slate-700 ml-1">4.8</span>
+                    </div>
+                    <h3 class="text-lg font-bold font-manrope">Suresh Yadav</h3>
+                    <p class="text-sm text-slate-500 mb-3">15 Years Experience</p>
+                    <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">Hindi</span>
+                        <span class="text-xs bg-green-50 text-green-600 px-2.5 py-1 rounded-full font-medium">Verified</span>
+                        <span class="text-xs bg-amber-50 text-amber-600 px-2.5 py-1 rounded-full font-medium">Hill Expert</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">22,100</p><p class="text-[10px] text-slate-400">Trips</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">0</p><p class="text-[10px] text-slate-400">Accidents</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">97%</p><p class="text-[10px] text-slate-400">On-time</p></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Driver 4 -->
+            <div class="driver-card animate-on-scroll delay-4 bg-white border border-slate-100 rounded-2xl overflow-hidden text-center">
+                <div class="h-56 img-zoom overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Driver Vikram Patel" class="w-full h-full object-cover driver-img">
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="iconify star-filled" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-xs font-bold text-slate-700 ml-1">4.9</span>
+                    </div>
+                    <h3 class="text-lg font-bold font-manrope">Vikram Patel</h3>
+                    <p class="text-sm text-slate-500 mb-3">10 Years Experience</p>
+                    <div class="flex flex-wrap justify-center gap-1.5 mb-4">
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">Hindi</span>
+                        <span class="text-xs bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full font-medium">English</span>
+                        <span class="text-xs bg-green-50 text-green-600 px-2.5 py-1 rounded-full font-medium">Verified</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">15,800</p><p class="text-[10px] text-slate-400">Trips</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">0</p><p class="text-[10px] text-slate-400">Accidents</p></div>
+                        <div class="bg-slate-50 rounded-lg py-2"><p class="text-sm font-bold text-slate-900">100%</p><p class="text-[10px] text-slate-400">On-time</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Driver Standards -->
+        <div class="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 animate-on-scroll">
+            <h3 class="text-xl font-bold font-manrope text-slate-900 mb-6 text-center">Our Driver Selection Standards</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                        <span class="iconify text-blue-600" data-icon="lucide:file-check" data-width="28"></span>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Background Verified</h4>
+                    <p class="text-xs text-slate-500">Police verification & address proof mandatory</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                        <span class="iconify text-emerald-600" data-icon="lucide:award" data-width="28"></span>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Min. 5 Years Exp.</h4>
+                    <p class="text-xs text-slate-500">Only experienced drivers with clean records</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                        <span class="iconify text-amber-600" data-icon="lucide:stethoscope" data-width="28"></span>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Medical Fitness</h4>
+                    <p class="text-xs text-slate-500">Annual health checkup & fitness certificate</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                        <span class="iconify text-indigo-600" data-icon="lucide:graduation-cap" data-width="28"></span>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Trained & Certified</h4>
+                    <p class="text-xs text-slate-500">Soft skills, first-aid & safety training</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tour Packages -->
+<section id="packages" class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Curated <span class="gradient-text">Tour Packages</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Hand-picked itineraries with the best routes, stays, and experiences. Customizable to your preferences.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Package 1 -->
+            <div class="card-hover animate-on-scroll delay-1 bg-white rounded-2xl overflow-hidden border border-slate-100">
+                <div class="img-zoom h-56 relative">
+                    <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80" alt="Golden Triangle Tour" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs font-bold text-slate-800">5 Days / 4 Nights</div>
+                    <div class="absolute top-4 right-4 bg-amber-500 rounded-full px-3 py-1.5 text-xs font-bold text-white">20% OFF</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="iconify text-amber-400" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-sm font-bold">4.9</span>
+                        <span class="text-xs text-slate-400">(340 reviews)</span>
+                    </div>
+                    <h3 class="text-xl font-bold font-manrope mb-2">Golden Triangle Tour</h3>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">Delhi → Agra → Jaipur. Visit Taj Mahal, Amer Fort, Qutub Minar, and more with expert guides.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Hotel Included</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Breakfast</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Guide</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-sm text-slate-400 line-through">₹18,000</span>
+                            <span class="text-2xl font-extrabold text-slate-900 ml-2">₹14,400</span>
+                            <span class="text-xs text-slate-400">/person</span>
+                        </div>
+                        <button onclick="showToast('Golden Triangle package details sent to your inquiry!')" class="btn-primary text-sm py-2.5 px-5">Enquire</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Package 2 -->
+            <div class="card-hover animate-on-scroll delay-2 bg-white rounded-2xl overflow-hidden border border-slate-100">
+                <div class="img-zoom h-56 relative">
+                    <img src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80" alt="Kerala Backwaters" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs font-bold text-slate-800">7 Days / 6 Nights</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="iconify text-amber-400" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-sm font-bold">4.8</span>
+                        <span class="text-xs text-slate-400">(215 reviews)</span>
+                    </div>
+                    <h3 class="text-xl font-bold font-manrope mb-2">Kerala Backwaters Escape</h3>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">Cochin → Munnar → Alleppey → Kovalam. Houseboat stay, spice plantations, and Ayurvedic massage.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Houseboat</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">All Meals</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Ayurveda</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-extrabold text-slate-900">₹22,500</span>
+                            <span class="text-xs text-slate-400">/person</span>
+                        </div>
+                        <button onclick="showToast('Kerala package details sent to your inquiry!')" class="btn-primary text-sm py-2.5 px-5">Enquire</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Package 3 -->
+            <div class="card-hover animate-on-scroll delay-3 bg-white rounded-2xl overflow-hidden border border-slate-100">
+                <div class="img-zoom h-56 relative">
+                    <img src="https://images.unsplash.com/photo-1585116938581-d55281ad4e10?w=600&q=80" alt="Rajasthan Heritage" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs font-bold text-slate-800">8 Days / 7 Nights</div>
+                    <div class="absolute top-4 right-4 bg-rose-500 rounded-full px-3 py-1.5 text-xs font-bold text-white">TRENDING</div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="iconify text-amber-400" data-icon="lucide:star" data-width="14"></span>
+                        <span class="text-sm font-bold">4.9</span>
+                        <span class="text-xs text-slate-400">(428 reviews)</span>
+                    </div>
+                    <h3 class="text-xl font-bold font-manrope mb-2">Rajasthan Heritage Tour</h3>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">Jaipur → Jodhpur → Jaisalmer → Udaipur. Desert safari, forts, palaces, and cultural performances.</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Heritage Hotels</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Desert Safari</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">Meals</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-sm text-slate-400 line-through">₹32,000</span>
+                            <span class="text-2xl font-extrabold text-slate-900 ml-2">₹26,900</span>
+                            <span class="text-xs text-slate-400">/person</span>
+                        </div>
+                        <button onclick="showToast('Rajasthan package details sent to your inquiry!')" class="btn-primary text-sm py-2.5 px-5">Enquire</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-10 animate-on-scroll">
+            <button onclick="showToast('Full package catalog will be emailed to you!')" class="btn-outline px-8 py-3.5 inline-flex items-center gap-2">
+                View All 25+ Packages
+                <span class="iconify" data-icon="lucide:arrow-right" data-width="18"></span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Service Areas -->
+<section id="areas" class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Our <span class="gradient-text">Service Areas</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Operating across 50+ cities in India with dedicated local teams for seamless service in every location.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <!-- Region 1 -->
+            <div class="animate-on-scroll delay-1 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
+                    <span class="iconify text-blue-600" data-icon="lucide:building" data-width="24"></span>
+                </div>
+                <h3 class="text-lg font-bold font-manrope text-slate-900 mb-1">North India</h3>
+                <p class="text-sm text-slate-500 mb-4">Delhi NCR, Jaipur, Agra, Chandigarh, Shimla, Manali, Haridwar, Rishikesh, Amritsar, Varanasi</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">15 Cities</span>
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">85+ Drivers</span>
+                </div>
+            </div>
+            <!-- Region 2 -->
+            <div class="animate-on-scroll delay-2 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-100">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-4">
+                    <span class="iconify text-emerald-600" data-icon="lucide:palmtree" data-width="24"></span>
+                </div>
+                <h3 class="text-lg font-bold font-manrope text-slate-900 mb-1">South India</h3>
+                <p class="text-sm text-slate-500 mb-4">Bangalore, Chennai, Hyderabad, Cochin, Mysore, Coorg, Ooty, Pondicherry, Madurai, Trivandrum</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">18 Cities</span>
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">95+ Drivers</span>
+                </div>
+            </div>
+            <!-- Region 3 -->
+            <div class="animate-on-scroll delay-3 bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-100">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center mb-4">
+                    <span class="iconify text-amber-600" data-icon="lucide:landmark" data-width="24"></span>
+                </div>
+                <h3 class="text-lg font-bold font-manrope text-slate-900 mb-1">West India</h3>
+                <p class="text-sm text-slate-500 mb-4">Mumbai, Pune, Goa, Ahmedabad, Surat, Udaipur, Mount Abu, Nashik, Lonavala, Mahabaleshwar</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">12 Cities</span>
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">70+ Drivers</span>
+                </div>
+            </div>
+            <!-- Region 4 -->
+            <div class="animate-on-scroll delay-4 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+                <div class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center mb-4">
+                    <span class="iconify text-purple-600" data-icon="lucide:mountain-snow" data-width="24"></span>
+                </div>
+                <h3 class="text-lg font-bold font-manrope text-slate-900 mb-1">East India</h3>
+                <p class="text-sm text-slate-500 mb-4">Kolkata, Darjeeling, Gangtok, Puri, Bhubaneswar, Ranchi, Patna, Guwahati, Shillong, Kaziranga</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">10 Cities</span>
+                    <span class="text-[10px] bg-white text-slate-600 px-2 py-0.5 rounded-full font-medium">55+ Drivers</span>
+                </div>
+            </div>
+        </div>
+        <!-- Airport coverage -->
+        <div class="animate-on-scroll bg-slate-900 rounded-2xl p-8 sm:p-10">
+            <h3 class="text-xl font-bold font-manrope text-white mb-6 flex items-center gap-2">
+                <span class="iconify text-blue-400" data-icon="lucide:plane" data-width="24"></span>
+                Airport Transfer Coverage
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="text-center"><p class="text-sm font-semibold text-white">DEL</p><p class="text-xs text-slate-400">Delhi IGI</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">BOM</p><p class="text-xs text-slate-400">Mumbai CSMIA</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">BLR</p><p class="text-xs text-slate-400">Bangalore KIA</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">MAA</p><p class="text-xs text-slate-400">Chennai MAA</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">CCU</p><p class="text-xs text-slate-400">Kolkata CCU</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">HYD</p><p class="text-xs text-slate-400">Hyderabad HYD</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">JAI</p><p class="text-xs text-slate-400">Jaipur JAI</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">GOI</p><p class="text-xs text-slate-400">Goa Dabolim</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">COK</p><p class="text-xs text-slate-400">Cochin COK</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">IXR</p><p class="text-xs text-slate-400">Ranchi IXR</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">GAU</p><p class="text-xs text-slate-400">Guwahati GAU</p></div>
+                <div class="text-center"><p class="text-sm font-semibold text-white">+30 more</p><p class="text-xs text-slate-400">All major airports</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section id="reviews" class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">What Our <span class="gradient-text">Customers Say</span></h2>
+            <p class="text-slate-500 text-lg leading-relaxed">Real reviews from real travellers. Our 4.9 rating across 10,000+ reviews speaks for itself.</p>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card animate-on-scroll delay-1">
+                <div class="flex items-center gap-1 mb-4 relative z-10">
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                </div>
+                <p class="text-slate-600 leading-relaxed mb-6 relative z-10">Booked an Innova for Delhi to Jaipur trip. Driver Rajesh was incredibly punctual, polite, and knew all the best stops along the way. Car was spotless. Will definitely use again!</p>
+                <div class="flex items-center gap-3 relative z-10">
+                    <img src="https://picsum.photos/seed/reviewer1/48/48.jpg" class="w-11 h-11 rounded-full object-cover" alt="Priya Sharma">
+                    <div>
+                        <p class="font-bold text-slate-900 text-sm">Priya Sharma</p>
+                        <p class="text-xs text-slate-400">Delhi → Jaipur • Nov 2024</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card animate-on-scroll delay-2">
+                <div class="flex items-center gap-1 mb-4 relative z-10">
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                </div>
+                <p class="text-slate-600 leading-relaxed mb-6 relative z-10">We used TravelElite for our corporate offsite to Lonavala with 35 people. Two tempo travellers arranged perfectly. Coordinators were responsive and everything was on time. Highly recommend for group travel.</p>
+                <div class="flex items-center gap-3 relative z-10">
+                    <img src="https://picsum.photos/seed/reviewer2/48/48.jpg" class="w-11 h-11 rounded-full object-cover" alt="Rohit Mehta">
+                    <div>
+                        <p class="font-bold text-slate-900 text-sm">Rohit Mehta</p>
+                        <p class="text-xs text-slate-400">Corporate Offsite • Oct 2024</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card animate-on-scroll delay-3">
+                <div class="flex items-center gap-1 mb-4 relative z-10">
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-filled" data-icon="lucide:star" data-width="16"></span>
+                    <span class="iconify star-empty" data-icon="lucide:star" data-width="16"></span>
+                </div>
+                <p class="text-slate-600 leading-relaxed mb-6 relative z-10">The Kerala package was a dream! From the houseboat in Alleppey to the tea gardens in Munnar, everything was perfectly planned. Driver Suresh was like a local guide. Only suggestion — include more free time in Munnar.</p>
+                <div class="flex items-center gap-3 relative z-10">
+                    <img src="https://picsum.photos/seed/reviewer3/48/48.jpg" class="w-11 h-11 rounded-full object-cover" alt="Ananya Iyer">
+                    <div>
+                        <p class="font-bold text-slate-900 text-sm">Ananya Iyer</p>
+                        <p class="text-xs text-slate-400">Kerala Package • Sep 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Feedback Form -->
+        <div class="max-w-2xl mx-auto animate-on-scroll">
+            <div class="bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-sm">
+                <h3 class="text-xl font-bold font-manrope text-slate-900 mb-2 text-center">Share Your Experience</h3>
+                <p class="text-sm text-slate-500 text-center mb-6">Your feedback helps us serve you better</p>
+                <form onsubmit="submitFeedback(event)">
+                    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="form-label">Your Name</label>
+                            <input type="text" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Trip Route</label>
+                            <input type="text" class="form-input" placeholder="Delhi → Agra" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Rating</label>
+                        <div class="flex gap-2" id="ratingStars">
+                            <button type="button" onclick="setRating(1)" class="rating-star text-slate-300 hover:text-amber-400 transition-colors"><span class="iconify" data-icon="lucide:star" data-width="32"></span></button>
+                            <button type="button" onclick="setRating(2)" class="rating-star text-slate-300 hover:text-amber-400 transition-colors"><span class="iconify" data-icon="lucide:star" data-width="32"></span></button>
+                            <button type="button" onclick="setRating(3)" class="rating-star text-slate-300 hover:text-amber-400 transition-colors"><span class="iconify" data-icon="lucide:star" data-width="32"></span></button>
+                            <button type="button" onclick="setRating(4)" class="rating-star text-slate-300 hover:text-amber-400 transition-colors"><span class="iconify" data-icon="lucide:star" data-width="32"></span></button>
+                            <button type="button" onclick="setRating(5)" class="rating-star text-slate-300 hover:text-amber-400 transition-colors"><span class="iconify" data-icon="lucide:star" data-width="32"></span></button>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label">Your Review</label>
+                        <textarea class="form-input" rows="4" placeholder="Tell us about your experience..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full py-3.5 text-center">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="py-24 sm:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="animate-on-scroll">
+                <div class="section-divider mb-4"></div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-6">Why <span class="gradient-text">TravelElite?</span></h2>
+                <p class="text-slate-500 text-lg leading-relaxed mb-8">We're not just another cab service. We're your trusted travel partner committed to making every journey memorable.</p>
+                <div class="space-y-5">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-green-600" data-icon="lucide:badge-indian-rupee" data-width="20"></span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">No Hidden Charges</h4>
+                            <p class="text-sm text-slate-500">What you see is what you pay. Fare includes base fare, per-km charge, and driver allowance. Toll & parking billed at actuals.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-blue-600" data-icon="lucide:clock-4" data-width="20"></span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Guaranteed Punctuality</h4>
+                            <p class="text-sm text-slate-500">97% on-time arrival rate. If we're late by more than 15 minutes, get 10% off your fare automatically.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-amber-600" data-icon="lucide:phone-call" data-width="20"></span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">24/7 Live Support</h4>
+                            <p class="text-sm text-slate-500">Dedicated support team available round the clock. WhatsApp, call, or email — we're always just a message away.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center flex-shrink-0">
+                            <span class="iconify text-rose-600" data-icon="lucide:x-circle" data-width="20"></span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-1">Free Cancellation</h4>
+                            <p class="text-sm text-slate-500">Cancel up to 24 hours before your trip for a full refund. No questions asked, no cancellation fees.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="animate-on-scroll delay-2 relative">
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=700&q=80" alt="Premium travel experience" class="w-full h-[500px] object-cover">
+                </div>
+                <div class="absolute -bottom-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-slate-100 max-w-[240px]" style="animation: float 4s ease-in-out infinite;">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                            <span class="iconify text-green-600" data-icon="lucide:trending-up" data-width="20"></span>
+                        </div>
+                        <p class="text-sm font-bold text-slate-900">97% On-Time</p>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full progress-bar" style="width: 97%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-24 sm:py-32 bg-slate-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16 animate-on-scroll">
+            <div class="section-divider mx-auto mb-4"></div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold font-manrope text-slate-900 mb-4">Frequently Asked <span class="gradient-text">Questions</span></h2>
+        </div>
+        <div class="space-y-3 animate-on-scroll">
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">How do I book a cab with TravelElite?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">You can book through our website using the quick booking form, call us at +91 98765 43210, or WhatsApp us. Simply enter your pickup, drop, date, and preferred vehicle. You'll receive instant fare estimate and booking confirmation within minutes.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">Are there any hidden charges in the fare?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Absolutely not! Our fares are 100% transparent. The estimated fare includes base fare + per-km charge + driver allowance. Only toll charges, parking fees, and state taxes (if applicable) are charged at actuals with proper receipts. You'll always know the cost before you book.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">What is your cancellation policy?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Free cancellation up to 24 hours before your scheduled pickup for a full refund. Cancellations within 24 hours incur a nominal ₹200 fee. No-shows are charged 25% of the total fare. We understand plans change, so we keep it flexible.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">Can I make stops during my outstation trip?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Yes! For outstation trips, you can make up to 3 intermediate stops at no extra charge (detour within 10 km). Additional stops or significant detours will be billed at the per-km rate. Just inform your driver or our support team in advance.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">How are your drivers verified?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Every driver undergoes thorough police verification, address verification, and background checks. They must have a minimum 5 years of driving experience, a valid commercial license, clean driving record, and pass our in-house training program covering safety, first-aid, and customer service.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-white rounded-xl border border-slate-100 overflow-hidden">
+                <button onclick="toggleFaq(this)" class="w-full flex items-center justify-between p-5 text-left">
+                    <span class="font-semibold text-slate-900 pr-4">Do you offer corporate billing?</span>
+                    <span class="iconify text-slate-400 flex-shrink-0 faq-icon transition-transform duration-300" data-icon="lucide:chevron-down" data-width="20"></span>
+                </button>
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500">
+                    <p class="px-5 pb-5 text-sm text-slate-500 leading-relaxed">Yes! We offer dedicated corporate accounts with monthly invoicing, GST billing, priority bookings, discounted rates, detailed trip reports, and a dedicated account manager. Contact our corporate team at corporate@travelelite.in for a customized proposal.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-24 sm:py-32 relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e1b4b 100%);">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 animate-on-scroll">
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/10 rounded-full px-4 py-2 mb-6">
+            <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <span class="text-xs font-semibold text-blue-300 uppercase tracking-wider">Available 24/7</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-manrope text-white mb-6 leading-tight">Ready to Start Your<br><span class="gradient-text-gold">Perfect Journey?</span></h2>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">Book your ride in under 2 minutes or call us for a custom quote. Your comfort, safety, and satisfaction are our top priorities.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})" class="btn-accent text-base py-4 px-8 flex items-center gap-2">
+                <span class="iconify" data-icon="lucide:calendar-check" data-width="20"></span>
+                Book Online Now
+            </button>
+            <a href="tel:+919876543210" class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all">
+                <span class="iconify" data-icon="lucide:phone" data-width="20"></span>
+                +91 98765 43210
+            </a>
+        </div>
+        <div class="mt-10 flex flex-wrap justify-center gap-8 text-sm text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="iconify text-green-400" data-icon="lucide:check-circle" data-width="16"></span>
+                No hidden charges
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="iconify text-green-400" data-icon="lucide:check-circle" data-width="16"></span>
+                Free cancellation
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="iconify text-green-400" data-icon="lucide:check-circle" data-width="16"></span>
+                Verified drivers
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="iconify text-green-400" data-icon="lucide:check-circle" data-width="16"></span>
+                24/7 support
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact" class="bg-slate-900 pt-20 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+            <!-- Brand -->
+            <div class="lg:col-span-2">
+                <a href="#" class="flex items-center gap-2.5 mb-5">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                        <span class="iconify text-white" data-icon="lucide:map-pin" data-width="20"></span>
+                    </div>
+                    <span class="text-xl font-bold font-manrope text-white">Travel<span class="text-blue-400">Elite</span></span>
+                </a>
+                <p class="text-sm text-slate-400 leading-relaxed mb-6 max-w-sm">India's trusted premium travel partner since 2015. Offering safe, comfortable, and punctual rides across 50+ cities with a fleet of 200+ vehicles.</p>
+                <div class="flex gap-3">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all">
+                        <span class="iconify" data-icon="lucide:facebook" data-width="18"></span>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-pink-600 hover:text-white transition-all">
+                        <span class="iconify" data-icon="lucide:instagram" data-width="18"></span>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-sky-500 hover:text-white transition-all">
+                        <span class="iconify" data-icon="lucide:twitter" data-width="18"></span>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-red-600 hover:text-white transition-all">
+                        <span class="iconify" data-icon="lucide:youtube" data-width="18"></span>
+                    </a>
+                </div>
+            </div>
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-5">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#services" class="text-sm text-slate-400 hover:text-white transition-colors">Our Services</a></li>
+                    <li><a href="#fleet" class="text-sm text-slate-400 hover:text-white transition-colors">Our Fleet</a></li>
+                    <li><a href="#fare" class="text-sm text-slate-400 hover:text-white transition-colors">Fare Estimate</a></li>
+                    <li><a href="#drivers" class="text-sm text-slate-400 hover:text-white transition-colors">Our Drivers</a></li>
+                    <li><a href="#packages" class="text-sm text-slate-400 hover:text-white transition-colors">Tour Packages</a></li>
+                    <li><a href="#reviews" class="text-sm text-slate-400 hover:text-white transition-colors">Customer Reviews</a></li>
+                </ul>
+            </div>
+            <!-- Services -->
+            <div>
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-5">Services</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Airport Transfers</a></li>
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Outstation Cabs</a></li>
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Corporate Travel</a></li>
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Wedding Cars</a></li>
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Group Travel</a></li>
+                    <li><a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">Pilgrimage Tours</a></li>
+                </ul>
+            </div>
+            <!-- Contact -->
+            <div>
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-5">Contact Us</h4>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <span class="iconify text-blue-400 mt-0.5 flex-shrink-0" data-icon="lucide:map-pin" data-width="16"></span>
+                        <span class="text-sm text-slate-400">Plot 45, Sector 12,<br>Gurugram, HR 122001</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="iconify text-blue-400 flex-shrink-0" data-icon="lucide:phone" data-width="16"></span>
+                        <a href="tel:+919876543210" class="text-sm text-slate-400 hover:text-white transition-colors">+91 98765 43210</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="iconify text-blue-400 flex-shrink-0" data-icon="lucide:mail" data-width="16"></span>
+                        <a href="mailto:book@travelelite.in" class="text-sm text-slate-400 hover:text-white transition-colors">book@travelelite.in</a>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <span class="iconify text-blue-400 flex-shrink-0" data-icon="lucide:message-circle" data-width="16"></span>
+                        <a href="#" class="text-sm text-slate-400 hover:text-white transition-colors">WhatsApp Support</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Bottom bar -->
+        <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-slate-500">© 2025 TravelElite. All rights reserved. | GSTIN: 06AABCT1234F1Z5</p>
+            <div class="flex gap-6">
+                <a href="#" class="text-xs text-slate-500 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="text-xs text-slate-500 hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="text-xs text-slate-500 hover:text-white transition-colors">Refund Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/919876543210?text=Hi%2C%20I%20want%20to%20book%20a%20ride" target="_blank" class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 hover:shadow-green-500/50 transition-all" title="Chat on WhatsApp">
+    <span class="iconify text-white" data-icon="lucide:message-circle" data-width="26"></span>
+</a>
+
+<script>
+// ========== DATA ==========
+const cityDistances = {
+    'delhi': { 'agra': 240, 'jaipur': 280, 'shimla': 350, 'chandigarh': 260, 'haridwar': 230, 'rishikesh': 240, 'amritsar': 450, 'varanasi': 820, 'manali': 540, 'mathura': 160 },
+    'mumbai': { 'pune': 150, 'goa': 560, 'nashik': 170, 'lonavala': 85, 'mahabaleshwar': 260, 'ahmedabad': 520, 'surat': 300, 'shirdi': 250 },
+    'bangalore': { 'mysore': 150, 'coorg': 260, 'ooty': 270, 'cochin': 550, 'chennai': 350, 'pondicherry': 310, 'wayanad': 280, 'mangalore': 370 },
+    'chennai': { 'pondicherry': 160, 'bangalore': 350, 'mahabalipuram': 60, 'tirupati': 135, 'madurai': 460, 'rameswaram': 560 },
+    'kolkata': { 'darjeeling': 620, 'gangtok': 680, 'puri': 500, 'bhubaneswar': 450, 'ranchi': 420, 'patna': 580 },
+    'hyderabad': { 'vijayawada': 270, 'warangal': 150, 'goa': 660, 'bangalore': 570, 'tirupati': 560 }
+};
+
+const fareData = {
+    sedan: { base: 300, perKm: 12, driverAllowance: 0, hourlyRate: 11, minHours: 4 },
+    suv: { base: 500, perKm: 16, driverAllowance: 0, hourlyRate: 15, minHours: 4 },
+    luxury: { base: 1000, perKm: 25, driverAllowance: 500, hourlyRate: 30, minHours: 4 },
+    tempo: { base: 800, perKm: 22, driverAllowance: 500, hourlyRate: 25, minHours: 5 }
+};
+
+let currentTripType = 'oneway';
+let currentRating = 0;
+let calcVehicle = 'sedan';
+let calcTrip = 'oneway';
+
+// ========== NAVBAR SCROLL ==========
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        nav.classList.add('nav-scrolled');
+    } else {
+        nav.classList.remove('nav-scrolled');
+    }
+});
+
+// ========== MOBILE MENU ==========
+function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('active');
+}
+
+// ========== TOAST ==========
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// ========== TRIP TYPE ==========
+function setTripType(type, btn) {
+    currentTripType = type;
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.classList.add('text-slate-600');
+    });
+    btn.classList.add('active');
+    btn.classList.remove('text-slate-600');
+    calculateFare();
+}
+
+// ========== FARE CALCULATION (BOOKING FORM) ==========
+function calculateFare() {
+    const pickup = document.getElementById('pickupInput').value.toLowerCase().trim();
+    const drop = document.getElementById('dropInput').value.toLowerCase().trim();
+    const vehicle = document.getElementById('vehicleSelect').value;
+    const fareEl = document.getElementById('fareDisplay');
+
+    let distance = null;
+
+    // Check direct route
+    if (cityDistances[pickup] && cityDistances[pickup][drop]) {
+        distance = cityDistances[pickup][drop];
+    } else if (cityDistances[drop] && cityDistances[drop][pickup]) {
+        distance = cityDistances[drop][pickup];
+    }
+
+    if (distance) {
+        const rates = fareData[vehicle];
+        let totalDist = distance;
+        let driverAllow = rates.driverAllowance;
+
+        if (currentTripType === 'roundtrip') {
+            totalDist = distance * 2;
+            driverAllow = rates.driverAllowance * 2 || 500;
+        } else if (currentTripType === 'local') {
+            totalDist = 40; // assumed local usage
+            driverAllow = 0;
+        }
+
+        const totalFare = rates.base + (totalDist * rates.perKm) + driverAllow;
+
+        document.getElementById('estDistance').textContent = totalDist + ' km';
+        document.getElementById('baseFare').textContent = '₹' + rates.base.toLocaleString();
+        document.getElementById('perKmCharge').textContent = '₹' + (totalDist * rates.perKm).toLocaleString();
+        document.getElementById('driverAllowance').textContent = '₹' + driverAllow.toLocaleString();
+        document.getElementById('totalFare').textContent = '₹' + totalFare.toLocaleString();
+        fareEl.classList.remove('hidden');
+    } else if (pickup.length > 2 && drop.length > 2) {
+        fareEl.classList.add('hidden');
+    }
+}
+
+// ========== FARE CALCULATOR ==========
+function setCalcVehicle(type, btn) {
+    calcVehicle = type;
+    document.querySelectorAll('.calc-veh-btn').forEach(b => {
+        b.classList.remove('active-calc');
+        b.style.borderColor = '#e2e8f0';
+        b.style.background = 'white';
+        b.style.color = '#475569';
+    });
+    btn.classList.add('active-calc');
+    btn.style.borderColor = '#3b82f6';
+    btn.style.background = '#eff6ff';
+    btn.style.color = '#1d4ed8';
+    updateCalc();
+}
+
+function setCalcTrip(type, btn) {
+    calcTrip = type;
+    document.querySelectorAll('.calc-trip-btn').forEach(b => {
+        b.style.borderColor = '#e2e8f0';
+        b.style.background = 'white';
+        b.style.color = '#475569';
+    });
+    btn.style.borderColor = '#3b82f6';
+    btn.style.background = '#eff6ff';
+    btn.style.color = '#1d4ed8';
+    updateCalc();
+}
+
+function updateCalc() {
+    const dist = parseInt(document.getElementById('calcDistance').value);
+    const rates = fareData[calcVehicle];
+    let totalDist = dist;
+    let driverAllow = rates.driverAllowance;
+
+    if (calcTrip === 'roundtrip') {
+        totalDist = dist * 2;
+        driverAllow = (rates.driverAllowance || 300) * 2;
+    }
+
+    const base = rates.base;
+    const distCharge = totalDist * rates.perKm;
+    const total = base + distCharge + driverAllow;
+
+    document.getElementById('calcDistLabel').textContent = dist + ' km';
+    document.getElementById('calcResult').textContent = '₹' + total.toLocaleString();
+    document.getElementById('calcBase').textContent = '₹' + base.toLocaleString();
+    document.getElementById('calcDist').textContent = '₹' + distCharge.toLocaleString();
+    document.getElementById('calcDriver').textContent = '₹' + driverAllow.toLocaleString();
+    document.getElementById('calcTotal').textContent = '₹' + total.toLocaleString();
+}
+
+function bookFromCalc() {
+    showToast('Fare calculated! Scroll up to the booking form to complete your reservation.');
+    document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ========== SELECT VEHICLE FROM FLEET ==========
+function selectVehicle(name) {
+    const select = document.getElementById('vehicleSelect');
+    const map = {
+        'Sedan (Swift Dzire)': 'sedan',
+        'SUV (Innova Crysta)': 'suv',
+        'Luxury (Mercedes E-Class)': 'luxury',
+        'Tempo Traveller (16 Seater)': 'tempo'
+    };
+    if (map[name]) select.value = map[name];
+    calculateFare();
+    document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+    showToast(name + ' selected! Fill in your trip details above.');
+}
+
+// ========== BOOKING MODAL ==========
+function openBookingModal() {
+    const pickup = document.getElementById('pickupInput').value || 'Not set';
+    const drop = document.getElementById('dropInput').value || 'Not set';
+    const vehicle = document.getElementById('vehicleSelect');
+    const vehicleName = vehicle.options[vehicle.selectedIndex].text;
+    const totalFare = document.getElementById('totalFare').textContent;
+
+    document.getElementById('modalTripType').textContent = currentTripType.charAt(0).toUpperCase() + currentTripType.slice(1);
+    document.getElementById('modalVehicle').textContent = vehicleName;
+    document.getElementById('modalRoute').textContent = pickup + ' → ' + drop;
+    document.getElementById('modalFare').textContent = totalFare || 'Calculate above';
+
+    document.getElementById('bookingModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('bookingModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function submitBooking(e) {
+    e.preventDefault();
+    closeModal();
+    showToast('🎉 Booking confirmed! You will receive a confirmation SMS and email shortly.');
+    e.target.reset();
+}
+
+// ========== RATING ==========
+function setRating(n) {
+    currentRating = n;
+    document.querySelectorAll('.rating-star').forEach((star, i) => {
+        if (i < n) {
+            star.style.color = '#f59e0b';
+        } else {
+            star.style.color = '#e2e8f0';
+        }
+    });
+}
+
+// ========== FEEDBACK ==========
+function submitFeedback(e) {
+    e.preventDefault();
+    if (currentRating === 0) {
+        showToast('Please select a rating before submitting.');
+        return;
+    }
+    showToast('Thank you for your review! It will appear after moderation.');
+    e.target.reset();
+    setRating(0);
+}
+
+// ========== FAQ ==========
+function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+    // Close all
+    document.querySelectorAll('.faq-answer').forEach(a => { a.style.maxHeight = '0px'; });
+    document.querySelectorAll('.faq-icon').forEach(i => { i.style.transform = 'rotate(0deg)'; });
+
+    if (!isOpen) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+
+// ========== SCROLL ANIMATIONS ==========
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Stat counter animation
+            if (entry.target.querySelector('.stat-number')) {
+                entry.target.querySelectorAll('.stat-number').forEach(counter => {
+                    const target = parseInt(counter.dataset.target);
+                    animateCounter(counter, target);
+                });
+            }
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+function animateCounter(el, target) {
+    let current = 0;
+    const increment = target / 60;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        if (target >= 1000) {
+            el.textContent = Math.floor(current).toLocaleString() + '+';
+        } else {
+            el.textContent = Math.floor(current) + '+';
+        }
+    }, 25);
+}
+
+// ========== SET DEFAULT DATE ==========
+const today = new Date();
+const tomorrow = new Date(today);
+tomorrow.setDate(tomorrow.getDate() + 1);
+document.getElementById('bookDate').value = tomorrow.toISOString().split('T')[0];
+document.getElementById('bookDate').min = tomorrow.toISOString().split('T')[0];
+
+// Initial calc
+updateCalc();
+</script>
+
+</body>
+</html>
